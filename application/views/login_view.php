@@ -10,10 +10,10 @@
     <body>
         <script src="js/jquery-1.9.1.js"></script>
         
-        <h1>Welcome to the test-page website, please login</h1>
+        <h1>AquaStem Login</h1>
         <div id="loginForm">
-            <input id="loginUsername" type="text" /><br>
-            <input id="loginPassword" type="password" /><br>
+            Username: <input id="loginUsername" type="text" /><br>
+            Password: <input id="loginPassword" type="password" /><br>
             <button id="loginButton" onclick="verifyLogin()">Login</button>
             <?php echo $home; ?>
         </div>
