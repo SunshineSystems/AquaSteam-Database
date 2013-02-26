@@ -10,7 +10,7 @@
     <body>
         <script src="js/jquery-1.9.1.js"></script>
         
-        <h1>AquaStem Login</h1>
+        <h1>Login</h1>
         <div id="loginForm">
             Username: <input id="loginUsername" type="text" /><br>
             Password: <input id="loginPassword" type="password" /><br>

@@ -1,5 +1,5 @@
 <?php
-	class adminMainMenu extends CI_Controller {
+	class empMainMenu extends CI_Controller {
 	
 		public function index()
 		{
