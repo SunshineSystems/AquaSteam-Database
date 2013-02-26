@@ -15,7 +15,7 @@
             Username: <input id="loginUsername" type="text" /><br>
             Password: <input id="loginPassword" type="password" /><br>
             <button id="loginButton" onclick="verifyLogin()">Login</button>
-            <?php echo $home; ?>
+            
         </div>
     </body>
     
