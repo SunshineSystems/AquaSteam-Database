@@ -5,8 +5,7 @@
             <button id="loginButton" onclick="verifyLogin()" class="btn" >Login</button>
             
         </div>
-    </body>
-    
+
     <script>
         
         function verifyLogin() {
@@ -16,4 +15,5 @@
         }
         
     </script>
+    </body>
 </html>

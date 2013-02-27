@@ -7,5 +7,31 @@
             <button id="googleCalendarButton" onclick="loadGoogleCalendar()" class="btn">Google Calendar</button><br>
             <button id="logoutButton" onclick="logout()" class="btn">Logout and Exit</button>
         </div>
-    </body>
+
+        
+    <script>
+        
+        function loadCustomers() {
+           
+        }
+        function loadWorkOrders() {
+           
+        }
+        function printBlankWorkOrders() {
+           
+        }
+        function loadEmployees() {
+           
+        }
+        function loadGoogleCalendar() {
+           
+        }
+        function logout() {
+           
+        }
+        
+    </script>
+  </body>
+    
+    
 </html>
