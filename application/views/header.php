@@ -14,7 +14,7 @@
 	    <script src="<?php echo $home?>js/bootstrap.js"></script>
 	    <script src="<?php echo $home?>js/jquery-ui-1.10.0.custom.min.js"></script>
     </head>
-    <body>
+    <body style="padding-top: 0px;">
     	<div class="navbar">
 		  <div class="navbar-inner">
 		  	  <div class="container">
