@@ -11,7 +11,7 @@
         <script src="js/jquery-1.9.1.js"></script>
         
         <h1>Employee Main Menu</h1>
-        <div id="empForm" >
+        <div id="form" >
             <button id="customersButton" onclick="loadCustomers()">Customers</button><br>
             <button id="viewWorkOrdersButton" onclick="loadWorkOrders()">View Work Orders</button><br>
             <button id="PrintBlankWorkOrderButton" onclick="printBlankWorkOrders()">Print Blank Work Order</button><br>

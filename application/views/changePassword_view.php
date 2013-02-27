@@ -11,7 +11,7 @@
         <script src="js/jquery-1.9.1.js"></script>
         
         <h1>Change Password</h1>
-        <div id="changePasswordForm">
+        <div id="form">
             Old Password: <input id="loginPassword" type="password" /><br>
             New Password: <input id="newPassword" type="password" /><br>
             Re-type New Password: <input id="reNewPassword" type="password" /><br>
