@@ -6,12 +6,13 @@
             <button id="changePasswordButton" onclick="verifyChangePassword()" class="btn">Change</button>
             
         </div>
-    </body>
+
     
     <script>    
-        function verifyChangeLogin() {
+        function verifyChangePassword() {
 		
 		}
         
     </script>
+  </body>
 </html>

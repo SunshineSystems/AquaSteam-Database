@@ -1,4 +1,4 @@
-        <?php
+<?php
 		    $home = base_url();
 		?>
 		        
