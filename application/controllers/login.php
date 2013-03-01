@@ -3,7 +3,8 @@
 	
 		public function index()
 		{
-			$this->load->view('header');
+			$data['title'] = "Log In";
+			$this->load->view('header', $data);
 			$this->load->view('login_view');
 		}
 	}

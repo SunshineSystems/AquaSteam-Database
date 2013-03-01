@@ -1,5 +1,5 @@
 body {
-	background-color: #f5f5f5;
+	background-color: #69A6C5;
 }
 
 .cust-container {
@@ -21,8 +21,12 @@ body {
   margin-bottom: 30px;
 }
 
+#searchType {
+	width: 125px;
+}
+
 #searchbar {
-	width: 400px;
+	width: 250px;
 	margin: -10px 0 0 20px;
 }
 
@@ -30,6 +34,67 @@ body {
 	margin: -10px 0 0 20px;
 }
 
+#id_newCust_button {
+	margin-top: 25px;
+}
+
 #id_result_table {
 	margin-top: 50px;
+}
+
+#dialog_customer_form {
+	display: none;
+	
+}
+
+#cust_form_container {
+	padding-left: 25px;
+}
+
+#cust_form_container label, #cust_form_container input {
+	display: inline-block;
+}
+
+#cust_form_container label {
+	width: 120px;
+	text-align: center;
+}
+
+#cust_form_container input {
+	margin-right: 25px;
+}
+
+.field-row {
+	display: inline-block;
+	width: 370px;
+	margin-top: 25px;	
+}
+
+.field-long-row {
+	margin-top: 25px;
+}
+
+#custID {
+	width: 75px;
+}
+
+#custHPhone, #custBPhone, #custCPhone {
+	width: 172px;
+}
+
+#custProvince {
+	width: 50px;
+}
+
+#custPCode {
+	width: 100px;
+}
+
+#custRef {
+	width: 585px;
+}
+
+#custNotes {
+	height: 80px;
+	width: 585px;
 }

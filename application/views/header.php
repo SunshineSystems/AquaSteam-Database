@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Login</title>
+        <title><?php echo $title?></title>
         <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/bootstrap-responsive.css">
 	    <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/jquery-ui-1.10.0.custom.css">
@@ -26,8 +26,8 @@
 			      <a class="brand" href="#">Aqua Steam</a>
 			      <div class="nav-collapse collapse">
 				      <ul class="nav">
-					      <li class="active"><a href="#">Home</a></li>
-					      <li><a href="#">Customers</a></li>
+					      <li id="homeLink"class="active"><a href="<?php echo $home?>">Home</a></li>
+					      <li id="customerLink"><a href="<?php echo $home?>/index.php/customer">Customers</a></li>
 					      <li><a href="#">Link</a></li>
 				      </ul>
 			      </div>

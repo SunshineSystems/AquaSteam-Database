@@ -3,8 +3,11 @@
 	
 		public function index()
 		{
-			$this->load->view('header');
+			$data['title'] = "Customers";
+			$this->load->view('header', $data);
 			$this->load->view('customer_view');
 		}
+		
+		
 	}
 ?>
