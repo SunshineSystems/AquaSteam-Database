@@ -23,12 +23,13 @@
 		            <span class="icon-bar"></span>
 		            <span class="icon-bar"></span>
 		          </button>
-			      <a class="brand" href="#">Aqua Steam</a>
+			      <a class="brand" href="#"><img src="/images/New Aqua Logo Web.png" alt="Aqua Steam"</a>
 			      <div class="nav-collapse collapse">
 				      <ul class="nav">
-					      <li id="homeLink"class="active"><a href="<?php echo $home?>">Home</a></li>
+					      <li id="homeLink"class="active"><a href="<?php echo $home?>/index.php/adminMainMenu">Home</a></li>
 					      <li id="customerLink"><a href="<?php echo $home?>/index.php/customer">Customers</a></li>
-					      <li><a href="#">Link</a></li>
+					      <li><a href="<?php echo $home?>/index.php/workOrder">Work Orders</a></li>
+					      <li><a href="<?php echo $home?>/index.php/logout">Logout</a></li>
 				      </ul>
 			      </div>
 			    </div>
