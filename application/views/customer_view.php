@@ -8,7 +8,7 @@
 		<div class="container cust-container">
 			<h1>Customers</h1>
 			<select id="searchType" onchange="loadSearch()">
-				<option value="name">Name</option>
+				<option value="name" selected="selected">Name</option>
 				<option value="company">Company</option>
 				<option value="city">City</option>
 				<option value="address">Address</option>
@@ -20,7 +20,7 @@
 			<div id="id_result_table"></div>
 		</div>
 		
-		<div id="dialog_customer_form">
+		<div id="dialog_customer_form"> <!--Creates the form that will be in the dialog box -->
 			<div id="cust_form_container">
 				<div class="field-row">
 					<label>Cust ID:</label>
@@ -87,10 +87,15 @@
 					<label>Notes:</label>
 					<textarea id="custNotes" rows="3" cols="200"></textarea>
 				</div>
-				
 			</div>
-		</div>
+		</div> <!--Dialog End-->
 		
+		
+		<script>
+			var json = <?php echo $tags;?>;
+			var custNum = <?php echo $custNum; ?>;
+			var obj = eval (json);
+		</script>
 		<script src="<?php echo $home?>js/jquery.tablesorter.js"></script>
 		<script src="<?php echo $home?>js/customer.js"></script>
 	</body>

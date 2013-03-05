@@ -21,6 +21,21 @@ body {
   margin-bottom: 30px;
 }
 
+.ui-dialog-buttonset {
+	float: none !important; /*the jquery.css file kept overriding this specific style, so 
+							  I had to make it !important so that it wouldn't overwrite it*/
+	text-align: center;
+}
+
+.ui-dialog .ui-dialog-buttonpane button { 
+	margin: .5em 1.5em; 
+	 
+}
+
+table td {
+	cursor: pointer;
+}
+
 #searchType {
 	width: 125px;
 }
@@ -28,6 +43,7 @@ body {
 #searchbar {
 	width: 250px;
 	margin: -10px 0 0 20px;
+	color: #555555;
 }
 
 #id_search_button {
@@ -44,7 +60,6 @@ body {
 
 #dialog_customer_form {
 	display: none;
-	
 }
 
 #cust_form_container {
