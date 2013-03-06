@@ -12,6 +12,11 @@ class Dbmodel extends CI_Model {
 		return $query;
 	}
 	
+	function getCustomerById($id) {
+		$query = $this->db->query("SELECT * FROM customers WHERE cust_id = $id");
+		return $query;
+	}
+	
 	//Checks to see how many fields that need to be searched
 	//And searches them for the $search value
 	function getCustomersBySearch($search, $field1, $field2, $field3) {

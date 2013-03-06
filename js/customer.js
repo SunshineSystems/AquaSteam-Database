@@ -7,6 +7,19 @@
 		tagArray[i] = obj[i]['cust_fname'] + " " + obj[i]['cust_lname'];
 	}
 	
+	//creates the dialog that contains our customer information form.
+	$("#dialog_customer_form").dialog({
+		    title: "Create New Customer",
+		    height: 735,
+		    width: 850,
+		    modal: true,
+		    autoOpen: false,
+		    close: function() {
+		    	$(this).dialog("close");
+		    	clearForm();
+		    }
+		});
+	
 	
 	$(function() {
 		$("#searchbar").autocomplete({
@@ -103,14 +116,8 @@
 	}
 	
 	function newCustomer() {
-		$("#dialog_customer_form").dialog({
-		    title: "Create New Customer",
-		    height: 725,
-		    width: 850,
-		    modal: true,
-		});
-		
 		//Need to implement buttons like this, in order to format properly
+		$( "#dialog_customer_form" ).dialog({ title: "Create New Customer" });
 		$("#dialog_customer_form").dialog("option", "buttons", [
 		
 		    {
@@ -146,12 +153,11 @@
 		    },
 		    
 		    {
-		    	
 		    	text: "Delete",
 		    	height: "50",
 		    	width: "100",
+		    	disabled: true,
 		    	click: function() {
-		    		deleteCustomer();
 		    		$(this).dialog("close");
 		    	}
 		    },
@@ -162,15 +168,90 @@
 	}
 	
 	function openCustomer(id) {
-		alert("you've selected customer: " + id);
+		
+		$("#custID").val(id);
+		$.ajax({
+				type: "POST",
+				url: "customer/getCustInfo",
+				data: { "id" : id
+					
+				},
+				success: function(data) {
+					var info = eval("(" + data + ")");
+					$("#custCompany").val(info['cust_company']);
+					$("#custFName").val(info['cust_fname']);
+					$("#custLName").val(info['cust_lname']);
+					$("#custAddress").val(info['cust_address']);
+					$("#custCity").val(info['cust_city']);
+					$("#custProvince").val(info['cust_prov']);
+					$("#custPCode").val(info['cust_pcode']);
+					$("#custHPhone").val(info['cust_hphone']);
+					$("#custBPhone").val(info['cust_bphone']);
+					$("#custCPhone").val(info['cust_cphone']);
+					$("#custEmail").val(info['cust_email']);
+					$("#custRef").val(info['cust_referral']);
+					$("#custNotes").val(info['cust_notes']);
+				}, 
+				error: function(xhr) {
+					alert("An error occured: " + xhr.status + " " + xhr.statusText);
+				}
+			});
+		
+		$( "#dialog_customer_form" ).dialog({ title: "Showing Customer" });
+		$("#dialog_customer_form").dialog("option", "buttons", [
+		
+		    {
+		        text: "Save",
+		        height: "50",
+		        width: "100",
+		        click: function () {
+		        	saveCustomer();
+		        	$(this).dialog("close");	
+		        }
+		    },
+		
+		    {
+		        text: "View Work Orders",
+		        height: "50",
+		        width: "100",
+		        click: function () {
+		        	viewWorkOrders();
+		        	$(this).dialog("close");
+		        }
+		    },
+		    
+		    {
+		        text: "New Work Order",
+		        height: "50",
+		        width: "100",
+		        click: function () {
+		        	newWorkOrder();
+		        	$(this).dialog("close");
+		        }
+		    },
+		    
+		    {
+		    	
+		    	text: "Delete",
+		    	height: "50",
+		    	width: "100",
+		    	click: function() {
+		    		deleteCustomer(id);
+		    		$(this).dialog("close");
+		    	}
+		    },
+		    
+		]);
+		
+		$("#dialog_customer_form").dialog("open");
 	}
 	
 	function saveCustomer() {
 		alert("i'll save the customer!");
 	}
 	
-	function deleteCustomer() {
-		alert("i'll delete the customer!");
+	function deleteCustomer(id) {
+		alert("i'll delete the customer: " + id);
 	}
 	
 	function viewWorkOrders() {
@@ -181,4 +262,20 @@
 		alert("I'll start a new workorder for this customer!");
 	}
 	
-	
+	//Resets the form in the dialog
+	function clearForm() {
+		$("#custID").val("");
+		$("#custCompany").val("");
+		$("#custFName").val("");
+		$("#custLName").val("");
+		$("#custAddress").val("");
+		$("#custCity").val("");
+		$("#custProvince").val("AB");
+		$("#custPCode").val("");
+		$("#custHPhone").val("403-");
+		$("#custBPhone").val("403-");
+		$("#custCPhone").val("403-");
+		$("#custEmail").val("");
+		$("#custRef").val("");
+		$("#custNotes").val("");
+	}

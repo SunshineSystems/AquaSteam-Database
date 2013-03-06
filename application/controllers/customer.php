@@ -12,6 +12,9 @@
 		{
 			$i = 0;
 			$tags = array();
+			
+			//Gets all customers from the database, and adds certain fields to an array
+			//to be used for our auto complete.
 			$custs = $this->dbm->getAllCustomers();
 			foreach($custs->result_array() as $row) {
 				$tags[$i]['cust_fname'] = $row['cust_fname'];
@@ -38,7 +41,11 @@
 			$searchQuery = $_POST['searchQ'];
 			$searchType = $_POST['searchType'];
 			
+			//checks to see what is being searched, and adds other fields if needed.
 			if($searchType == "cust_fname") {
+				//Need to check if there's 2 names, if there is we need to split them up into seperate
+				//strings, and search fname and lname for them respectively
+				//if(stristr($searchQuery))
 				$field2 = "cust_lname";
 				$results = $this->dbm->getCustomersBySearch($searchQuery, $searchType, $field2, false);
 				
@@ -52,6 +59,7 @@
 				$results = $this->dbm->getCustomersBySearch($searchQuery, $searchType, false, false);
 			}
 			
+			//creates table that will be returned as string, and will be output to customer_view.
 			$tableData = "<table id='result-table' class='tablesorter table-striped table-hover'>
 							<thead>
 								<tr>
@@ -82,6 +90,32 @@
 			$tableData .= "</tbody></table>";
 			
 			echo $tableData;
+		}
+		
+		function getCustInfo() {
+			$id = $_POST['id'];
+			$echo = "";
+			$output = array();
+			$result = $this->dbm->getCustomerById($id);
+			
+			foreach($result->result_array() as $row) {
+				$output['cust_fname'] = $row['cust_fname'];
+				$output['cust_lname'] = $row['cust_lname'];
+				$output['cust_company'] = $row['cust_company'];
+				$output['cust_address'] = $row['cust_address'];
+				$output['cust_city'] = $row['cust_city'];
+				$output['cust_prov'] = $row['cust_prov'];
+				$output['cust_pcode'] = $row['cust_pcode'];
+				$output['cust_hphone'] = $row['cust_hphone'];
+				$output['cust_bphone'] = $row['cust_bphone'];
+				$output['cust_cphone'] = $row['cust_cphone'];
+				$output['cust_email'] = $row['cust_email'];
+				$output['cust_referral'] = $row['cust_referral'];
+				$output['cust_notes'] = $row['cust_notes'];
+			}
+			
+			$output = json_encode($output);
+			echo $output;
 		}
 		
 	}

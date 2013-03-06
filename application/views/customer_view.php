@@ -14,7 +14,7 @@
 				<option value="address">Address</option>
 				<option value="phone">Phone #</option>
 			</select>
-			<input id="searchbar" placeholder="Search..." />
+			<input id="searchbar" placeholder="Search..." onClick="this.select();"/>
 			<button id="id_search_button" class="btn btn-primary" onclick="getSearchResults()">Search</button>
 			<div><button id="id_newCust_button" class="btn btn-large btn-primary" onclick="newCustomer()">Create New Customer</button></div>
 			<div id="id_result_table"></div>
@@ -24,7 +24,7 @@
 			<div id="cust_form_container">
 				<div class="field-row">
 					<label>Cust ID:</label>
-					<input id="custID" type="text" placeholder="######"/>
+					<input id="custID" type="text" placeholder="######" readonly/>
 				</div>
 				<div class="field-row">		
 					<label>Company:</label>
@@ -48,7 +48,7 @@
 				</div>
 				<div class="field-row">
 					<label>Province:</label>
-					<input id="custProvince" type="text"/>
+					<input id="custProvince" type="text" value="AB"/>
 				</div>
 				<div class="field-row">		
 					<label>Postal Code:</label>
@@ -56,24 +56,15 @@
 				</div>
 				<div class="field-row">
 					<label>Home Phone:</label>
-					<div class="input-prepend">
-						<span class="add-on">403</span>
-						<input id="custHPhone" type="text"/>
-					</div>
+					<input id="custHPhone" type="text" value="403-"/>
 				</div>
 				<div class="field-row">		
 					<label>Business Phone:</label>
-					<div class="input-prepend">
-						<span class="add-on">403</span>
-						<input id="custBPhone" type="text"/>
-					</div>
+					<input id="custBPhone" type="text" value="403-"/>
 				</div>
 				<div class="field-row">
 					<label>Cell Phone:</label>
-					<div class="input-prepend">
-						<span class="add-on">403</span>
-						<input id="custCPhone" type="text"/>
-					</div>
+					<input id="custCPhone" type="text" value="403-"/>
 				</div>
 				<div class="field-row">		
 					<label>Email:</label>
@@ -94,6 +85,8 @@
 		<script>
 			var json = <?php echo $tags;?>;
 			var custNum = <?php echo $custNum; ?>;
+			
+			//!!!! when doing eval of json, make sure to have that space between eval and (
 			var obj = eval (json);
 		</script>
 		<script src="<?php echo $home?>js/jquery.tablesorter.js"></script>
