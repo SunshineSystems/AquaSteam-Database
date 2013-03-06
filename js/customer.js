@@ -1,5 +1,6 @@
 
 	var tagArray = new Array();
+	var searchField = "cust_fname";
 	//Gets the data that we got from the database, and puts the first/last name of each customer
 	//Into a string which is used for the autocomplete.
 	for(var i=0;  i < custNum; i++) {
@@ -26,21 +27,25 @@
 				for(var i=0;  i < custNum; i++) {
 					tagArray[i] = obj[i]['cust_fname'] + " " + obj[i]['cust_lname'];
 				}
+				searchField = "cust_fname";
 				break;
 			case "company":
 				for(var i=0;  i < custNum; i++) {
 					tagArray[i] = obj[i]['cust_company'];
 				}
+				searchField = "cust_company";
 				break;
 			case "city":
 				for(var i=0;  i < custNum; i++) {
 					tagArray[i] = obj[i]['cust_city'];
 				}
+				searchField = "cust_city";
 				break;
 			case "address":
 				for(var i=0;  i < custNum; i++) {
 					tagArray[i] = obj[i]['cust_address'];
 				}
+				searchField = "cust_address";
 				break;
 			case "phone":
 				for(var i=0;  i < custNum; i++) {
@@ -52,7 +57,7 @@
 				for(var i=0;  i < custNum; i++) {
 					tagArray.push(obj[i]['cust_cphone'])
 				}
-				
+				searchField = "cust_hphone";
 				break;
 		}
 		//replaces NULL values with an empty string, otherwise the autocomplete breaks.
@@ -71,7 +76,6 @@
 	
 	function getSearchResults() {
 		$(function() {
-			var searchType = $("#searchType").val();
 			var searchQuery = $("#searchbar").val();
 			if(searchQuery == "") {
 				alert("Please input something to search by");
@@ -82,7 +86,7 @@
 				type: "POST",
 				url: "customer/showresults",
 				data: { "searchQ" : searchQuery,
-					    "searchType" : searchType
+					    "searchType" : searchField
 					
 				},
 				success: function(data) {

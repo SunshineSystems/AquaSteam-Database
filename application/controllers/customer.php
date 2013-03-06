@@ -38,8 +38,19 @@
 			$searchQuery = $_POST['searchQ'];
 			$searchType = $_POST['searchType'];
 			
-			//testing purposes
-			$searchType = "cust_fname";
+			if($searchType == "cust_fname") {
+				$field2 = "cust_lname";
+				$results = $this->dbm->getCustomersBySearch($searchQuery, $searchType, $field2, false);
+				
+			}
+			else if($searchType == "cust_hphone") {
+				$field2 = "cust_bphone";
+				$field3 = "cust_cphone";
+				$results = $this->dbm->getCustomersBySearch($searchQuery, $searchType, $field2, $field3);
+			}
+			else {
+				$results = $this->dbm->getCustomersBySearch($searchQuery, $searchType, false, false);
+			}
 			
 			$tableData = "<table id='result-table' class='tablesorter table-striped table-hover'>
 							<thead>
@@ -49,18 +60,23 @@
 									<th>Company</th>
 									<th>Address</th>
 									<th>City</th>
+									<th>Home Phone</th>
+									<th>Bus. Phone</th>
+									<th>Cell Phone</th>
 								</tr>
 							</thead>
 							<tbody>";
-							
-			$results = $this->dbm->getCustomersBySearch($searchQuery, $searchType);
+						
 			foreach($results->result_array() as $row) {
-				$tableData .= "<a><tr onclick='openCustomer(".$row['cust_id'].")'>";
+				$tableData .= "<tr onclick='openCustomer(".$row['cust_id'].")'>";
 				$tableData .= '<td>'.$row["cust_fname"].'</td>';
 				$tableData .= '<td>'.$row["cust_lname"].'</td>';
 				$tableData .= '<td>'.$row["cust_company"].'</td>';
 				$tableData .= '<td>'.$row["cust_address"].'</td>';
-				$tableData .= '<td>'.$row["cust_city"].'</td></tr></a>';
+				$tableData .= '<td>'.$row["cust_city"].'</td>';
+				$tableData .= '<td>'.$row["cust_hphone"].'</td>';
+				$tableData .= '<td>'.$row["cust_bphone"].'</td>';
+				$tableData .= '<td>'.$row["cust_cphone"].'</td></tr>';
 			}
 			
 			$tableData .= "</tbody></table>";
