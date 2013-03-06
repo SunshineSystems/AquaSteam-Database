@@ -5,7 +5,7 @@ body {
 }
 
 .mainMenu-container {
-    max-width: 500px;
+    max-width: 250px;
     padding: 19px 29px 29px;
     margin: 0 auto 20px;
     background-color: #fff;
@@ -19,8 +19,8 @@ body {
 	text-align: center;
 }
 .mainMenu-container a {
-	width: 200px;
+	width: 150px;
 	margin-top: 15px;
-	
+	padding: 8px;
 	
 }

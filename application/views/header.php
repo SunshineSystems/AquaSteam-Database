@@ -23,7 +23,7 @@
 		            <span class="icon-bar"></span>
 		            <span class="icon-bar"></span>
 		          </button>
-			      <a class="brand" href="#"><img src="<?php echo $home;?>images/New Aqua Logo Web.png" alt="Aqua Steam height="20" width="60"></a>
+			      <a class="brand" href="#"><img src="<?php echo $home;?>images/New Aqua Logo Web.png" alt="Aqua Steam" height="32.75" width="125"></a>
 			      <div class="nav-collapse collapse">
 				      <ul class="nav">
 					      <li id="homeLink"class="active"><a href="<?php echo $home?>index.php/adminMainMenu">Home</a></li>
