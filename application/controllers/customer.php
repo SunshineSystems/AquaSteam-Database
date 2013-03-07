@@ -37,6 +37,31 @@
 			$this->load->view('customer_view', $data);
 		}
 		
+		//Gets the information in the database that we will use for the autocomplete box
+		//On the view.
+		function updateTags() {
+			$i = 0;
+			$tags = array();
+			
+			//Gets all customers from the database, and adds certain fields to an array
+			//to be used for our auto complete.
+			$custs = $this->dbm->getAllCustomers();
+			foreach($custs->result_array() as $row) {
+				$tags[$i]['cust_fname'] = $row['cust_fname'];
+				$tags[$i]['cust_lname'] = $row['cust_lname'];
+				$tags[$i]['cust_company'] = $row['cust_company'];
+				$tags[$i]['cust_address'] = $row['cust_address'];
+				$tags[$i]['cust_city'] = $row['cust_city'];
+				$tags[$i]['cust_hphone'] = $row['cust_hphone'];
+				$tags[$i]['cust_bphone'] = $row['cust_bphone'];
+				$tags[$i]['cust_cphone'] = $row['cust_cphone'];
+				$i++;
+			}
+			
+			$jtags = json_encode($tags);
+			echo $jtags;
+		}
+		
 		// Gets the results of the search, based on the string that the user inputs, as well
 		// as the type of search specified in the dropdown.
 		function showResults() {
@@ -130,6 +155,40 @@
 			
 			$output = json_encode($output);
 			echo $output;
+		}
+		
+		//Takes the values passed from the view, and inserts them into the database,
+		//as either a new customer, or updating an existing customer.
+		function saveCustomer() {
+			$data = array();
+			$id = $_POST['id'];
+			
+			$data['cust_fname'] = $_POST['fname'];
+			$data['cust_lname'] = $_POST['lname'];
+			$data['cust_company'] = $_POST['company'];
+			$data['cust_address'] = $_POST['address'];
+			$data['cust_city'] = $_POST['city'];
+			$data['cust_prov']= $_POST['prov'];
+			$data['cust_pcode'] = $_POST['pcode'];
+			$data['cust_hphone'] = $_POST['hphone'];
+			$data['cust_bphone'] = $_POST['bphone'];
+			$data['cust_cphone'] = $_POST['cphone'];
+			$data['cust_email'] = $_POST['email'];
+			$data['cust_referral'] = $_POST['ref'];
+			$data['cust_notes'] = $_POST['notes'];
+			
+			if(!$id) {
+				$this->dbm->insertNewCustomer($data);
+				$feedback = "<div class='alert alert-success'><h4>Success!</h4>
+								The New Customer Has Been Saved</div>";
+			}
+			else {
+				$this->dbm->updateCustomer($id, $data);
+				$feedback = "<div class='alert alert-success'><h4>Success!</h4>
+								The Customer Has Been Updated</div>";
+			}
+			
+			echo $feedback;
 		}
 		
 	}

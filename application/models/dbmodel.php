@@ -37,13 +37,24 @@ class Dbmodel extends CI_Model {
 		$query = $this->db->get("customers");
 		return $query;
 	}
-	
+		
 	function getCustomersByNameSearch($fname, $lname) {
 		$this->db->like('cust_fname', "$fname");
 		$this->db->like('cust_lname', "$lname");
 		
 		$query = $this->db->get("customers");
 		return $query;
+	}
+	
+	//Inserts a new customer into the 'customers' table, with the given data.
+	function insertNewCustomer($data) {
+		$this->db->insert('customers', $data);
+	}
+	
+	//Updates an existing customer in the 'customers' table with the given data.
+	function updateCustomer($id, $data) {
+		$this->db->where('cust_id', $id);
+		$this->db->update('customers', $data);
 	}
 }
 

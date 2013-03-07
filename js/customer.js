@@ -14,7 +14,6 @@
 			obj[i]['cust_lname'] = "";
 		}
 		tagArray[i] = obj[i]['cust_fname'] + " " + obj[i]['cust_lname'];
-		
 	}
 	
 	// Removes duplicate elements from the array, so autocomplete only displays unique values.
@@ -54,11 +53,25 @@
 	
 	function loadSearch() {
 		var searchType = $("#searchType").val();
-		$("#searchbar").autocomplete( "destroy" ); // Need to destroy the autocomplete in order to make a new one
-		tagArray = new Array(); //recreates the array, so nothing is left over(phone numbers)
+		tagArray = new Array(); //recreates the array, so nothing is left over(i.e. phone numbers)
+		$.ajax({
+			url:"customer/updateTags",
+			success	: function(data) {
+				obj = eval(data);
+			},
+			error: function(xhr) {
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			}
+		});
 		switch(searchType) {
 			case "name":
 				for(var i=0;  i < custNum; i++) {
+					if (obj[i]['cust_fname'] == null) {
+						obj[i]['cust_fname'] = "";
+					}
+					if (obj[i]['cust_lname'] == null) {
+						obj[i]['cust_lname'] = "";
+					}
 					tagArray[i] = obj[i]['cust_fname'] + " " + obj[i]['cust_lname'];
 				}
 				searchField = "cust_fname";
@@ -107,7 +120,10 @@
 				
 			}
 		}
+		
 		tagArray = eliminateDuplicates(tagArray);
+		
+		$("#searchbar").autocomplete( "destroy" ); // Need to destroy the autocomplete in order to make a new one
 		$(function() {
 			$("#searchbar").autocomplete({
 				source: tagArray
@@ -140,8 +156,6 @@
 					alert("An error occured: " + xhr.status + " " + xhr.statusText);
 				}
 			});
-			
-			
 		});
 	}
 	
@@ -276,8 +290,41 @@
 		$("#dialog_customer_form").dialog("open");
 	}
 	
+	//Gets the values in the form, and passes them to the controller, to be input to the database
 	function saveCustomer() {
-		alert("i'll save the customer!");
+		var id = $("#custID").val();
+		var company = $("#custCompany").val();
+		var fname = $("#custFName").val();
+		var lname = $("#custLName").val();
+		var address = $("#custAddress").val();
+		var city = $("#custCity").val();
+		var prov = $("#custProvince").val();
+		var pcode = $("#custPCode").val();
+		var hphone = $("#custHPhone").val();
+		var bphone = $("#custBPhone").val();
+		var cphone = $("#custCPhone").val();
+		var email = $("#custEmail").val();
+		var ref = $("#custRef").val();
+		var notes = $("#custNotes").val();
+		
+		$.ajax({
+			type: "POST",
+			url: "customer/savecustomer",
+			data: { "id" : id,         "company" : company, "fname" : fname,
+					"lname" : lname,   "address" : address, "city" : city,
+					"prov" : prov,     "pcode" : pcode,     "hphone" : hphone,
+					"bphone" : bphone, "cphone" : cphone,   "email" : email,
+					"ref" : ref,       "notes" : notes 	
+			},
+			success: function(data) {
+				$("#id_result_table").html(data);
+				//loadSearch(); //Called so that the new customer information is available to the autocomplete.
+			}, 
+			error: function(xhr) {
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			}
+		});
+		
 	}
 	
 	function deleteCustomer(id) {

@@ -22,6 +22,7 @@
 		
 		<div id="dialog_customer_form"> <!--Creates the form that will be in the dialog box -->
 			<div id="cust_form_container">
+				<div id="message_container"></div>
 				<div class="field-row">
 					<label>Cust ID:</label>
 					<input id="custID" type="text" placeholder="######" readonly/>
@@ -86,7 +87,6 @@
 			var json = <?php echo $tags;?>;
 			var custNum = <?php echo $custNum; ?>;
 			
-			//!!!! when doing eval of json, make sure to have that space between eval and (
 			var obj = eval (json);
 		</script>
 		<script src="<?php echo $home?>js/jquery.tablesorter.js"></script>
