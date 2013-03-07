@@ -22,14 +22,26 @@ body {
 }
 
 .ui-dialog-buttonset {
-	float: none !important; /*the jquery.css file kept overriding this specific style, so 
+	float: none !important; /*the jqueryui.css file kept overriding this specific style, so 
 							  I had to make it !important so that it wouldn't overwrite it*/
 	text-align: center;
 }
 
 .ui-dialog .ui-dialog-buttonpane button { 
-	margin: .5em 1.5em; 
-	 
+	margin: .5em 1.5em; 	 
+}
+
+/*Makes the autocomplete limited to a certain size, and adding a scrollbar if
+  the results go passed that size*/
+.ui-autocomplete {
+    max-height: 205px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+ }
+
+.alert {
+	margin-bottom: 0;
 }
 
 table td {

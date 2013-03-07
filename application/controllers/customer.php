@@ -37,19 +37,28 @@
 			$this->load->view('customer_view', $data);
 		}
 		
+		// Gets the results of the search, based on the string that the user inputs, as well
+		// as the type of search specified in the dropdown.
 		function showResults() {
 			$searchQuery = $_POST['searchQ'];
 			$searchType = $_POST['searchType'];
 			
 			//checks to see what is being searched, and adds other fields if needed.
 			if($searchType == "cust_fname") {
-				//Need to check if there's 2 names, if there is we need to split them up into seperate
-				//strings, and search fname and lname for them respectively
-				//if(stristr($searchQuery))
-				$field2 = "cust_lname";
-				$results = $this->dbm->getCustomersBySearch($searchQuery, $searchType, $field2, false);
+				
+				// Checks if there's a space in the search query, if true it splits the words
+				// In order to search first and last names.
+				if ( preg_match('/\s/', $searchQuery) ) {
+					$names = explode(" ", $searchQuery);
+					$results = $this->dbm->getCustomersByNameSearch($names[0], $names[1]);
+				}
+				else {
+					$field2 = "cust_lname";
+					$results = $this->dbm->getCustomersBySearch($searchQuery, $searchType, $field2, false);
+				}
 				
 			}
+			//If user searches for a phone number, it searches all phone number fields. 
 			else if($searchType == "cust_hphone") {
 				$field2 = "cust_bphone";
 				$field3 = "cust_cphone";
@@ -58,7 +67,10 @@
 			else {
 				$results = $this->dbm->getCustomersBySearch($searchQuery, $searchType, false, false);
 			}
-			
+			if(!$results->result()) {
+				echo "<div class='alert alert-block'><h4>Whoops!</h4>There's nothing in the database matching that search</div>";
+				return;
+			}
 			//creates table that will be returned as string, and will be output to customer_view.
 			$tableData = "<table id='result-table' class='tablesorter table-striped table-hover'>
 							<thead>
@@ -92,6 +104,8 @@
 			echo $tableData;
 		}
 		
+		// Gets all of the data fields associated with the given customer ID
+		// Returns a json string to be handled by javascript.
 		function getCustInfo() {
 			$id = $_POST['id'];
 			$echo = "";

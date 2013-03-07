@@ -37,6 +37,14 @@ class Dbmodel extends CI_Model {
 		$query = $this->db->get("customers");
 		return $query;
 	}
+	
+	function getCustomersByNameSearch($fname, $lname) {
+		$this->db->like('cust_fname', "$fname");
+		$this->db->like('cust_lname', "$lname");
+		
+		$query = $this->db->get("customers");
+		return $query;
+	}
 }
 
 ?>
