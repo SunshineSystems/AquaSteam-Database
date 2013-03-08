@@ -1,0 +1,17 @@
+img {
+	height: 54px;
+	width: 200px;
+}
+
+li {
+	line-height: 54px;
+}
+
+.navbar .brand {
+	padding: 8px 30px 10px 10px;
+}
+
+.navbar .nav > li > a{
+	padding-left: 45px;
+	padding-right: 45px;
+}

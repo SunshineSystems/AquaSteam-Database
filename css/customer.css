@@ -213,3 +213,13 @@ table td {
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ee5f5b', endColorstr='#bd362f', GradientType=0);/* IE8 */
 	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
+
+#new-cust-alert{
+	padding-bottom: 0;
+}
+
+#new-cust-btn {
+	margin: 7px 6px 20px;
+	padding: 3px 20px;
+}
+

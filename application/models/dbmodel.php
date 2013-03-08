@@ -46,9 +46,17 @@ class Dbmodel extends CI_Model {
 		return $query;
 	}
 	
-	//Inserts a new customer into the 'customers' table, with the given data.
+	//Inserts a new customer into the 'customers' table, with the given data, then selects that customer from the
+	//database and returns his id.
 	function insertNewCustomer($data) {
 		$this->db->insert('customers', $data);
+		$query = $this->db->query("SELECT cust_id FROM customers ORDER BY cust_id DESC LIMIT 1");
+		
+		foreach($query->result_array() as $row) {
+			$id = $row['cust_id'];
+		}
+		return $id;
+		
 	}
 	
 	//Updates an existing customer in the 'customers' table with the given data.

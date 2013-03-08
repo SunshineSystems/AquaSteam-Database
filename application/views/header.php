@@ -9,6 +9,7 @@
         <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/bootstrap-responsive.css">
 	    <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/jquery-ui-1.10.0.custom.css">
+	    <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/header.css">
 	    
 	    <script src="<?php echo $home?>js/jquery-1.9.1.js"></script>
 	    <script src="<?php echo $home?>js/bootstrap.js"></script>
@@ -23,13 +24,13 @@
 		            <span class="icon-bar"></span>
 		            <span class="icon-bar"></span>
 		          </button>
-			      <a class="brand" href="#"><img src="<?php echo $home;?>images/New Aqua Logo Web.png" alt="Aqua Steam" height="32.75" width="125"></a>
+			      <a class="brand" href="#"><img src="<?php echo $home;?>images/New Aqua Logo Web.png" alt="Aqua Steam" height="20%" width="20%"></a>
 			      <div class="nav-collapse collapse">
 				      <ul class="nav">
-					      <li id="homeLink"class="active"><a href="<?php echo $home?>index.php/adminMainMenu">Home</a></li>
-					      <li id="customerLink"><a href="<?php echo $home?>index.php/customer">Customers</a></li>
-					      <li><a href="<?php echo $home?>index.php/workOrder">Work Orders</a></li>
-					      <li><a href="<?php echo $home?>index.php/logout">Logout</a></li>
+					      <li id="homeLink"class="active"><a class="menu-links" href="<?php echo $home?>index.php/adminMainMenu">Home</a></li>
+					      <li id="customerLink"><a class="menu-links" href="<?php echo $home?>index.php/customer">Customers</a></li>
+					      <li id="workOrderLink"><a href="<?php echo $home?>index.php/workOrderSearch">Work Orders</a></li>
+					      <li id="logoutLink"><a href="<?php echo $home?>index.php/login">Logout</a></li>
 				      </ul>
 			      </div>
 			    </div>

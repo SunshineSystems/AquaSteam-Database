@@ -8,6 +8,9 @@
 			$this->load->model("dbmodel", "dbm", true);
 		}
 		
+		/*This is called when SiteDomain/aquasteam-database/index.php/customer is loaded in the browser.
+		  It passes select customer values to the view that are to be used as our tags for autocomplete
+		 */
 		public function index()
 		{
 			$i = 0;
@@ -181,9 +184,11 @@
 			$data['cust_notes'] = $_POST['notes'];
 			
 			if(!$id) {
-				$this->dbm->insertNewCustomer($data);
-				$feedback = "<div class='alert alert-success'><h4>Success!</h4>
-								The New Customer Has Been Saved</div>";
+				$newCustID = $this->dbm->insertNewCustomer($data); //returns the id of the customer after insertion
+				
+				$feedback = "<div id='new-cust-alert' class='alert alert-success'><h4>Success!</h4>The New Customer Has Been Saved.<br>
+							  Click<button id='new-cust-btn' class='btn btn-success' value=".$newCustID.">
+							   Here</button>to view the customer</div>";
 			}
 			else {
 				$this->dbm->updateCustomer($id, $data);

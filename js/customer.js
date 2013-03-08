@@ -34,6 +34,11 @@
 		}
 	});
 	
+	$('#new-cust-btn').click(function() {
+		var id = $('#new-cust-btn').val();
+		openCustomer(id);
+	});
+	
 	//creates the dialog that contains our customer information form.
 	$("#dialog_customer_form").dialog({
 		    title: "Create New Customer",
@@ -53,16 +58,6 @@
 	
 	function loadSearch() {
 		var searchType = $("#searchType").val();
-		tagArray = new Array(); //recreates the array, so nothing is left over(i.e. phone numbers)
-		$.ajax({
-			url:"customer/updateTags",
-			success	: function(data) {
-				obj = eval(data);
-			},
-			error: function(xhr) {
-				alert("An error occured: " + xhr.status + " " + xhr.statusText);
-			}
-		});
 		switch(searchType) {
 			case "name":
 				for(var i=0;  i < custNum; i++) {
@@ -222,7 +217,6 @@
 	}
 	
 	function openCustomer(id) {
-		
 		$("#custID").val(id);
 		$.ajax({
 				type: "POST",

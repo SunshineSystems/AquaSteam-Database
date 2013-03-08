@@ -1,6 +1,6 @@
 <?php
-		    $home = base_url();
-		?>
+    $home = base_url();
+?>
 		        
         <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/login.css">
         
