@@ -17,8 +17,13 @@
 			<input id="searchbar" placeholder="Search..." onClick="this.select();"/>
 			<button id="id_search_button" class="btn btn-primary" onclick="getSearchResults()">Search</button>
 			<div><button id="id_newCust_button" class="btn btn-large btn-primary" onclick="newCustomer()">Create New Customer</button></div>
-			<div id="id_result_table"></div>
+			<div id="id_result_table"><?php if(isset($_POST['alert-data'])) { echo $_POST['alert-data']; }?></div>
 		</div>
+		
+		<!--Hidden form that contains will contain the alert code after a customer is saved/deleted-->
+		<form id="alert-form" action"controller" method="POST">
+			<input id="alert-data" name="alert-data" type="hidden"/>
+		</form>
 		
 		<div id="dialog_customer_form"> <!--Creates the form that will be in the dialog box -->
 			<div id="cust_form_container">
@@ -29,51 +34,51 @@
 				</div>
 				<div class="field-row">		
 					<label>Company:</label>
-					<input id="custCompany" type="text"/>
+					<input id="custCompany" type="text" maxlength="40"/>
 				</div>
 				<div class="field-row">
 					<label>First Name:</label>
-					<input id="custFName" type="text"/>
+					<input id="custFName" type="text" maxlength="20"/>
 				</div>
 				<div class="field-row">		
 					<label>Last Name:</label>
-					<input id="custLName" type="text"/>
+					<input id="custLName" type="text" maxlength="20"/>
 				</div>
 				<div class="field-row">
 					<label>Personal Address:</label>
-					<input id="custAddress" type="text"/>
+					<input id="custAddress" type="text" maxlength="30"/>
 				</div>
 				<div class="field-row">		
 					<label>City:</label>
-					<input id="custCity" type="text"/>
+					<input id="custCity" type="text" maxlength="20"/>
 				</div>
 				<div class="field-row">
 					<label>Province:</label>
-					<input id="custProvince" type="text" value="AB"/>
+					<input id="custProvince" type="text" value="AB" maxlength="2"/>
 				</div>
 				<div class="field-row">		
 					<label>Postal Code:</label>
-					<input id="custPCode" type="text"/>
+					<input id="custPCode" type="text" maxlength="7"/>
 				</div>
 				<div class="field-row">
 					<label>Home Phone:</label>
-					<input id="custHPhone" type="text" value="403-"/>
+					<input id="custHPhone" type="text" value="403-" maxlength="12"/>
 				</div>
 				<div class="field-row">		
 					<label>Business Phone:</label>
-					<input id="custBPhone" type="text" value="403-"/>
+					<input id="custBPhone" type="text" value="403-" maxlength="12"/>
 				</div>
 				<div class="field-row">
 					<label>Cell Phone:</label>
-					<input id="custCPhone" type="text" value="403-"/>
+					<input id="custCPhone" type="text" value="403-" maxlength="12"/>
 				</div>
 				<div class="field-row">		
 					<label>Email:</label>
-					<input id="custEmail" type="text"/>
+					<input id="custEmail" type="text" maxlength="30"/>
 				</div>
 				<div class="field-long-row">		
 					<label>Referral:</label>
-					<input id="custRef" type="text"/>
+					<input id="custRef" type="text" maxlength="40"/>
 				</div>
 				<div class="field-long-row">		
 					<label>Notes:</label>

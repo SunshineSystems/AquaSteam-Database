@@ -206,6 +206,16 @@
 		    	}
 		    },
 		    
+		    {
+		    	
+		    	text: "Cancel",
+		    	height: "50",
+		    	width: "100",
+		    	click: function() {
+		    		$(this).dialog("close");
+		    	}
+		    },
+		    
 		]);
 		
 		$("#dialog_customer_form").dialog("open");
@@ -280,7 +290,19 @@
 		    	height: "50",
 		    	width: "100",
 		    	click: function() {
-		    		deleteCustomer(id);
+		    		if(confirm("Are you sure you want to delete this customer?\n" +
+		    					"This will permanently remove them from the database...")) {
+		    			deleteCustomer();
+		    		}
+		    	}
+		    },
+		    
+		    {
+		    	
+		    	text: "Cancel",
+		    	height: "50",
+		    	width: "100",
+		    	click: function() {
 		    		$(this).dialog("close");
 		    	}
 		    },
@@ -317,18 +339,41 @@
 					"ref" : ref,       "notes" : notes 	
 			},
 			success: function(data) {
-				$("#id_result_table").html(data);
-				//loadSearch(); //Called so that the new customer information is available to the autocomplete.
+				
+				/*	Gives a value to the hidden input, and then submits the form.
+				 *	This will reload the page, and put the form data into the table-results div.
+				 *	The page is reloaded so that the autocomplete has the data that they just saved.
+				 */
+				$("#alert-data").val(data);
+				document.getElementById("alert-form").submit();
 			}, 
 			error: function(xhr) {
 				alert("An error occured: " + xhr.status + " " + xhr.statusText);
 			}
 		});
-		
 	}
 	
-	function deleteCustomer(id) {
-		alert("i'll delete the customer: " + id);
+	function deleteCustomer() {
+		var id = $("#custID").val();
+			
+			$.ajax({
+			type: "POST",
+			url: "customer/deletecustomer",
+			data: { "id" : id},
+			success: function(data) {
+				
+				/*	Gives a value to the hidden input, and then submits the form.
+				 *	This will reload the page, and put the form data into the table-results div.
+				 *	The page is reloaded so that the autocomplete has the data that they just saved.
+				 */
+				$("#alert-data").val(data);
+				document.getElementById("alert-form").submit();
+			}, 
+			error: function(xhr) {
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			}
+		});
+	
 	}
 	
 	function viewWorkOrders() {

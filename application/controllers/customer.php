@@ -93,7 +93,8 @@
 				$results = $this->dbm->getCustomersBySearch($searchQuery, $searchType, false, false);
 			}
 			if(!$results->result()) {
-				echo "<div class='alert alert-block'><h4>Whoops!</h4>There's nothing in the database matching that search</div>";
+				echo "<div class='alert alert-error'><h4>Whoops!</h4>
+					  There's nothing in the database matching that search</div>";
 				return;
 			}
 			//creates table that will be returned as string, and will be output to customer_view.
@@ -162,9 +163,11 @@
 		function saveCustomer() {
 			$data = array();
 			$id = $_POST['id'];
+			$sanitizedFName = str_replace(" ", "", $_POST['fname']);
+			$sanitizedLName = str_replace(" ", "", $_POST['lname']);
 			
-			$data['cust_fname'] = $_POST['fname'];
-			$data['cust_lname'] = $_POST['lname'];
+			$data['cust_fname'] = $sanitizedFName;
+			$data['cust_lname'] = $sanitizedLName;
 			$data['cust_company'] = $_POST['company'];
 			$data['cust_address'] = $_POST['address'];
 			$data['cust_city'] = $_POST['city'];
@@ -188,6 +191,21 @@
 								The Customer Has Been Updated</div>";
 			}
 			
+			echo $feedback;
+		}
+
+		function deleteCustomer() {
+			$id = $_POST['id'];
+			
+			if(!$id) {
+				$feedback = "<div class='alert alert-error'><h4>Hmmm...</h4>
+								There was an error; no customer was deleted.</div>";
+			}
+			else {
+				$this->dbm->deleteCustomer($id);
+				$feedback = "<div class='alert alert-success'><h4>Success!</h4>
+								The Customer has been deleted from the database.</div>";
+			}
 			echo $feedback;
 		}
 		

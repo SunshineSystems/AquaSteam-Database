@@ -56,6 +56,12 @@ class Dbmodel extends CI_Model {
 		$this->db->where('cust_id', $id);
 		$this->db->update('customers', $data);
 	}
+	
+	//Deletes the customer entry that matches the id passed to the function
+	function deleteCustomer($id) {
+		$this->db->where('cust_id', $id);
+		$this->db->delete('customers');
+	}
 }
 
 ?>
