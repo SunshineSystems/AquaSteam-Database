@@ -19,6 +19,12 @@
 			<div id="id_result_table"><?php if(isset($_POST['alert-data'])) { echo $_POST['alert-data']; }?></div>
 		
 	    </div>
+	    <script>
+			var json = <?php echo $tags;?>;
+			var custNum = <?php echo $custNum; ?>;
+			
+			var obj = eval (json);
+		</script>
 	    <script src="<?php echo $home?>js/jquery.tablesorter.js"></script>
 	    <script src="<?php echo $home?>js/workOrderSearch.js"></script>
     </body>
