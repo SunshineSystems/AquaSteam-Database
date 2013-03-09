@@ -1,9 +1,4 @@
 
-	//Sets the current page as active on the header menu
-	$(".active").removeClass("active");
-	$("#workOrderLink").addClass("active");
-	
-
 	var tagArray = new Array();
 	var searchField = "cust_fname";
 	var sorter = [[0,0],[1,0]]; //Sets which column will be sorted by default
@@ -38,6 +33,10 @@
 			$( "#searchbar" ).autocomplete( "close" ); //Hides the autocomplete on enter so it's not in the way
 		}
 	});
+	
+	//Sets the current page as active on the header menu
+	$(".active").removeClass("active");
+	$("#workOrderLink").addClass("active");
 	
 	function loadSearch() {
 		var searchType = $("#searchType").val();
@@ -105,7 +104,7 @@
 			
 			$.ajax({
 				type: "POST",
-				url: "customer/showresults",
+				url: "workOrderSearch/showresults",
 				data: { "searchQ" : searchQuery,
 					    "searchType" : searchField
 					
@@ -122,3 +121,22 @@
 			});
 		});
 	}
+	
+	//When you click on a row, it will bring you to the workorder page and send the wo_id over
+	//function openWordOrder(id) {
+	//	$("#woorID").val(id);
+	//	$.ajax({
+	//			type: "POST",
+	//			url: "workorderform",
+	//			data: { "id" : id
+	//				
+	//			},
+	//			success: function(data) {
+	//				var info = eval("(" + data + ")");
+	//				$("#workOrderID").val(info['wo_id']);
+	//			}, 
+	//			error: function(xhr) {
+	//				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+	//			}
+	//		});
+	//}

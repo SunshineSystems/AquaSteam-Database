@@ -10,13 +10,12 @@
 		
 		public function index() {
 			
-			
 			$i = 0;
 			$tags = array();
 			
 			//Gets all customers from the database, and adds certain fields to an array
 			//to be used for our auto complete.
-			$custs = $this->dbm->getAllCustomers();
+			$custs = $this->dbm->getAllCustomers(); //Change to getAllCustomersandWorkOrders() once ready
 			foreach($custs->result_array() as $row) {
 				$tags[$i]['cust_fname'] = $row['cust_fname'];
 				$tags[$i]['cust_lname'] = $row['cust_lname'];
@@ -27,6 +26,8 @@
 			
 			$tags = json_encode($tags);
 			
+			$data['tags'] = $tags;
+			$data['custNum'] = $i;
 			$data['title'] = "Search Work Orders";
 			$this->load->view('header.php', $data);
 			$this->load->view('workOrderSearch_view.php');
@@ -38,7 +39,7 @@
 			
 			//Gets all customers from the database, and adds certain fields to an array
 			//to be used for our auto complete.
-			$custs = $this->dbm->getAllCustomers();
+			$custs = $this->dbm->getAllCustomers(); //Change to getAllCustomersandWorkOrders() once ready
 			foreach($custs->result_array() as $row) {
 				$tags[$i]['cust_fname'] = $row['cust_fname'];
 				$tags[$i]['cust_lname'] = $row['cust_lname'];
@@ -94,11 +95,12 @@
 							<tbody>";
 						
 			foreach($results->result_array() as $row) {
-				$tableData .= "<tr onclick='openCustomer(".$row['cust_id'].")'>";
+				//$tableData .= "<tr onclick='openWorkOrder(".$row['wo_id'].")'>"; Needs to be fixed once database is ready
 				$tableData .= '<td>'.$row["cust_company"].'</td>';
 				$tableData .= '<td>'.$row["cust_fname"].'</td>';
 				$tableData .= '<td>'.$row["cust_lname"].'</td>';
-				$tableData .= '<td>'.$row["cust_address"].'</td></tr>';
+				$tableData .= '<td>'.$row["cust_address"].'</td></tr>'; //remove '</tr>' when line below is ready
+				//$tableData .= '<td>'.$row["wo_date_complete"].'</td></tr>'; Needs to be fixed once database is ready
 			}
 			
 			$tableData .= "</tbody></table>";
