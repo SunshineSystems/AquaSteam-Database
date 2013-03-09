@@ -9,7 +9,7 @@
      	<a class="btn" href="<?php echo $home?>index.php/customer">Customers</a><br>
      	<a class="btn" href="<?php echo $home?>index.php/workOrder">Work Orders</a><br>
      	<a class="btn" href="<?php echo $home?>index.php/printWorkOrder">Print Blank Work Order</a><br>
-     	<a class="btn" href="<?php echo $home?>index.php/manageAccounts">Manage Accounts</a><br>
+     	<a class="btn" href="<?php echo $home?>index.php/manageAccount">Manage Accounts</a><br>
      	<a class="btn" href="https://www.google.com/calendar" target="_blank">Google Calendar</a><br>
      	<a class="btn" href="<?php echo $home?>index.php/logout">Logout</a><br>
 </div>

@@ -34,6 +34,11 @@
 		}
 	});
 	
+	//Resizes the dialog box when the window is resized by calling the resizeDialog function 
+	$(window).resize(function () {
+	    resizeDialog();
+	});
+	
 	$('#new-cust-btn').click(function() {
 		var id = $('#new-cust-btn').val();
 		openCustomer(id);
@@ -41,16 +46,16 @@
 	
 	//creates the dialog that contains our customer information form.
 	$("#dialog_customer_form").dialog({
-		    title: "Create New Customer",
-		    height: 735,
-		    width: 850,
-		    modal: true,
-		    autoOpen: false,
-		    close: function() {
-		    	$(this).dialog("close");
-		    	clearForm();
-		    }
-		});
+	    title: "Create New Customer",
+	    height: 735,
+	    width: 850,
+	    modal: false,
+	    autoOpen: false,
+	    close: function() {
+	    	$(this).dialog("close");
+	    	clearForm();
+	    }
+	});
 	
 	//Sets the customers page as active on the header menu
 	$(".active").removeClass("active");
@@ -214,6 +219,7 @@
 		]);
 		
 		$("#dialog_customer_form").dialog("open");
+		resizeDialog();
 	}
 	
 	function openCustomer(id) {
@@ -304,6 +310,7 @@
 		]);
 		
 		$("#dialog_customer_form").dialog("open");
+		resizeDialog();
 	}
 	
 	//Gets the values in the form, and passes them to the controller, to be input to the database
@@ -411,3 +418,21 @@
 	 	}
 	 	return out;
 	}
+	
+	function resizeDialog() {
+		var timerid;
+		(timerid && clearTimeout(timerid));
+	        timerid = setTimeout(function () {
+	            //uncomment to test alert("Do Resize");
+	            $("#dialog_customer_form").dialog("option","width",$(window).width()*0.9);
+	            $("#dialog_customer_form").dialog("option","height",$(window).height()*0.9);
+	            if($(".ui-dialog").width() > 850) {
+	            	$("#dialog_customer_form").dialog("option","width", 850);
+	            } 
+	            if($(".ui-dialog").height() > 735) {
+	            	$("#dialog_customer_form").dialog("option","height", 735);
+	            }
+	            $("#dialog_customer_form").dialog("option","position","center");
+	        }, 200);
+	}
+	

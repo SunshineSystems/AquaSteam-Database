@@ -27,7 +27,6 @@
 		
 		<div id="dialog_customer_form"> <!--Creates the form that will be in the dialog box -->
 			<div id="cust_form_container">
-				<div id="message_container"></div>
 				<div class="field-row">
 					<label>Cust ID:</label>
 					<input id="custID" type="text" placeholder="######" readonly/>

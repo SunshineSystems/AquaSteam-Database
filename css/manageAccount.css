@@ -1,0 +1,62 @@
+body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #69A6C5;
+}
+
+.account-container {
+	max-width: 500px;
+	padding: 19px 29px 29px;
+  	margin: 50px auto 20px;
+  	background-color: #fff;
+  	border: 1px solid #e5e5e5;
+  	-webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+          	border-radius: 5px;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  	   -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+          	box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+
+.account-container {
+	font-size: 64px;
+  	line-height: 1;
+  	margin-bottom: 30px;
+}
+
+#dialog_account_form {
+	display: none;
+}
+
+#account_form_container {
+	padding-left: 25px;
+}
+
+#account_form_container label, #account_form_container input {
+	display: inline-block;
+}
+
+#account_form_container label {
+	width: 120px;
+	text-align: center;
+}
+
+#account_form_container input {
+	margin-right: 25px;
+}
+
+.field-row {
+	display: inline-block;
+	width: 370px;
+	margin-top: 25px;	
+}
+
+.field-long-row {
+	margin-top: 25px;
+}
+
+#userNotes {
+	height: 80px;
+	width: 585px;
+	vertical-align:text-top;
+}

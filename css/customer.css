@@ -124,6 +124,7 @@ table td {
 #custNotes {
 	height: 80px;
 	width: 585px;
+	vertical-align:text-top;
 }
 
 
