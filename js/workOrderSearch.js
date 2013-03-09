@@ -1,4 +1,4 @@
-
+	
 	var tagArray = new Array();
 	var searchField = "cust_fname";
 	var sorter = [[0,0],[1,0]]; //Sets which column will be sorted by default
@@ -15,7 +15,6 @@
 		}
 		tagArray[i] = obj[i]['cust_fname'] + " " + obj[i]['cust_lname'];
 	}
-	
 	// Removes duplicate elements from the array, so autocomplete only displays unique values.
 	tagArray = eliminateDuplicates(tagArray);
 	
@@ -25,6 +24,7 @@
 			source: tagArray
 		});
 	});
+	
 	
 	// If the user hits "Enter" in the searchbar, it runs the onclick event of the search button.
 	$("#searchbar").keydown(function(event) {
@@ -122,21 +122,37 @@
 		});
 	}
 	
+	
 	//When you click on a row, it will bring you to the workorder page and send the wo_id over
-	//function openWordOrder(id) {
-	//	$("#woorID").val(id);
-	//	$.ajax({
-	//			type: "POST",
-	//			url: "workorderform",
-	//			data: { "id" : id
-	//				
-	//			},
-	//			success: function(data) {
-	//				var info = eval("(" + data + ")");
-	//				$("#workOrderID").val(info['wo_id']);
-	//			}, 
-	//			error: function(xhr) {
-	//				alert("An error occured: " + xhr.status + " " + xhr.statusText);
-	//			}
-	//		});
-	//}
+	/*function openWorkOrder(id) {
+		$("#woorID").val(id);
+		$.ajax({
+				type: "POST",
+				url: "workorderform",
+				data: { "id" : id
+					
+				},
+				success: function(data) {
+					var info = eval("(" + data + ")");
+					$("#workOrderID").val(info['wo_id']);
+				}, 
+				error: function(xhr) {
+					alert("An error occured: " + xhr.status + " " + xhr.statusText);
+				}
+			});
+	}*/
+	
+	function eliminateDuplicates(arr) {
+		var i,
+	  	len=arr.length,
+	  	out=[],
+	  	obj={};
+	
+	 	for (i=0;i<len;i++) {
+	 		obj[arr[i]]=0;
+	 	}
+	 	for (i in obj) {
+	 		out.push(i);
+	 	}
+	 	return out;
+	}

@@ -26,11 +26,11 @@
 			
 			$tags = json_encode($tags);
 			
-			$data['tags'] = $tags;
-			$data['custNum'] = $i;
+			$data['tags'] = $tags; //this passes $tags to each page that $data is loaded.
+			$data['custNum'] = $i; //this passes $custNum to each page that $data is loaded.
 			$data['title'] = "Search Work Orders";
 			$this->load->view('header.php', $data);
-			$this->load->view('workOrderSearch_view.php');
+			$this->load->view('workOrderSearch_view.php', $data);
 		}
 		
 		function updateTags() {

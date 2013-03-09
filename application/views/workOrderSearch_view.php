@@ -9,7 +9,7 @@
         <div class="container wo-container">
 	    	<h1>Search Work Orders</h1>
 	    	<select id="searchType" onchange="loadSearch()">
-				<option value="name" selected="selected">Name</option>
+				<option value="name" selected="selected">Customer Name</option>
 				<option value="company">Company</option>
 				<option value="city">City</option>
 				<option value="address">Address</option>
