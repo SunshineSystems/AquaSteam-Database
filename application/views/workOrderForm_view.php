@@ -1,9 +1,13 @@
 <?php
     $home = base_url();
 ?>
-		<head>       
+		<head>
+			
+			
         <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/workOrderForm.css">
         
+        
+          
         <!-- Keep all displayed content inside container div -->
         <div class="container wo-container">
 	      <h1>Work Order</h1>
@@ -11,6 +15,8 @@
 	    <script src="<?php echo $home?>js/workOrderForm.js">
 	    	
 	    </script>
+	    
+   
 	    </head> 
 	    <body>
 	    	
@@ -185,7 +191,39 @@
 
 </ul>
 <div id="carpetTab">
-<p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
+ <table border="1">
+        <thead>
+            <tr>
+            	<th>Identifier *not sure</th>
+                <th>Description</th>
+                <th>Color/Type</th>                     
+                <th>Length</th>
+                <th>Width</th>
+                <th>Sq Feet</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Extended Price</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>         
+                <!-- The "identifier" class makes it so we have an id
+                    to pass to our ajax script so we know what to change -->       
+                <td class="identifier">00123</td>
+                <td class="editable">This is the description</td>
+                <td class="editable">Color/Type</td>
+                <td class="editable">Length</td>
+                <td class="editable">Width</td>
+                <td>sq feet not editable</td>
+                <td class="editable">quantity</td>
+                <td class="editable">Unit Price</td>
+                <td class="editable">Extended Price</td>
+                <td>Total Price not editable</td>
+                
+            </tr>                   
+        </tbody>
+    </table>
 </div>
 <div id="upholsteryTab">
 <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
@@ -209,10 +247,49 @@
 </div>
 
 
- 
-
     </form>
-    
+    <script>
+		var json = <?php echo $tags;?>;
+		var custNum = <?php echo $custNum; ?>;
+		var workOrderNum = <?php echo $workOrderNum; ?>;
+		
+		var obj = eval (json);
+		
+</script>
+<script type="text/javascript">
+// bind our event handler to all td elements with class editable
+        $('td.editable').bind('click', function() {
+            // Only create an editable input if one doesn't exist
+            if(!$(this).has('input').length) {
+                // Get the text from the cell containing the value
+                var value = $(this).html();
+                // Create a new input element with the value of the cell text
+                var input = $('<input/>', {
+                    'type':'text',
+                    'value':value,
+                    // Give it an onchange handler so when the data is changed
+                    // It will do the ajax call
+                    change: function() {
+                        var new_value = $(this).val();
+                        // This finds the sibling td element with class identifier so we have
+                        // an id to pass to the ajax call
+                        var cell = $(this).parent();
+                        // Get the position of the td cell...
+                        var cell_index = $(this).parent().parent().children().index(cell);
+                        // .. to find its corresponding header
+                        var identifier = $('thead th:eq('+cell_index+')').html();
+                        //ajax post with id and new value
+                        $(this).replaceWith(new_value);
+                    }
+                });
+                // Empty out the cell contents...
+                $(this).empty();
+                // ... and replace it with the input field that has the value populated
+                $(this).append(input);
+            }
+        });
+    </script>
+
     </body>
 </html>
 
