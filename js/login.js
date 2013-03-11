@@ -28,7 +28,6 @@
 				}
 				else {
 					$("#error-div").html(data);
-					/*window.location = home + "index.php/mainmenu";*/ //Will reenable once the success check is working. 
 				}
 			}, 
 			error: function(xhr) {
