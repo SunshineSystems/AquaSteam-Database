@@ -12,6 +12,30 @@ class Dbmodel extends CI_Model {
 		return $query;
 	} 
 	
+	function insertNewUser($data) {
+		$this->db->insert('user', $data);
+	}
+	
+	function updateUser($id, $data) {
+		$this->db->where('user_id', $id);
+		$this->db->update('user', $data);
+	}
+	
+	function deleteUser($id) {
+		$this->db->where('user_id', $id);
+		$this->db->delete('user');
+	}
+	
+	function getAllUsers() {
+		$query = $this->db->get("user");
+		return $query;
+	}
+	
+	function getUserById($id) {
+		$query = $this->db->query("SELECT * FROM user WHERE user_id = $id");
+		return $query;
+	}
+	
 	function getAllCustomers() {
 		$query = $this->db->get("customers");
 		return $query;
@@ -83,9 +107,6 @@ class Dbmodel extends CI_Model {
 		$this->db->delete('customers');
 	}
 	
-	function insertNewAccount($data) {
-		$this->db->insert('user', $data);
-	}
 }
 
 ?>

@@ -9,9 +9,14 @@
         <div class="container account-container">
 	    	<h1>Manage Accounts</h1>
 			<div><button id="id_account_button" class="btn btn-large btn-primary" onclick="newAccount()">Create New Account</button></div>
-			<div id="alert-div"></div>
-			<div id="accounts-table"></div>
+			<div id="alert-div"><?php if(isset($_POST['alert-data'])) { echo $_POST['alert-data']; }?></div>
+			<div id="accounts-table"><?php echo $table; ?></div>
 	    </div>
+	    
+	    <!--Hidden form that contains will contain the alert code after a customer is saved/deleted-->
+		<form id="alert-form" action"controller" method="POST">
+			<input id="alert-data" name="alert-data" type="hidden"/>
+		</form>
 	    
 	    <div id="dialog_account_form">
 	    	<div id="account_form_container">

@@ -137,7 +137,6 @@
 		// Returns a json string to be handled by javascript.
 		function getCustInfo() {
 			$id = $_POST['id'];
-			$echo = "";
 			$output = array();
 			$result = $this->dbm->getCustomerById($id);
 			

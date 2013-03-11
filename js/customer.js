@@ -357,7 +357,7 @@
 	function deleteCustomer() {
 		var id = $("#custID").val();
 			
-			$.ajax({
+		$.ajax({
 			type: "POST",
 			url: "customer/deletecustomer",
 			data: { "id" : id},
