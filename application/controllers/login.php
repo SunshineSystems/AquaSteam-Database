@@ -9,10 +9,15 @@
 			parent::__construct();
 			//Loads the database model functions as "dbm"
 			$this->load->model("dbmodel", "dbm", true);
+			session_start();
+			if(isset($_SESSION['id'])) {
+				session_destroy();
+				session_start();
+			}
 		}
 		
 		public function index()
-		{
+		{	
 			$data['title'] = "Log In";
 			$this->load->view('header', $data);
 			$this->load->view('login_view');
@@ -36,7 +41,9 @@
 			}
 			
 			foreach($result->result_array() as $row) {
+				$id = $row['user_id'];	
 				$storedPass = $row['user_password'];
+				$type = $row['user_admin'];
 			}
 			
 			//Compares the input password to the stored password.
@@ -48,6 +55,9 @@
 				echo $error;
 				return;
 			}
+			
+			$_SESSION['id'] = $id;
+			$_SESSION['usertype'] = $type;
 			echo 'success';		
 		}
 	}

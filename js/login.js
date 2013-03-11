@@ -24,10 +24,11 @@
 			},
 			success: function(data) {
 				if(data == 'success') { //it's not saying it's equal to success, I have no idea why it's busted.
-					alert("data");//window.location = home + "index.php/adminmainmenu";
+					alert("data");//window.location = home + "index.php/mainmenu";
 				}
 				else {
 					$("#error-div").html(data);
+					/*window.location = home + "index.php/mainmenu";*/ //Will reenable once the success check is working. 
 				}
 			}, 
 			error: function(xhr) {

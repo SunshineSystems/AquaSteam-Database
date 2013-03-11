@@ -27,7 +27,7 @@
 			      <a class="brand" href="#"><img src="<?php echo $home;?>images/New Aqua Logo Web.png" alt="Aqua Steam" height="20%" width="20%"></a>
 			      <div class="nav-collapse collapse">
 				      <ul class="nav">
-					      <li id="homeLink"class="active"><a class="menu-links" href="<?php echo $home?>index.php/adminMainMenu">Home</a></li>
+					      <li id="homeLink"class="active"><a class="menu-links" href="<?php echo $home?>index.php/MainMenu">Home</a></li>
 					      <li id="customerLink"><a class="menu-links" href="<?php echo $home?>index.php/customer">Customers</a></li>
 					      <li id="workOrderLink"><a href="<?php echo $home?>index.php/workOrderSearch">Work Orders</a></li>
 					      <li id="logoutLink"><a href="<?php echo $home?>">Logout</a></li>
