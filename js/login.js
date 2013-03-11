@@ -23,8 +23,8 @@
 					"password" : password
 			},
 			success: function(data) {
-				if(data == 'success') { //it's not saying it's equal to success, I have no idea why it's busted.
-					alert("data");//window.location = home + "index.php/mainmenu";
+				if(data == 1) { 
+					window.location = home + "index.php/mainmenu";
 				}
 				else {
 					$("#error-div").html(data);

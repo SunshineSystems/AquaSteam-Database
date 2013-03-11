@@ -49,7 +49,7 @@
 	    title: "Create New Customer",
 	    height: 735,
 	    width: 850,
-	    modal: false,
+	    modal: true,
 	    autoOpen: false,
 	    close: function() {
 	    	$(this).dialog("close");

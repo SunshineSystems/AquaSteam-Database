@@ -58,7 +58,7 @@
 			
 			$_SESSION['id'] = $id;
 			$_SESSION['usertype'] = $type;
-			echo 'success';		
+			echo 1;		
 		}
 	}
 ?>
