@@ -60,11 +60,42 @@
 	}
 	
 	function saveAccount() {
-		alert("i'll save this account, but i need to be coded first!");
+		var id = $("#userID").val();
+		var type = $("#userType").val();
+		var username = $("#userUName").val();
+		var password = $("#userPass").val();
+		var fname = $("#userFName").val();
+		var lname = $("#userLName").val();
+		var address = $("#userAddress").val();
+		var city = $("#userCity").val();
+		var prov = $("#userProvince").val();
+		var pcode = $("#userPCode").val();
+		var hphone = $("#userHPhone").val();
+		var cphone = $("#userCPhone").val();
+		var notes = $("#userNotes").val();
+		$.ajax({
+			type: "POST",
+			url: "manageAccount/saveAccount",
+			data: { "id" : id,        	 	"type" : type, 		"username" : username,
+					"password" : password,	"fname" : fname,	"lname" : lname,   
+					"address" : address, 	"city" : city,		"prov" : prov,     
+					"pcode" : pcode,		"hphone" : hphone,	"cphone" : cphone, 
+					"notes" : notes 	
+			},
+			success: function(data) {
+				$("#accounts-table").html(data);
+				
+				//$("#alert-data").val(data);
+				//document.getElementById("alert-form").submit();
+			}, 
+			error: function(xhr) {
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			}
+		});
 	}
 	
 	function deleteAccount() {
-		alert("I'll delete this account, but i need to be coded first!")
+		("I'll delete this account, but i need to be coded first!")
 	}
 	
 	function resizeDialog() {

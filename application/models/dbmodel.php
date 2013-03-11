@@ -6,6 +6,11 @@ class Dbmodel extends CI_Model {
 		$this->load->database();
 	}
 	
+	//Gets all the information from the username that attempted the login.
+	function getUserOnLogin($username) {
+		$query = $this->db->query("SELECT * FROM user WHERE user_username = '$username'");
+		return $query;
+	} 
 	
 	function getAllCustomers() {
 		$query = $this->db->get("customers");
@@ -76,6 +81,10 @@ class Dbmodel extends CI_Model {
 	function deleteCustomer($id) {
 		$this->db->where('cust_id', $id);
 		$this->db->delete('customers');
+	}
+	
+	function insertNewAccount($data) {
+		$this->db->insert('user', $data);
 	}
 }
 

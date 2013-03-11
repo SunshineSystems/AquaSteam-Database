@@ -30,7 +30,7 @@
 					      <li id="homeLink"class="active"><a class="menu-links" href="<?php echo $home?>index.php/adminMainMenu">Home</a></li>
 					      <li id="customerLink"><a class="menu-links" href="<?php echo $home?>index.php/customer">Customers</a></li>
 					      <li id="workOrderLink"><a href="<?php echo $home?>index.php/workOrderSearch">Work Orders</a></li>
-					      <li id="logoutLink"><a href="<?php echo $home?>index.php/login">Logout</a></li>
+					      <li id="logoutLink"><a href="<?php echo $home?>">Logout</a></li>
 				      </ul>
 			      </div>
 			    </div>

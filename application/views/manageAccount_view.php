@@ -9,6 +9,7 @@
         <div class="container account-container">
 	    	<h1>Manage Accounts</h1>
 			<div><button id="id_account_button" class="btn btn-large btn-primary" onclick="newAccount()">Create New Account</button></div>
+			<div id="alert-div"></div>
 			<div id="accounts-table"></div>
 	    </div>
 	    
@@ -31,7 +32,7 @@
 				</div>
 				<div class="field-row">
 					<label>New Password:</label>
-					<input id="userPass" type="text"/>
+					<input id="userPass" type="password"/>
 				</div>
 				<div class="field-row">
 					<label>First Name:</label>
