@@ -69,8 +69,8 @@
 							<thead>
 								<tr>
 									<th>Date</th>
-									<th>Company</th>
 									<th>Customer</th>
+									<th>Company</th>
 									<th>City</th>
 									<th>Address</th>
 								</tr>
@@ -79,10 +79,10 @@
 						
 			foreach($results->result_array() as $row) {
 				
-				$tableData .= "<tr onclick='openWorkOrder(".$row['cust_id'].")'>";
+				$tableData .= "<tr onclick='openWorkOrder(".$row['wo_id'].")'>";
 				$tableData .= '<td>'.$row["wo_date"].'</td>';
-				$tableData .= '<td>'.$row["cust_company"].'</td>';
 				$tableData .= '<td>'.$row["cust_fname"]. ' ' .$row["cust_lname"].'</td>';
+				$tableData .= '<td>'.$row["cust_company"].'</td>';
 				$tableData .= '<td>'.$row["wo_city"].'</td>';
 				$tableData .= '<td>'.$row["wo_address"].'</td></tr>'; //remove '</tr>' when line below is ready
 			}

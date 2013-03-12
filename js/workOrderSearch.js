@@ -52,14 +52,14 @@
 					tagArray[i] = obj[i]['cust_fname'] + " " + obj[i]['cust_lname'];
 				}
 				searchField = "cust_fname";
-				sorter = [[2,0]]; 
+				sorter = [[1,0]]; 
 				break;
 			case "company":
 				for(var i=0;  i < custNum; i++) {
 					tagArray[i] = obj[i]['cust_company'];
 				}
 				searchField = "cust_company";
-				sorter = [[1,0]];
+				sorter = [[2,0]];
 				break;
 			case "city":
 				for(var i=0;  i < custNum; i++) {
