@@ -16,3 +16,14 @@ body {
      -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
           box-shadow: 0 1px 2px rgba(0,0,0,.05);
 }
+.control-group {
+	display: inline-block;
+	width: 300px;
+	margin-top: 25px;	
+}
+.checkbox{
+	display: inline-block;
+	width: 300px;
+	margin-top: 25px;
+	
+}
