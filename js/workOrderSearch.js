@@ -1,7 +1,7 @@
 	
 	var tagArray = new Array();
 	var searchField = "cust_fname";
-	var sorter = [[0,0],[1,0]]; //Sets which column will be sorted by default
+	var sorter = [[2,0]]; //Sets which column will be sorted by default
 	
 	//Gets the data that we got from the database, and puts the first/last name of each customer
 	//Into a string which is used for the autocomplete. Also replaces null values with empty strings
@@ -52,28 +52,35 @@
 					tagArray[i] = obj[i]['cust_fname'] + " " + obj[i]['cust_lname'];
 				}
 				searchField = "cust_fname";
-				sorter = [[0,0],[1,0]]; 
+				sorter = [[2,0]]; 
 				break;
 			case "company":
 				for(var i=0;  i < custNum; i++) {
 					tagArray[i] = obj[i]['cust_company'];
 				}
 				searchField = "cust_company";
-				sorter = [[2,0]];
+				sorter = [[1,0]];
 				break;
 			case "city":
 				for(var i=0;  i < custNum; i++) {
-					tagArray[i] = obj[i]['cust_city'];
+					tagArray[i] = obj[i]['wo_city'];
 				}
-				searchField = "cust_city";
-				sorter = [[4,0]];
+				searchField = "wo_city";
+				sorter = [[3,0]];
 				break;
 			case "address":
 				for(var i=0;  i < custNum; i++) {
-					tagArray[i] = obj[i]['cust_address'];
+					tagArray[i] = obj[i]['wo_address'];
 				}
-				searchField = "cust_address";
-				sorter = [[3,0]];
+				searchField = "wo_address";
+				sorter = [[4,0]];
+				break;
+			case "date":
+				for(var i=0;  i < custNum; i++) {
+					tagArray[i] = obj[i]['wo_date'];
+				}
+				searchField = "wo_date";
+				sorter = [[0,0]];
 				break;
 		}
 		
@@ -124,23 +131,25 @@
 	
 	
 	//When you click on a row, it will bring you to the workorder page and send the wo_id over
-	/*function openWorkOrder(id) {
+	function openWorkOrder(id) {
 		$("#woorID").val(id);
-		$.ajax({
-				type: "POST",
-				url: "workorderform",
-				data: { "id" : id
-					
-				},
-				success: function(data) {
-					var info = eval("(" + data + ")");
-					$("#workOrderID").val(info['wo_id']);
-				}, 
-				error: function(xhr) {
-					alert("An error occured: " + xhr.status + " " + xhr.statusText);
-				}
-			});
-	}*/
+		/*$.ajax({
+			type: "POST",
+			url: "workorderform",
+			data: { "id" : id
+				
+			},
+			success: function(data) {
+				var info = eval("(" + data + ")");
+				$("#workOrderID").val(info['wo_id']);
+			}, 
+			error: function(xhr) {
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			}
+		});*/
+		
+		alert("You've opened work order: " + id);
+	}
 	
 	function eliminateDuplicates(arr) {
 		var i,

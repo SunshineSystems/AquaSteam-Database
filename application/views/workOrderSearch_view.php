@@ -13,6 +13,7 @@
 				<option value="company">Company</option>
 				<option value="city">City</option>
 				<option value="address">Address</option>
+				<option value="date">Date</option>
 			</select>
 			<input id="searchbar" placeholder="Search..." onClick="this.select();"/>
 			<button id="id_search_button" class="btn btn-primary" onclick="getSearchResults()">Search</button>
