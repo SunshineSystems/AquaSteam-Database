@@ -25,7 +25,9 @@
 			var custNum = <?php echo $custNum; ?>;
 			
 			var obj = eval (json);
+			var home = "<?php echo $home; ?>";
 		</script>
+		
 	    <script src="<?php echo $home?>js/jquery.tablesorter.js"></script>
 	    <script src="<?php echo $home?>js/workOrderSearch.js"></script>
     </body>

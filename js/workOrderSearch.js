@@ -133,6 +133,7 @@
 	//When you click on a row, it will bring you to the workorder page and send the wo_id over
 	function openWorkOrder(id) {
 		$("#woorID").val(id);
+		var url = home + "index.php/workorderform";
 		/*$.ajax({
 			type: "POST",
 			url: "workorderform",
@@ -147,8 +148,9 @@
 				alert("An error occured: " + xhr.status + " " + xhr.statusText);
 			}
 		});*/
-		
-		alert("You've opened work order: " + id);
+		var page = window.open(url, '_blank');
+		page.focus();
+		//alert("You've opened work order: " + id);
 	}
 	
 	function eliminateDuplicates(arr) {
