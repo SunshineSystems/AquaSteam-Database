@@ -40,30 +40,7 @@
 			$this->load->view('customer_view', $data);
 		}
 		
-		//Gets the information in the database that we will use for the autocomplete box
-		//On the view.
-		function updateTags() {
-			$i = 0;
-			$tags = array();
-			
-			//Gets all customers from the database, and adds certain fields to an array
-			//to be used for our auto complete.
-			$custs = $this->dbm->getAllCustomers();
-			foreach($custs->result_array() as $row) {
-				$tags[$i]['cust_fname'] = $row['cust_fname'];
-				$tags[$i]['cust_lname'] = $row['cust_lname'];
-				$tags[$i]['cust_company'] = $row['cust_company'];
-				$tags[$i]['cust_address'] = $row['cust_address'];
-				$tags[$i]['cust_city'] = $row['cust_city'];
-				$tags[$i]['cust_hphone'] = $row['cust_hphone'];
-				$tags[$i]['cust_bphone'] = $row['cust_bphone'];
-				$tags[$i]['cust_cphone'] = $row['cust_cphone'];
-				$i++;
-			}
-			
-			$jtags = json_encode($tags);
-			echo $jtags;
-		}
+		
 		
 		// Gets the results of the search, based on the string that the user inputs, as well
 		// as the type of search specified in the dropdown.

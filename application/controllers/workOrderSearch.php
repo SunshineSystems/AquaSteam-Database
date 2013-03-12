@@ -13,14 +13,15 @@
 			$i = 0;
 			$tags = array();
 			
-			//Gets all customers from the database, and adds certain fields to an array
-			//to be used for our auto complete.
-			$custs = $this->dbm->getAllCustomers(); //Change to getAllCustomersandWorkOrders() once ready
-			foreach($custs->result_array() as $row) {
+			//Gets select fields from the database to be used for our auto complete tags.
+			$results = $this->dbm->getWorkOrderTags(); 
+			foreach($results->result_array() as $row) {
 				$tags[$i]['cust_fname'] = $row['cust_fname'];
 				$tags[$i]['cust_lname'] = $row['cust_lname'];
 				$tags[$i]['cust_company'] = $row['cust_company'];
-				$tags[$i]['cust_address'] = $row['cust_address'];
+				$tags[$i]['wo_city'] = $row['wo_city'];
+				$tags[$i]['wo_address'] = $row['wo_address'];
+				$tags[$i]['cwo_date'] = $row['wo_date'];
 				$i++;
 			}
 			
@@ -31,25 +32,6 @@
 			$data['title'] = "Search Work Orders";
 			$this->load->view('header.php', $data);
 			$this->load->view('workOrderSearch_view.php', $data);
-		}
-		
-		function updateTags() {
-			$i = 0;
-			$tags = array();
-			
-			//Gets all customers from the database, and adds certain fields to an array
-			//to be used for our auto complete.
-			$custs = $this->dbm->getAllCustomers(); //Change to getAllCustomersandWorkOrders() once ready
-			foreach($custs->result_array() as $row) {
-				$tags[$i]['cust_fname'] = $row['cust_fname'];
-				$tags[$i]['cust_lname'] = $row['cust_lname'];
-				$tags[$i]['cust_company'] = $row['cust_company'];
-				$tags[$i]['cust_address'] = $row['cust_address'];
-				$i++;
-			}
-			
-			$jtags = json_encode($tags);
-			echo $jtags;
 		}
 		
 		// Gets the results of the search, based on the string that the user inputs, as well
@@ -65,17 +47,17 @@
 				// In order to search first and last names.
 				if ( preg_match('/\s/', $searchQuery) ) {
 					$names = explode(" ", $searchQuery);
-					$results = $this->dbm->getCustomersByNameSearch($names[0], $names[1]);
+					$results = $this->dbm->getWorkOrdersByNameSearch($names[0], $names[1]);
 				}
 				else {
 					$field2 = "cust_lname";
-					$results = $this->dbm->getCustomersBySearch($searchQuery, $searchType, $field2, false);
+					$results = $this->dbm->getWorkOrdersBySearch($searchQuery, $searchType, $field2, false);
 				}
 				
 			}
 			
 			else {
-				$results = $this->dbm->getCustomersBySearch($searchQuery, $searchType, false, false);
+				$results = $this->dbm->getWorkOrdersBySearch($searchQuery, $searchType, false, false);
 			}
 			if(!$results->result()) {
 				echo "<div class='alert alert-error'><h4>Whoops!</h4>
@@ -86,21 +68,23 @@
 			$tableData = "<table id='result-table' class='tablesorter table-striped table-hover'>
 							<thead>
 								<tr>
+									<th>Date</th>
+									<th>Customer</th>
 									<th>Company</th>
-									<th>First Name</th>
-									<th>Lastname</th>
+									<th>City</th>
 									<th>Address</th>
 								</tr>
 							</thead>
 							<tbody>";
 						
 			foreach($results->result_array() as $row) {
-				//$tableData .= "<tr onclick='openWorkOrder(".$row['wo_id'].")'>"; Needs to be fixed once database is ready
+				
+				$tableData .= "<tr onclick='openWorkOrder(".$row['wo_id'].")'>";
+				$tableData .= '<td>'.$row["wo_date"].'</td>';
+				$tableData .= '<td>'.$row["cust_fname"]. ' ' .$row["cust_lname"].'</td>';
 				$tableData .= '<td>'.$row["cust_company"].'</td>';
-				$tableData .= '<td>'.$row["cust_fname"].'</td>';
-				$tableData .= '<td>'.$row["cust_lname"].'</td>';
-				$tableData .= '<td>'.$row["cust_address"].'</td></tr>'; //remove '</tr>' when line below is ready
-				//$tableData .= '<td>'.$row["wo_date_complete"].'</td></tr>'; Needs to be fixed once database is ready
+				$tableData .= '<td>'.$row["wo_city"].'</td>';
+				$tableData .= '<td>'.$row["wo_address"].'</td></tr>'; //remove '</tr>' when line below is ready
 			}
 			
 			$tableData .= "</tbody></table>";

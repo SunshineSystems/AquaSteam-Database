@@ -13,6 +13,7 @@
 				<option value="company">Company</option>
 				<option value="city">City</option>
 				<option value="address">Address</option>
+				<option value="date">Date</option>
 			</select>
 			<input id="searchbar" placeholder="Search..." onClick="this.select();"/>
 			<button id="id_search_button" class="btn btn-primary" onclick="getSearchResults()">Search</button>
@@ -24,7 +25,9 @@
 			var custNum = <?php echo $custNum; ?>;
 			
 			var obj = eval (json);
+			var home = "<?php echo $home; ?>";
 		</script>
+		
 	    <script src="<?php echo $home?>js/jquery.tablesorter.js"></script>
 	    <script src="<?php echo $home?>js/workOrderSearch.js"></script>
     </body>

@@ -107,6 +107,41 @@ class Dbmodel extends CI_Model {
 		$this->db->delete('customers');
 	}
 	
+	function getWorkOrderTags() {
+		$query  = $this->db->query("SELECT cust_fname, cust_lname, cust_company, wo_city, wo_address, wo_date
+										FROM customers, work_order WHERE work_order.cust_id = customers.cust_id");
+		return $query;
+	}
+	
+	//Checks to see how many fields that need to be searched
+	//And searches them for the $search value
+	function getWorkOrdersBySearch($search, $field1, $field2) {
+	 	$this->db->select("*");
+	 	$this->db->from('work_order');
+	 	$this->db->join('customers', 'work_order.cust_id = customers.cust_id');	
+	 	if($field2) {
+			$this->db->like("$field1", "$search");
+			$this->db->or_like("$field2", "$search");
+		}	
+		else {
+			$this->db->like("$field1", "$search");
+		}	
+
+		$query  = $this->db->get();
+		return $query;
+	}
+	
+	function getWorkOrdersByNameSearch($fname, $lname) {
+		$this->db->select("*");
+	 	$this->db->from('work_order');
+	 	$this->db->join('customers', 'work_order.cust_id = customers.cust_id');	
+		
+		$this->db->like('cust_fname', "$fname");
+		$this->db->like('cust_lname', "$lname");
+		
+		$query = $this->db->get();
+		return $query;
+	}
 }
 
 ?>
