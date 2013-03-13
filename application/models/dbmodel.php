@@ -41,13 +41,6 @@ class Dbmodel extends CI_Model {
 		return $query;
 	}
 	
-	//This function will be used for grabbing customer information and
-	//work order information for the WorkOrderSearch page
-	//***Must be completed once database allows a join between the two tables
-	//function getAllCustomersandWorkOrders(){
-	//	$query = $this->db->query()
-	//}
-	
 	function getCustomerById($id) {
 		$query = $this->db->query("SELECT * FROM customers WHERE cust_id = $id");
 		return $query;
@@ -105,6 +98,12 @@ class Dbmodel extends CI_Model {
 	function deleteCustomer($id) {
 		$this->db->where('cust_id', $id);
 		$this->db->delete('customers');
+	}
+	
+	//Changes User Password
+	function changePassword($id, $data){
+		$this->db->where('username', $id);
+		$this->db->update('password', $data);
 	}
 	
 	function getWorkOrderTags() {
