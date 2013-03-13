@@ -23,77 +23,77 @@
 	    		<div class="control-group">
 	    			<label class="control-label" for="custCompany">Company:</label>
     				<div class="controls">
-    					<input type="text" id="custCompany">
+    					<input type="text" id="custCompany" maxlength="40">
     				</div>
 	    		</div>
 	    		
 	    		<div class="control-group">
 	    			<label class="control-label" for="custFName">First Name:</label>
     				<div class="controls">
-    					<input type="text" id="custFName">
+    					<input type="text" id="custFName" maxlength="20">
     				</div>
 	    		</div>
 	    		
 	    		<div class="control-group">
 	    			<label class="control-label" for="custLName">Last Name:</label>
     				<div class="controls">
-    					<input type="text" id="custLName">
+    					<input type="text" id="custLName" maxlength="20">
     				</div>
 	    		</div>
 	    		
 	    		<div class="control-group">
 	    			<label class="control-label" for="custAddress">Address:</label>
     				<div class="controls">
-    					<input type="text" id="custAddress">
+    					<input type="text" id="custAddress" maxlength="30">
     				</div>
 	    		</div>
 	    		
 	    		<div class="control-group">
 	    			<label class="control-label" for="custCity">City:</label>
     				<div class="controls">
-    					<input type="text" id="custCity">
+    					<input type="text" id="custCity" maxlength="20">
     				</div>
 	    		</div>
 	    		
 	    		<div class="control-group">
 	    			<label class="control-label" for="custProvince">Province:</label>
     				<div class="controls">
-    					<input type="text" id="custProvince">
+    					<input type="text" id="custProvince" maxlength="2">
     				</div>
 	    		</div>
 	    		
 	    		<div class="control-group">
 	    			<label class="control-label" for="custPCode">Postal Code:</label>
     				<div class="controls">
-    					<input type="text" id="custPCode">
+    					<input type="text" id="custPCode" maxlength="7">
     				</div>
 	    		</div>
 	    		
 	    		<div class="control-group">
 	    			<label class="control-label" for="custHPhone">Home Phone:</label>
     				<div class="controls">
-    					<input type="text" id="custHPhone">
+    					<input type="text" id="custHPhone" maxlength="12">
     				</div>
 	    		</div>
 	    		
 	    		<div class="control-group">
 	    			<label class="control-label" for="custBPhone">Business Phone:</label>
     				<div class="controls">
-    					<input type="text" id="custBPhone">
+    					<input type="text" id="custBPhone" maxlength="12">
     				</div>
 	    		</div>
 	    		
 	    		<div class="control-group">
 	    			<label class="control-label" for="custCPhone">Cell Phone:</label>
     				<div class="controls">
-    					<input type="text" id="custCPhone">
+    					<input type="text" id="custCPhone" maxlength="12">
     				</div>
 	    		</div>
 	
 				<div class="control-group">
 		    		<label class="control-label" for="workOrderGift">Gift:</label>
 	    			<div class="controls">
-	    				<input type="text" id="workOrderGift">
+	    				<input type="text" id="workOrderGift" maxlength="30">
 	    			</div> 
 		    	</div> 
 	    	 	
@@ -105,7 +105,7 @@
 		 	<div class="control-group">
 		    	<label class="control-label" for="workOrderDiscount">Discount:</label>
 	   			<div class="controls">
-	 				<input type="text" id="workOderDiscount">
+	 				<input type="text" id="workOderDiscount" maxlength="13">
 	  				<select class="input-small">
 						<option>%</option>
 						<option>$</option>
