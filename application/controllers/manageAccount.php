@@ -16,9 +16,9 @@
 			$tableData = "<table id='user-table' class='tablesorter table-striped table-hover'>
 							<thead>
 								<tr>
+									<th>Username</th>
 									<th>First Name</th>
 									<th>Last Name</th>
-									<th>Username</th>
 									<th>Account Type</th>
 								</tr>
 							</thead>
@@ -32,9 +32,9 @@
 					$type = "Employee";
 				}
 				$tableData .= "<tr onclick='openUser(".$row['user_id'].")'>";
+				$tableData .= '<td>'.$row["user_username"].'</td>';
 				$tableData .= '<td>'.$row["user_fname"].'</td>';
 				$tableData .= '<td>'.$row["user_lname"].'</td>';
-				$tableData .= '<td>'.$row["user_username"].'</td>';
 				$tableData .= '<td>'.$type.'</td></tr>';
 			}
 			
