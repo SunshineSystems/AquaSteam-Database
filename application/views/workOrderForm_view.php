@@ -2,18 +2,10 @@
     $home = base_url();
 ?>
 		<head>
-			
-			
-        <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/workOrderForm.css">
-        
-        
-          
-        <!-- Keep all displayed content inside container div -->
-        <div class="container wo-container">
-	      <h1>Work Order</h1>
-
-	    
-   
+        	<link rel="stylesheet" type="text/css" href="<?php echo $home?>css/workOrderForm.css">   
+        	<!-- Keep all displayed content inside container div -->
+        	<div class="container wo-container">
+	    	<h1>Work Order</h1>
 	    </head> 
 	    
 	    <body>
@@ -115,8 +107,9 @@
    			</div>
     </div>
 	
+	<div class="checkbox-container">
+		<h4>Payment</h4>
 	<div class="checkbox">
-	<div class="controls">
     	<label>
     		<input type="checkbox"> Cash
     	</label>
@@ -131,12 +124,13 @@
     	</label>
     	<label>
     		<input type="checkbox"> Other
-    		<input type="text" id="payOther">
+    		<input type="text" class="input-small" id="payOther">
     	</label>
     </div>
     </div>
     
-    <div class="checkbox"gn="right">
+    <div class="checkbox-container">
+    	<h4>Equipment</h4>
     <div class="controls">
     	<label>
     		<input type="checkbox"> RX
@@ -236,5 +230,3 @@
 
     </body>
 </html>
-
-    
