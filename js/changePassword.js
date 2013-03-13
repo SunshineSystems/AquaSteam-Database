@@ -23,14 +23,15 @@
         
         $.ajax({
 			type: "POST",
-			url:  home + "index.php/changepassword/checkCredentials",
+			url:  "changepassword/checkCredentials",
 			data: { "oldPassword" : oldPassword,
 					"newPassword" : newPassword,
 					"retypeNewPassword" : retypeNewPassword,
 			},
 			success: function(data) {
-				if(data == 1) { 
-					changePassword($id, newPassword);
+				if(data == 1) {
+					//alert(data);
+					window.location = home;
 				}
 				else {
 					$("#error-div").html(data);

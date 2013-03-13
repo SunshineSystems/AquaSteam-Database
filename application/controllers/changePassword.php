@@ -9,6 +9,7 @@
 			parent::__construct();
 			//Loads the database model functions as "dbm"
 			$this->load->model("dbmodel", "dbm", true);
+			session_start();
 		}
 	
 		public function index(){
@@ -21,17 +22,14 @@
 			$oldPassword = $_POST['oldPassword'];
 			$newPassword = $_POST['newPassword'];
 			$retypeNewPassword = $_POST['retypeNewPassword'];
+			$userID = $_SESSION['id'];
 			
 			global $hasher; //calls the global variable from hasher.php
+			//die("something");
+			$result = $this->dbm->getUserById($userID); 
 			
-			//The line below is a problem. A new funtion in the dbm model needs to be created. Withing a session variable being passed in
-			//$result = $this->dbm->getUserById($username); //'$username needs to be session variable; I don't know where to do the session code
-			$user = $result->result_array();
-
 			foreach($result->result_array() as $row) {
-				$id = $row['user_id'];	
 				$storedPass = $row['user_password'];
-				$type = $row['user_admin'];
 			}
 			
 			//Compares the input password to the stored password.
@@ -50,6 +48,9 @@
 				echo $error;
 				return;
 			}
+			
+			$hashedPassword = $hasher->HashPassword($newPassword);
+			$this->dbm->updateUserPassword($userID, $hashedPassword);
 			echo 1;
 		}
 	}
