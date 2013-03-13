@@ -231,6 +231,13 @@
 				<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
 			</div>
 		</div>
+		
+		<div id="buttons-container">
+			<button id="save-button" class="btn btn-large btn-primary" onclick="saveWorkOrder()">Save Work Order</button>
+			<button id="start-new-button" class="btn btn-large btn-info" onclick="startAsNew()">Start as New</button>
+			<button id="print-button" class="btn btn-large btn-info" onclick="printWorkOrder()">Print Work Order</button>
+			<button id="delete-button" class="btn btn-large btn-danger" onclick="deleteWorkOrder()">Delete Work Order</button>
+		</div> 
 	</div> <!-- End of Container -->
 
 		<script src="<?php echo $home?>js/workorderform.js"></script>
