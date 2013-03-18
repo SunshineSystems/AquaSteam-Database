@@ -173,16 +173,12 @@ class Dbmodel extends CI_Model {
 	//from the database and returns it's id.
 	function insertNewWorkOrder($data) {
 		$this->db->insert('work_order', $data);
-		$query = $this->db->query("SELECT wo_id FROM work_order ORDER BY cust_id DESC LIMIT 1");
+		$query = $this->db->query("SELECT wo_id FROM work_order ORDER BY wo_id DESC LIMIT 1");
 		
 		foreach($query->result_array() as $row) {
 			$id = $row['wo_id'];
 		}
 		return $id;
-	}
-	
-	function insertNewPayment($data) {
-		$this->db->insert('payment_type', $data);
 	}
 	
 	//Updates an existing work order in the 'work_order' table with the passed data.
@@ -197,7 +193,21 @@ class Dbmodel extends CI_Model {
 		$this->db->delete('work_order');
 	}
 	
+	function insertNewPayment($data) {
+		$this->db->insert('payment_type', $data);
+	}
 	
+	function updatePayment($woID, $data) {
+		$this->db->where("wo_id", $woID);	
+		$this->db->update('payment_type', $data);
+	}
+	
+	function getPaymentByWOID($woID) {
+		$this->db->where("wo_id", $woID);	
+		$query = $this->db->get('payment_type');
+		
+		return $query;
+	}
 }
 
 ?>

@@ -55,6 +55,7 @@
     	var payGift = $('#workOrderGift').val();
     	var woDate = $('#datepicker').val();
     	var payDiscount = $('#workOrderDiscount').val();
+    	if (payDiscount == "") payDiscount = 0;
     	var payDiscountType = $('#workOrderDiscountType').val();
     	
     	//Checks to see which checkboxes are checked, and assigns it's variable as either 1 or 0 based on that, to be

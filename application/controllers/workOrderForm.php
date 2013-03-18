@@ -83,6 +83,7 @@
 			//Puts all posted work order data from the ajax call, into the $woData array, to be put into the database.
 			$woData['cust_id'] = $_POST['custID'];
 			$woData['wo_date'] = $_POST['woDate'];
+			if($woData['wo_date'] == "") $woData['wo_date'] = "0000-00-00 00:00:00";
 			$woData['wo_address'] = $_POST['woAddress'];
 			$woData['wo_city'] = $_POST['woCity'];
 			$woData['wo_prov'] = $_POST['woProv'];
@@ -105,20 +106,28 @@
 			$payData['pay_charge'] = $_POST['payCharge'];
 			$payData['pay_cc'] = $_POST['payCC'];
 			$payData['pay_other'] = $_POST['payOther'];
-			
 			if($woID == "") {
-				
 				//Inserts new work order, and is returned new work order's id
 				$newWorkOrderID = $this->dbm->insertNewWorkOrder($woData);
 				
 				$payData['wo_id'] = $newWorkOrderID; //Assigns new work order id to be inserted to payment_type table
-				$this->dbm->insertNewPayment($payData);
+				$test = $this->dbm->insertNewPayment($payData);
 				$feedback = "<div class='alert alert-success'><h4>Success!</h4>
 								The New Work Order Has Been Saved</div>";
 			}
 			else {
+				$paymentCheck = $this->dbm->getPaymentByWOID($woID);
 				$this->dbm->updateWorkOrder($woID, $woData);	
-				$this->dbm->updatePayment($woID, $payData);
+				
+				if(!$paymentCheck->result()) {
+					$payData['wo_id'] = $woID; 
+					$this->dbm->insertNewPayment($payData);
+				}
+				
+				else {
+					$this->dbm->updatePayment($woID, $payData);
+				}
+				
 				$feedback = "<div class='alert alert-success'><h4>Success!</h4>
 								The Work Order Has Been Updated</div>";
 			}
