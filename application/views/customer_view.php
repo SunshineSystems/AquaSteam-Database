@@ -21,7 +21,7 @@
 		</div>
 		
 		<!--Hidden form that contains will contain the alert code after a customer is saved/deleted-->
-		<form id="alert-form" action"controller" method="POST">
+		<form id="alert-form" method="POST">
 			<input id="alert-data" name="alert-data" type="hidden"/>
 		</form>
 		
@@ -92,6 +92,7 @@
 			var custNum = <?php echo $custNum; ?>;
 			
 			var obj = eval (json);
+			var home = "<?php echo $home; ?>";
 		</script>
 		<script src="<?php echo $home?>js/jquery.tablesorter.js"></script>
 		<script src="<?php echo $home?>js/customer.js"></script>

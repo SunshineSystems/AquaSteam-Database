@@ -270,7 +270,6 @@
 		        width: "100",
 		        click: function () {
 		        	viewWorkOrders();
-		        	$(this).dialog("close");
 		        }
 		    },
 		    
@@ -280,7 +279,6 @@
 		        width: "100",
 		        click: function () {
 		        	newWorkOrder();
-		        	$(this).dialog("close");
 		        }
 		    },
 		    
@@ -378,11 +376,17 @@
 	}
 	
 	function viewWorkOrders() {
-		alert("I'll show all workorders for this customer!");
+		var id = $("#custID").val();
+		var url = home + "index.php/workordersearch/showAllForCust/" + id;
+		var page = window.open(url, '_blank');
+		page.focus();
 	}
 	
 	function newWorkOrder() {
-		alert("I'll start a new workorder for this customer!");
+		var id = $("#custID").val();
+		var url = home + "index.php/workorderform/newForCust/" + id;
+		var page = window.open(url, '_blank');
+		page.focus();
 	}
 	
 	//Resets the form in the dialog

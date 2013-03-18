@@ -158,6 +158,16 @@ class Dbmodel extends CI_Model {
 		$query = $this->db->get();
 		return $query;
 	}
+	
+	function getWorkOrdersByCustId($custID) {
+		$this->db->select("*");
+	 	$this->db->from('work_order');
+		$this->db->where('work_order.cust_id', $custID);
+	 	$this->db->join('customers', 'work_order.cust_id = customers.cust_id');
+		
+		$query = $this->db->get();
+		return $query;	
+	}
 }
 
 ?>

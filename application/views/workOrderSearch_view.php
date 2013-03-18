@@ -7,7 +7,7 @@
         
         <!-- Keep all displayed content inside container div -->
         <div class="container wo-container">
-	    	<h1>Search Work Orders</h1>
+	    	<h1><?php if(isset($header)) echo $header; else echo 'Search Work Orders';?></h1>
 	    	<select id="searchType" onchange="loadSearch()">
 				<option value="name" selected="selected">Customer Name</option>
 				<option value="company">Company</option>
@@ -17,7 +17,7 @@
 			</select>
 			<input id="searchbar" placeholder="Search..." onClick="this.select();"/>
 			<button id="id_search_button" class="btn btn-primary" onclick="getSearchResults()">Search</button>
-			<div id="id_result_table"><?php if(isset($_POST['alert-data'])) { echo $_POST['alert-data']; }?></div>
+			<div id="id_result_table"><?php if(isset($tableData)) echo $tableData;?></div>
 		
 	    </div>
 	    <script>

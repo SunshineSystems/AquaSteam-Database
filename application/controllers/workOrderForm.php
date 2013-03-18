@@ -55,6 +55,26 @@
 			$this->load->view('header.php', $data);
 			$this->load->view('workOrderForm_view.php', $data);
 		}
+
+		function newForCust($custID) {
+			$data['title'] = "Work Order Form";
+			$data['custID'] = $custID;
+			
+			$results = $this->dbm->getCustomerById($custID);
+			
+			foreach($results->result_array() as $row) {
+				$data['custFName'] = $row['cust_fname'];
+				$data['custLName'] = $row['cust_lname'];
+				$data['custCompany'] = $row['cust_company'];
+				$data['woAddress'] = $row['cust_address'];
+				$data['woCity'] = $row['cust_city'];
+				$data['woProv'] = $row['cust_prov'];
+				$data['woPCode'] = $row['cust_pcode'];
+			}
+			
+			$this->load->view('header.php', $data);
+			$this->load->view('workOrderForm_view.php', $data);
+		}
 	}
 	
 ?>
