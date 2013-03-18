@@ -10,105 +10,91 @@
 	    		<div class="control-group">
 	    			<label class="control-label" for="workOrderID">Work Order ID</label>
 	    				<div class="controls">
-	    					<input  class="input-small" type="text" id="workOrderID" placeholder="######" readonly>
+	    					<input  class="input-small" type="text" id="workOrderID" placeholder="######" readonly value="<?php if(isset($woID)) echo $woID; ?>">
 	   		 			</div>
 	    		</div>
 	    		<div class="control-group">
 	    			<label class="control-label" for="custID">Customer ID:</label>
     				<div class="controls">
-    					<input  class="input-small" type="text" id="custID" placeholder="######" readonly>
+    					<input  class="input-small" type="text" id="custID" placeholder="######" readonly value="<?php if(isset($custID)) echo $custID; ?>">
     				</div>
 	    		</div>
 	    		
 	    		<div class="control-group">
 	    			<label class="control-label" for="custCompany">Company:</label>
     				<div class="controls">
-    					<input type="text" id="custCompany" maxlength="40">
+    					<input type="text" id="custCompany" maxlength="40" value="<?php if(isset($custCompany)) echo $custCompany; ?>">
     				</div>
 	    		</div>
 	    		
 	    		<div class="control-group">
 	    			<label class="control-label" for="custFName">First Name:</label>
     				<div class="controls">
-    					<input type="text" id="custFName" maxlength="20">
+    					<input type="text" id="custFName" maxlength="20" value="<?php if(isset($custFName)) echo $custFName; ?>" >
     				</div>
 	    		</div>
 	    		
 	    		<div class="control-group">
 	    			<label class="control-label" for="custLName">Last Name:</label>
     				<div class="controls">
-    					<input type="text" id="custLName" maxlength="20">
+    					<input type="text" id="custLName" maxlength="20" value="<?php if(isset($custLName)) echo $custLName; ?>">
     				</div>
 	    		</div>
 	    		
 	    		<div class="control-group">
-	    			<label class="control-label" for="custAddress">Address:</label>
+	    			<label class="control-label" for="woAddress">Address:</label>
     				<div class="controls">
-    					<input type="text" id="custAddress" maxlength="30">
+    					<input type="text" id="woAddress" maxlength="30" value="<?php if(isset($woAddress)) echo $woAddress; ?>">
     				</div>
 	    		</div>
 	    		
 	    		<div class="control-group">
-	    			<label class="control-label" for="custCity">City:</label>
+	    			<label class="control-label" for="woCity">City:</label>
     				<div class="controls">
-    					<input type="text" id="custCity" maxlength="20">
+    					<input type="text" id="woCity" maxlength="20" value="<?php if(isset($woCity)) echo $woCity; ?>">
     				</div>
 	    		</div>
 	    		
 	    		<div class="control-group">
-	    			<label class="control-label" for="custProvince">Province:</label>
+	    			<label class="control-label" for="woProvince">Province:</label>
     				<div class="controls">
-    					<input type="text" id="custProvince" maxlength="2">
+    					<input type="text" id="woProvince" maxlength="2" value="<?php if(isset($woProv)) echo $woProv; ?>">
     				</div>
 	    		</div>
 	    		
 	    		<div class="control-group">
-	    			<label class="control-label" for="custPCode">Postal Code:</label>
+	    			<label class="control-label" for="woPCode">Postal Code:</label>
     				<div class="controls">
-    					<input type="text" id="custPCode" maxlength="7">
+    					<input type="text" id="woPCode" maxlength="7" value="<?php if(isset($woPCode)) echo $woPCode; ?>">
     				</div>
 	    		</div>
 	    		
 	    		<div class="control-group">
-	    			<label class="control-label" for="custHPhone">Home Phone:</label>
+	    			<label class="control-label" for="woPhone">Phone:</label>
     				<div class="controls">
-    					<input type="text" id="custHPhone" maxlength="12">
-    				</div>
-	    		</div>
-	    		
-	    		<div class="control-group">
-	    			<label class="control-label" for="custBPhone">Business Phone:</label>
-    				<div class="controls">
-    					<input type="text" id="custBPhone" maxlength="12">
-    				</div>
-	    		</div>
-	    		
-	    		<div class="control-group">
-	    			<label class="control-label" for="custCPhone">Cell Phone:</label>
-    				<div class="controls">
-    					<input type="text" id="custCPhone" maxlength="12">
+    					<input type="text" id="woPhone" maxlength="12" value="<?php if(isset($woPhone)) echo $woPhone; ?>">
     				</div>
 	    		</div>
 	
 				<div class="control-group">
 		    		<label class="control-label" for="workOrderGift">Gift:</label>
 	    			<div class="controls">
-	    				<input type="text" id="workOrderGift" maxlength="30">
+	    				<input type="text" id="workOrderGift" maxlength="30" value="<?php if(isset($payGift)) echo $payGift; ?>">
 	    			</div> 
 		    	</div> 
 	    	 	
 		    <div class="control-group">
 				<label class="control-label" for="workOrderDate">Date:</label>
-				<input type="text" id="datepicker" placeholder="mm/dd/yyyy"/>
+				<input type="text" id="datepicker" placeholder="mm/dd/yyyy" value="<?php if(isset($woDate)) echo $woDate; ?>">
 			</div>  		
 		
 		 	<div class="control-group">
 		    	<label class="control-label" for="workOrderDiscount">Discount:</label>
 	   			<div class="controls">
-	 				<input type="text" id="workOderDiscount" maxlength="13">
-	  				<select class="input-small">
+	 				<input type="text" id="workOderDiscount" maxlength="13" value="<?php if(isset($payDiscount)) echo $payDiscount; ?>">
+	  				<select class="input-small"<?php if(isset($payDiscountType) && $payDiscountType == '$') echo 'selected'; ?>>
 						<option>%</option>
-						<option>$</option>
+						<option<?php if(isset($payDiscountType) && $payDiscountType == '$') echo ' selected'; ?>>$</option>
 					</select>
 	   			</div>
 		    </div>
@@ -119,20 +105,20 @@
 				<h4>Payment</h4>
 				<div class="checkbox">
 			    	<label>
-			    		<input type="checkbox"> Cash
+			    		<input type="checkbox" <?php if(isset($payCash)) echo $payCash; ?>> Cash
 			    	</label>
 			    	<label>
-			    		<input type="checkbox"> Cheque
+			    		<input type="checkbox" <?php if(isset($payCheque)) echo $payCheque; ?>> Cheque
 			    	</label>
 			    	<label>
-			    		<input type="checkbox"> Credit Card
+			    		<input type="checkbox" <?php if(isset($payCC)) echo $payCC; ?>> Credit Card
 			    	</label>
 			    	<label>
-			    		<input type="checkbox"> Charge
+			    		<input type="checkbox" <?php if(isset($payCharge)) echo $payCharge; ?>> Charge
 			    	</label>
 			    	<label>
-			    		<input type="checkbox"> Other
-			    		<input type="text" class="input-small" id="payOther">
+			    		<input type="checkbox"> Other:
+			    		<input type="text" class="input-small" id="payOther" value="<?php if(isset($payOther)) echo $payOther; ?>">
 			    	</label>
 		    	</div>
 		    </div>
@@ -141,22 +127,22 @@
 		    	<h4>Equipment</h4>
 			    <div class="controls">
 			    	<label>
-			    		<input type="checkbox"> RX
+			    		<input type="checkbox" <?php if(isset($woRX)) echo $woRX; ?>/> RX
 			   		 </label>
 			    	<label>
-			    		<input type="checkbox"> Fan
+			    		<input type="checkbox" <?php if(isset($woFan)) echo $woFan; ?>> Fan
 			    	</label>
 			    	<label>
-			    		<input type="checkbox"> Rake
+			    		<input type="checkbox" <?php if(isset($woRake)) echo $woRake; ?>> Rake
 			    	</label>
 			    	<label>
-			    		<input type="checkbox"> Pad
+			    		<input type="checkbox" <?php if(isset($woPad)) echo $woPad; ?>> Pad
 			    	</label>
 			    	<label>
-			    		<input type="checkbox"> Encapsulate
+			    		<input type="checkbox" <?php if(isset($woEncapsulate)) echo $woEncapsulate; ?>> Encapsulate
 			    	</label>
 			    	<label>
-			    		<input type="checkbox"> Info Form
+			    		<input type="checkbox" <?php if(isset($woForm)) echo $woForm; ?>> Info Form
 			    	</label>
 			    </div>
 			</div>

@@ -112,6 +112,17 @@ class Dbmodel extends CI_Model {
 		$this->db->update('password', $data);
 	}
 	
+	function getWorkOrderById($id) {
+		$this->db->select("*");
+	 	$this->db->from('work_order');
+		$this->db->where('work_order.wo_id', $id);
+	 	$this->db->join('customers', 'work_order.cust_id = customers.cust_id', 'left');	
+		$this->db->join('payment_type', 'work_order.wo_id = payment_type.wo_id', 'left');	
+			
+		$query = $this->db->get();
+		return $query;
+	}
+	
 	function getWorkOrderTags() {
 		$query  = $this->db->query("SELECT cust_fname, cust_lname, cust_company, wo_city, wo_address, wo_date
 										FROM customers, work_order WHERE work_order.cust_id = customers.cust_id");

@@ -133,7 +133,7 @@
 	//When you click on a row, it will bring you to the workorder page and send the wo_id over
 	function openWorkOrder(id) {
 		$("#woorID").val(id);
-		var url = home + "index.php/workorderform";
+		var url = home + "index.php/workorderform/openWorkOrder/" + id;
 		/*$.ajax({
 			type: "POST",
 			url: "workorderform",

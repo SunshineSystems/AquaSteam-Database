@@ -21,7 +21,7 @@
 				$tags[$i]['cust_company'] = $row['cust_company'];
 				$tags[$i]['wo_city'] = $row['wo_city'];
 				$tags[$i]['wo_address'] = $row['wo_address'];
-				$tags[$i]['cwo_date'] = $row['wo_date'];
+				$tags[$i]['wo_date'] = $row['wo_date'];
 				$i++;
 			}
 			
