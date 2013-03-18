@@ -168,6 +168,36 @@ class Dbmodel extends CI_Model {
 		$query = $this->db->get();
 		return $query;	
 	}
+	
+	//Inserts a new work order into the 'work_order' table, with the given data, then selects that work order
+	//from the database and returns it's id.
+	function insertNewWorkOrder($data) {
+		$this->db->insert('work_order', $data);
+		$query = $this->db->query("SELECT wo_id FROM work_order ORDER BY cust_id DESC LIMIT 1");
+		
+		foreach($query->result_array() as $row) {
+			$id = $row['wo_id'];
+		}
+		return $id;
+	}
+	
+	function insertNewPayment($data) {
+		$this->db->insert('payment_type', $data);
+	}
+	
+	//Updates an existing work order in the 'work_order' table with the passed data.
+	function updateWorkOrder($id, $data) {
+		$this->db->where('wo_id', $id);
+		$this->db->update('work_order', $data);
+	}
+	
+
+	function deleteWorkOrder($id) {
+		$this->db->where('wo_id', $id);
+		$this->db->delete('work_order');
+	}
+	
+	
 }
 
 ?>

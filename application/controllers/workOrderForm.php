@@ -56,6 +56,7 @@
 			$this->load->view('workOrderForm_view.php', $data);
 		}
 
+		//Loads the page when givin a customer to create a new workorder for, and fills in some default information.
 		function newForCust($custID) {
 			$data['title'] = "Work Order Form";
 			$data['custID'] = $custID;
@@ -74,6 +75,60 @@
 			
 			$this->load->view('header.php', $data);
 			$this->load->view('workOrderForm_view.php', $data);
+		}
+
+		function saveWorkOrder() {
+			$woID = $_POST["woID"];
+			
+			//Puts all posted work order data from the ajax call, into the $woData array, to be put into the database.
+			$woData['cust_id'] = $_POST['custID'];
+			$woData['wo_date'] = $_POST['woDate'];
+			$woData['wo_address'] = $_POST['woAddress'];
+			$woData['wo_city'] = $_POST['woCity'];
+			$woData['wo_prov'] = $_POST['woProv'];
+			$woData['wo_pcode'] = $_POST['woPCode'];
+			//$woData['wo_notes'] = $_POST['']; Not Yet Implemented.
+			$woData['wo_phone'] = $_POST['woPhone'];
+			$woData['wo_rx'] = $_POST['woRX'];
+			$woData['wo_fan'] = $_POST['woFan'];
+			$woData['wo_rake'] = $_POST['woRake'];
+			$woData['wo_pad'] = $_POST['woPad'];
+			$woData['wo_encapsulate'] = $_POST['woEncap'];
+			$woData['wo_form'] = $_POST['woForm'];
+			
+			//Puts all posted payment data from the ajax call, into the $payData array, to be put into the database.
+			$payData['pay_cash'] = $_POST['payCash'];
+			$payData['pay_cheque'] = $_POST['payCheque'];
+			$payData['pay_discount'] = $_POST['payDiscount'];
+			$payData['pay_discount_type'] = $_POST['payDiscountType'];
+			$payData['pay_gift'] = $_POST['payGift'];
+			$payData['pay_charge'] = $_POST['payCharge'];
+			$payData['pay_cc'] = $_POST['payCC'];
+			$payData['pay_other'] = $_POST['payOther'];
+			
+			if($woID == "") {
+				
+				//Inserts new work order, and is returned new work order's id
+				$newWorkOrderID = $this->dbm->insertNewWorkOrder($woData);
+				
+				$payData['wo_id'] = $newWorkOrderID; //Assigns new work order id to be inserted to payment_type table
+				$this->dbm->insertNewPayment($payData);
+				$feedback = "<div class='alert alert-success'><h4>Success!</h4>
+								The New Work Order Has Been Saved</div>";
+			}
+			else {
+				$this->dbm->updateWorkOrder($woID, $woData);	
+				$this->dbm->updatePayment($woID, $payData);
+				$feedback = "<div class='alert alert-success'><h4>Success!</h4>
+								The Work Order Has Been Updated</div>";
+			}
+			echo $feedback;
+		}
+
+		function deleteWorkOrder() {
+			$woID = $_POST["id"];
+			
+			$this->dbm->deleteWorkOrder($woID);
 		}
 	}
 	
