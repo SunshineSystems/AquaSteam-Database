@@ -117,7 +117,8 @@ class Dbmodel extends CI_Model {
 	 	$this->db->from('work_order');
 		$this->db->where('work_order.wo_id', $id);
 	 	$this->db->join('customers', 'work_order.cust_id = customers.cust_id', 'left');	
-		$this->db->join('payment_type', 'work_order.wo_id = payment_type.wo_id', 'left');	
+		$this->db->join('payment_type', 'work_order.wo_id = payment_type.wo_id', 'left');
+		$this->db->join('travel', 'work_order.wo_id = travel.wo_id', 'left');	
 			
 		$query = $this->db->get();
 		return $query;
@@ -205,6 +206,22 @@ class Dbmodel extends CI_Model {
 	function getPaymentByWOID($woID) {
 		$this->db->where("wo_id", $woID);	
 		$query = $this->db->get('payment_type');
+		
+		return $query;
+	}
+
+	function insertNewTravel($data) {
+		$this->db->insert('travel', $data);
+	}
+	
+	function updateTravel($woID, $data) {
+		$this->db->where("wo_id", $woID);	
+		$this->db->update('travel', $data);
+	}
+	
+	function getTravelByWOID($woID) {
+		$this->db->where("wo_id", $woID);	
+		$query = $this->db->get('travel');
 		
 		return $query;
 	}

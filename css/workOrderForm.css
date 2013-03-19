@@ -66,5 +66,22 @@ body {
 	padding-bottom: 15px;
 }
 
+.travelField-div {
+	display: inline-block;
+	margin-right: 30px;
+}
 
+.travelField-pdiv {
+	vertical-align: middle;
+}
+
+#notesTab {
+	text-align:center;
+}
+
+
+#woNotes {
+	width: 90%;
+	height: 200px
+}
 

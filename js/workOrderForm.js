@@ -12,6 +12,18 @@
 		$( "#tabs" ).tabs();
 	});
 	
+	//Calculates total in Travel Tab when the page first loads
+	calcTravel();
+	
+	//Calculates total in Travel Tab when the values have changed, and the changed input has lost focus.
+	$('#travelDist').change(function() {
+		calcTravel();
+	});
+	
+	$('#travelPrice').change(function() {
+		calcTravel();
+	});
+	
 // bind our event handler to all td elements with class editable
     $('td.editable').click(function() {
         // Only create an editable input if one doesn't exist
@@ -52,12 +64,16 @@
     	var woProv = $('#woProvince').val();
     	var woPCode = $('#woPCode').val();
     	var woPhone = $('#woPhone').val();
+    	var woNotes = $('#woNotes').val();
     	var payGift = $('#workOrderGift').val();
     	var woDate = $('#datepicker').val();
     	var payDiscount = $('#workOrderDiscount').val();
     	if (payDiscount == "") payDiscount = 0;
     	var payDiscountType = $('#workOrderDiscountType').val();
-    	
+    	var travelDistance = $('#travelDist').val();
+    	if(!isValidNum(travelDistance)) travelDistance = 0;
+    	var travelPrice = $('#travelPrice').val();
+    	if(!isValidNum(travelPrice)) travelPrice = 0;
     	//Checks to see which checkboxes are checked, and assigns it's variable as either 1 or 0 based on that, to be
     	//entered into the database.
     	if($('#woRX').is(':checked')) var woRX = 1;
@@ -94,7 +110,8 @@
 					"woRake" : woRake,					   "woPad" : woPad, 			"woEncap" : woEncap,
 					"woForm" : woForm, 					   "payCash" : payCash, 		"payCheque" : payCheque,
 					"payCC" : payCC, 					   "payCharge" : payCharge, 	"payOther" : payOther,
-					"custID" : custID
+					"custID" : custID, 					   "woNotes" : woNotes,			"travelDistance" : travelDistance,
+					"travelPrice" : travelPrice
 			},
 			success: function(data) {
 				$("#alert-div").html(data);
@@ -168,6 +185,33 @@
 				}
 			});
 		}
+    }
+    
+    function calcTravel() {
+    	var distance = $('#travelDist').val();
+    	var rate = $('#travelPrice').val();
+
+		//Makes sure distance and rate are valid numbers, and don't have any non number characters in their field
+    	if(!isNaN(distance) && !isNaN(rate) && !isNaN(parseFloat(distance)) && !isNaN(parseFloat(rate))) {
+    		var total = parseFloat(distance) * parseFloat(rate);
+    		var roundedTotal = total.toFixed(2);
+    		$('#travelTotal').val(roundedTotal);
+    	}
+    	else {
+    		$('#travelTotal').val("0.00");
+    	}
+    }
+    
+    //Returns true if the passed variable contains nothing but number characters.
+    function isValidNum(value) {
+    	
+		//Makes sure distance and rate are valid numbers, and don't have any non number characters in their field
+    	if(!isNaN(value) && !isNaN(parseFloat(value))) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
     }
 
 

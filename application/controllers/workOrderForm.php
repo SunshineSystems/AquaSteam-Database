@@ -26,10 +26,11 @@
 			foreach($results->result_array() as $row) {
 				$data['custID'] = $row['cust_id'];
 				
-				//Formats date to DD/MM/YYYY, before being output to the table.
+				//Formats date to MM/DD/YYYY, before being output to the table.
 				$unix = strtotime($row["wo_date"]);
 				$formattedDate = date("m/d/Y", $unix);
 				$data['woDate'] = $formattedDate;
+				
 				$data['woAddress'] = $row['wo_address'];
 				$data['woCity'] = $row['wo_city'];
 				$data['woProv'] = $row['wo_prov'];
@@ -53,6 +54,8 @@
 				$data['payDiscountType'] = $row['pay_discount_type'];
 				$data['payGift'] = $row['pay_gift'];
 				$data['payOther'] = $row['pay_other'];
+				$data['travDistance'] = $row['travel_distance'];
+				$data['travPrice'] = $row['travel_price'];
 			}
 			
 			$this->load->view('header.php', $data);
@@ -93,7 +96,7 @@
 			$woData['wo_city'] = $_POST['woCity'];
 			$woData['wo_prov'] = $_POST['woProv'];
 			$woData['wo_pcode'] = $_POST['woPCode'];
-			//$woData['wo_notes'] = $_POST['']; Not Yet Implemented.
+			$woData['wo_notes'] = $_POST['woNotes'];
 			$woData['wo_phone'] = $_POST['woPhone'];
 			$woData['wo_rx'] = $_POST['woRX'];
 			$woData['wo_fan'] = $_POST['woFan'];
@@ -111,20 +114,34 @@
 			$payData['pay_charge'] = $_POST['payCharge'];
 			$payData['pay_cc'] = $_POST['payCC'];
 			$payData['pay_other'] = $_POST['payOther'];
+			
+			//Puts all posted travel data from the ajax call, into the $travData array, to be put into the database.
+			$travData['travel_distance'] = $_POST['travelDistance'];
+			$travData['travel_price'] = $_POST['travelPrice'];
+			
+			//Checks to see if there is a value for work order id. If there isn't, it inserts a new workorder with
+			//the data in $woData, if there is, it updates the work order that matches the id.
 			if($woID == "") {
 				//Inserts new work order, and is returned new work order's id
 				$newWorkOrderID = $this->dbm->insertNewWorkOrder($woData);
 				
-				$payData['wo_id'] = $newWorkOrderID; //Assigns new work order id to be inserted to payment_type table
-				$test = $this->dbm->insertNewPayment($payData);
-				$feedback = "<div class='alert alert-success'><h4>Success!</h4>
-								The New Work Order Has Been Saved</div>
+				//Assigns new work order id to be inserted to payment_type and travel tables.
+				$payData['wo_id'] = $newWorkOrderID; 
+				$travData['wo_id'] = $newWorkOrderID;
+				
+				$this->dbm->insertNewPayment($payData);
+				$this->dbm->insertNewTravel($travData);
+				$feedback = "<div class='alert alert-success'>
+								<button type='button' class='close' data-dismiss='alert'>&times;</button>
+								<h4>Success!</h4>The New Work Order Has Been Saved</div>
 								<input id='new-woID-val' type='hidden' value='".$newWorkOrderID."'>"; //Sets a hidden input, with the value of the newly saved workorder, to be passed back to the view.
 			}
 			else {
-				$paymentCheck = $this->dbm->getPaymentByWOID($woID);
 				$this->dbm->updateWorkOrder($woID, $woData);	
 				
+				//Checks to see if there's a payment entry tied to the work order being updated.
+				//If there's not, then it inserts a new one, otherwise it just updates.
+				$paymentCheck = $this->dbm->getPaymentByWOID($woID);
 				if(!$paymentCheck->result()) {
 					$payData['wo_id'] = $woID; 
 					$this->dbm->insertNewPayment($payData);
@@ -134,8 +151,21 @@
 					$this->dbm->updatePayment($woID, $payData);
 				}
 				
-				$feedback = "<div class='alert alert-success'><h4>Success!</h4>
-								The Work Order Has Been Updated</div>";
+				//Checks to see if there's a travel entry tied to the work order being updated.
+				//If there's not, then it inserts a new one, otherwise it just updates.
+				$travelCheck = $this->dbm->getTravelByWOID($woID);
+				if(!$travelCheck->result()) {
+					$travData['wo_id'] = $woID; 
+					$this->dbm->insertNewTravel($travData);
+				}
+				
+				else {
+					$this->dbm->updateTravel($woID, $travData);
+				}
+				
+				$feedback = "<div class='alert alert-success'>
+								<button type='button' class='close' data-dismiss='alert'>&times;</button>
+								<h4>Success!</h4>The Work Order Has Been Updated</div>";
 			}
 			echo $feedback;
 		}
