@@ -21,12 +21,15 @@
 			$data['woID'] = $id;
 			
 			$results = $this->dbm->getWorkOrderById($id);
-			//echo $results;
 			
 			//Assigns a value in $data to a field recieved from the database, to be passed to the view.
 			foreach($results->result_array() as $row) {
 				$data['custID'] = $row['cust_id'];
-				$data['woDate'] = $row['wo_date'];
+				
+				//Formats date to DD/MM/YYYY, before being output to the table.
+				$unix = strtotime($row["wo_date"]);
+				$formattedDate = date("m/d/Y", $unix);
+				$data['woDate'] = $formattedDate;
 				$data['woAddress'] = $row['wo_address'];
 				$data['woCity'] = $row['wo_city'];
 				$data['woProv'] = $row['wo_prov'];
@@ -82,7 +85,9 @@
 			
 			//Puts all posted work order data from the ajax call, into the $woData array, to be put into the database.
 			$woData['cust_id'] = $_POST['custID'];
-			$woData['wo_date'] = $_POST['woDate'];
+			$unix = strtotime($_POST['woDate']); //Creates Unix Timestamp based on input date.
+			$formattedDate = date("Y-m-d H:i:s", $unix); //Formats Unix Timestamp to work with SQL DateTime.
+			$woData['wo_date'] = $formattedDate;
 			if($woData['wo_date'] == "") $woData['wo_date'] = "0000-00-00 00:00:00";
 			$woData['wo_address'] = $_POST['woAddress'];
 			$woData['wo_city'] = $_POST['woCity'];
@@ -113,7 +118,8 @@
 				$payData['wo_id'] = $newWorkOrderID; //Assigns new work order id to be inserted to payment_type table
 				$test = $this->dbm->insertNewPayment($payData);
 				$feedback = "<div class='alert alert-success'><h4>Success!</h4>
-								The New Work Order Has Been Saved</div>";
+								The New Work Order Has Been Saved</div>
+								<input id='new-woID-val' type='hidden' value='".$newWorkOrderID."'>"; //Sets a hidden input, with the value of the newly saved workorder, to be passed back to the view.
 			}
 			else {
 				$paymentCheck = $this->dbm->getPaymentByWOID($woID);
@@ -138,6 +144,10 @@
 			$woID = $_POST["id"];
 			
 			$this->dbm->deleteWorkOrder($woID);
+			
+			$feedback = "<div class='alert alert-success'><h4>Success!</h4>
+								The Work Order Has Been Deleted</div>";
+			echo $feedback;					
 		}
 	}
 	

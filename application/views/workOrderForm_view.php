@@ -1,11 +1,17 @@
 <?php
     $home = base_url();
 ?>
-        	<link rel="stylesheet" type="text/css" href="<?php echo $home?>css/workOrderForm.css">   
-        	<!-- Keep all displayed content inside container div -->
+    	<link rel="stylesheet" type="text/css" href="<?php echo $home?>css/workOrderForm.css">   
+    	<!-- Keep all displayed content inside container div -->
+	    
+	    <!--Hidden form that will contain the alert code after a page refresh, if a new work order is saved-->
+		<form id="alert-form" method="POST">
+			<input id="alert-data" name="alert-data" type="hidden"/>
+		</form>
+	    
 	    <div class="container wo-container">
 	    	<h1>Work Order</h1>
-	    	<div id="alert-div"></div>
+	    	<div id="alert-div"><?php if(isset($_POST['alert-data'])) { echo $_POST['alert-data']; }?></div>
 			<div id="top-container">
 				<div id="inputs-div">
 		    		<div class="control-group">
@@ -24,21 +30,21 @@
 		    		<div class="control-group">
 		    			<label class="control-label" for="custCompany">Company:</label>
 	    				<div class="controls">
-	    					<input type="text" id="custCompany" maxlength="40" value="<?php if(isset($custCompany)) echo $custCompany; ?>">
+	    					<input type="text" id="custCompany" maxlength="40" readonly value="<?php if(isset($custCompany)) echo $custCompany; ?>">
 	    				</div>
 		    		</div>
 		    		
 		    		<div class="control-group">
 		    			<label class="control-label" for="custFName">First Name:</label>
 	    				<div class="controls">
-	    					<input type="text" id="custFName" maxlength="20" value="<?php if(isset($custFName)) echo $custFName; ?>" >
+	    					<input type="text" id="custFName" maxlength="20" readonly value="<?php if(isset($custFName)) echo $custFName; ?>" >
 	    				</div>
 		    		</div>
 		    		
 		    		<div class="control-group">
 		    			<label class="control-label" for="custLName">Last Name:</label>
 	    				<div class="controls">
-	    					<input type="text" id="custLName" maxlength="20" value="<?php if(isset($custLName)) echo $custLName; ?>">
+	    					<input type="text" id="custLName" maxlength="20" readonly value="<?php if(isset($custLName)) echo $custLName; ?>">
 	    				</div>
 		    		</div>
 		    		

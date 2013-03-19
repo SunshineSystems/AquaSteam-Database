@@ -21,7 +21,13 @@
 				$tags[$i]['cust_company'] = $row['cust_company'];
 				$tags[$i]['wo_city'] = $row['wo_city'];
 				$tags[$i]['wo_address'] = $row['wo_address'];
-				$tags[$i]['wo_date'] = $row['wo_date'];
+				
+				//Formats date to DD/MM/YYYY, before being put into the autocomplete.
+				//Not sure we even need autocomplete for dates... It seems pretty pointless, just as long as they know
+				//the format to search.
+				$unix = strtotime($row["wo_date"]);
+				$formattedDate = date("d/m/Y", $unix);
+				$tags[$i]['wo_date'] = $formattedDate;
 				$i++;
 			}
 			
@@ -68,7 +74,7 @@
 			$tableData = "<table id='result-table' class='tablesorter table-striped table-hover'>
 							<thead>
 								<tr>
-									<th>Date</th>
+									<th>Date (MM/DD/YYYY)</th>
 									<th>Customer</th>
 									<th>Company</th>
 									<th>City</th>
@@ -80,7 +86,12 @@
 			foreach($results->result_array() as $row) {
 				
 				$tableData .= "<tr onclick='openWorkOrder(".$row['wo_id'].")'>";
-				$tableData .= '<td>'.$row["wo_date"].'</td>';
+				
+				//Formats date to DD/MM/YYYY, before being output to the table.
+				$unix = strtotime($row["wo_date"]);
+				$formattedDate = date("m/d/Y", $unix);
+				$tableData .= '<td>'.$formattedDate.'</td>';
+				
 				$tableData .= '<td>'.$row["cust_fname"]. ' ' .$row["cust_lname"].'</td>';
 				$tableData .= '<td>'.$row["cust_company"].'</td>';
 				$tableData .= '<td>'.$row["wo_city"].'</td>';

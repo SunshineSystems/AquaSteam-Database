@@ -98,6 +98,18 @@
 			},
 			success: function(data) {
 				$("#alert-div").html(data);
+				
+				//If It saves a new customer, then load that work order's page', and display the success feedback.
+				//Checks for hidden input, that is only output when a new workorder is saved.
+				if($("#new-woID-val").length) {
+					var url = home + "index.php/workorderform/openWorkOrder/" + $("#new-woID-val").val();
+					$("#alert-data").val(data);
+					$("#alert-form").attr({'action': url}); //Sets the action of the form, to the new work order's url.
+					document.getElementById("alert-form").submit();
+				}
+				else {
+					window.scrollTo(0,0);
+				}
 			}, 
 			error: function(xhr) {
 				alert("An error occured: " + xhr.status + " " + xhr.statusText);
@@ -146,7 +158,10 @@
 				url: home + "index.php/workOrderForm/deleteWorkOrder",
 				data: { "id" : id},
 				success: function(data) {
-					alert("Work Order Deleted:\nNeed to do something after deleted, cuz this isn't good enough.")
+					var url = home + "index.php/workordersearch"
+					$("#alert-data").val(data);
+					$("#alert-form").attr({'action': url}); //Sets the action of the form, to the work order search's url.
+					document.getElementById("alert-form").submit();
 				}, 
 				error: function(xhr) {
 					alert("An error occured: " + xhr.status + " " + xhr.statusText);

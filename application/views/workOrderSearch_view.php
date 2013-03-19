@@ -5,6 +5,11 @@
         <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/workOrderSearch.css">
         <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/table css/style.css">
         
+        <!--Hidden form that will contain the alert code after a page load if a work order is deleted on the form page-->
+		<form id="alert-form" method="POST">
+			<input id="alert-data" name="alert-data" type="hidden"/>
+		</form>
+        
         <!-- Keep all displayed content inside container div -->
         <div class="container wo-container">
 	    	<h1><?php if(isset($header)) echo $header; else echo 'Search Work Orders';?></h1>
@@ -17,7 +22,7 @@
 			</select>
 			<input id="searchbar" placeholder="Search..." onClick="this.select();"/>
 			<button id="id_search_button" class="btn btn-primary" onclick="getSearchResults()">Search</button>
-			<div id="id_result_table"><?php if(isset($tableData)) echo $tableData;?></div>
+			<div id="id_result_table"><?php if(isset($tableData)) echo $tableData; if(isset($_POST['alert-data'])) echo $_POST['alert-data'];?></div>
 		
 	    </div>
 	    <script>
