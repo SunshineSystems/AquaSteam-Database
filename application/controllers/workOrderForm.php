@@ -56,6 +56,7 @@
 				$data['payOther'] = $row['pay_other'];
 				$data['travDistance'] = $row['travel_distance'];
 				$data['travPrice'] = $row['travel_price'];
+				$data['serviceTable'] = $this->getServiceTableForWO($id);
 			}
 			
 			$this->load->view('header.php', $data);
@@ -178,6 +179,59 @@
 			$feedback = "<div class='alert alert-success'><h4>Success!</h4>
 								The Work Order Has Been Deleted</div>";
 			echo $feedback;					
+		}
+		
+		function getServiceTableForWO($woID) {
+			$serviceTable = "<table id='service-table' class='tablesorter table-striped'>
+							<thead>
+								<tr>
+									<th>Color/Type</th>
+									<th>Description</th>
+									<th>Length</th>
+									<th>Width</th>
+									<th>Sq Feet</th>
+									<th>Quantity</th>
+									<th>Unit Price</th>
+									<th>Extended Price</th>
+								</tr>
+							</thead>
+							<tbody>";
+			
+			//Gets each row from Service that is tied to the open work order.
+			//Puts the content into a table to be displayed. Each cell has classes that will make them editable.				
+			$results = $this->dbm->getServiceByWOID($woID);
+			foreach($results->result_array() as $row) {
+				$serviceTable .= "<tr><td class='editable service serv_type ".$row['serv_id']."'>".$row['serv_type']."</td>";
+				$serviceTable .= "<td class='editable service serv_description ".$row['serv_id']."'>".$row['serv_description']."</td>";
+				$serviceTable .= "<td class='editable service serv_length ".$row['serv_id']."'>".$row['serv_length']."</td>";
+				$serviceTable .= "<td class='editable service serv_width ".$row['serv_id']."'>".$row['serv_width']."</td>";
+				$serviceTable .= "<td>".$row['serv_sq_feet']."</td>";
+				$serviceTable .= "<td class='editable service serv_quantity ".$row['serv_id']."'>".$row['serv_quantity']."</td>";
+				$serviceTable .= "<td class='editable service serv_unit_price ".$row['serv_id']."'>".$row['serv_unit_price']."</td>";
+				$serviceTable .= "<td></td></tr>";
+			}
+			
+			$serviceTable .= "</tbody></table>";
+			return $serviceTable;
+		}
+
+		function updateTabTable() {
+			$id = $_POST['id'];
+			$field = $_POST['field'];
+			$table = $_POST['table'];
+			$value = $_POST['value'];
+			
+			if($table == 'service') {
+				$this->dbm->updateServiceValue($id, $field, $value);
+			}
+			else if($table == 'upholstery') {
+				//updateUpholsteryValue
+			}
+			else {
+				//updateStainGuardValue
+			}
+			
+			echo "yay it saved!";
 		}
 	}
 	

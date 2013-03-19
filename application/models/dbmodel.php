@@ -225,6 +225,20 @@ class Dbmodel extends CI_Model {
 		
 		return $query;
 	}
+	
+	function getServiceByWOID($woID) {
+		$this->db->where("wo_id", $woID);	
+		$query = $this->db->get('service');
+		
+		return $query;
+	}
+	
+	function updateServiceValue($id, $field, $value) {
+		$this->db->set($field, $value);	
+		$this->db->where("serv_id", $id);
+		$this->db->update('service');
+	}
+	
 }
 
 ?>

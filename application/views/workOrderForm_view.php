@@ -164,39 +164,7 @@
 					<li><a href="#notesTab">Notes</a></li>
 				</ul>
 				<div id="carpetTab">
-					<table border="1">
-		        		<thead>
-		            		<tr>
-		            			<th>Identifier *not sure</th>
-		                		<th>Description</th>
-		                		<th>Color/Type</th>                     
-		                		<th>Length</th>
-		                		<th>Width</th>
-		                		<th>Sq Feet</th>
-		                		<th>Quantity</th>
-		                		<th>Unit Price</th>
-		                		<th>Extended Price</th>
-		                		<th>Total Price</th>
-		            		</tr>
-		        		</thead>
-		        	<tbody>
-		            <tr>         
-		                <!-- The "identifier" class makes it so we have an id
-		                    to pass to our ajax script so we know what to change -->       
-		                <td class="identifier">00123</td>
-		                <td class="editable">This is the description</td>
-		                <td class="editable">Color/Type</td>
-		                <td class="editable">Length</td>
-		                <td class="editable">Width</td>
-		                <td>sq feet not editable</td>
-		                <td class="editable">quantity</td>
-		                <td class="editable">Unit Price</td>
-		                <td class="editable">Extended Price</td>
-		                <td>Total Price not editable</td>
-		                
-		            </tr>                   
-		        	</tbody>
-		    		</table>
+					<?php if(isset($serviceTable)) echo $serviceTable; ?>
 				</div>
 			
 				<div id="upholsteryTab">
@@ -226,7 +194,7 @@
 						<label>Total Price:</label>
 						<div class="input-prepend">
 							<span class="add-on">$</span>
-						  	<input id="travelTotal" class="input-small span2" type="text" value="0.00">
+						  	<input id="travelTotal" class="input-small span2" type="text" value="0.00" readonly>
 						</div>
 					</div>
 				</div>

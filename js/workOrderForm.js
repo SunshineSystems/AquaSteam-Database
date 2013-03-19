@@ -8,6 +8,8 @@
 		$( "#datepicker" ).datepicker();
 	});
  
+ 	
+ 
  	$(function() {
 		$( "#tabs" ).tabs();
 	});
@@ -23,38 +25,6 @@
 	$('#travelPrice').change(function() {
 		calcTravel();
 	});
-	
-// bind our event handler to all td elements with class editable
-    $('td.editable').click(function() {
-        // Only create an editable input if one doesn't exist
-        if(!$(this).has('input').length) {
-            // Get the text from the cell containing the value
-            var value = $(this).html();
-            // Create a new input element with the value of the cell text
-            var input = $('<input/>', {
-                'type':'text',
-                'value':value,
-                // Give it an onchange handler so when the data is changed
-                // It will do the ajax call
-                change: function() {
-                    var new_value = $(this).val();
-                    // This finds the sibling td element with class identifier so we have
-                    // an id to pass to the ajax call
-                    var cell = $(this).parent();
-                    // Get the position of the td cell...
-                    var cell_index = $(this).parent().parent().children().index(cell);
-                    // .. to find its corresponding header
-                    var identifier = $('thead th:eq('+cell_index+')').html();
-                    //ajax post with id and new value
-                    $(this).replaceWith(new_value);
-                }
-            });
-            // Empty out the cell contents...
-            $(this).empty();
-            // ... and replace it with the input field that has the value populated
-            $(this).append(input);
-        }
-    });
     
     function saveWorkOrder() {
     	var woID = $('#workOrderID').val();
@@ -213,6 +183,63 @@
     		return false;
     	}
     }
+    
+    /*This section of code will handle all of the table editing stuff.*/
+	$(function() {
+	    $('td.editable').click(function(){
+	    	var htmlData = '<input id="editbox" type="text" value="' +  $(this).text() + '">';
+	 		$('.ajax').html($('.ajax input').val());  
+	 		$('.ajax').removeClass('ajax');  
+	  
+	 		$(this).addClass('ajax');  
+	 		$(this).html(htmlData);  
+	  
+			$('#editbox').focus();
+		});
+	});
+	
+	//When enter is hit while editing a cell, the value of that cell is updated in the database.
+	$(function() {
+		$('td.editable').keydown(function(event){  
+		    var value = $('.ajax input').val();
+		    //Puts all of the classes into an array, to be passed to the controller.
+		    var data = $(this).attr('class').split( " " );
+		    //data[0] = editable
+		    //data[1] = table name
+		    //data[2] = table field
+		    //data[3] = primary key
+		    
+		    if(event.keyCode == 13)  
+		   	{  
+				$.ajax({    
+					type: "POST",  
+					url: home + "index.php/workOrderForm/updateTabTable",   
+					data: {
+						'id' : data[3], 'field' : data[2], 'table' : data[1], 'value' : value
+					},
+					success: function(data){ 
+						alert(data); 
+						$('.ajax').html($('.ajax input').val());  
+						$('.ajax').removeClass('ajax');  
+				  	},
+				  	error: function(xhr) {
+						alert("An error occured: " + xhr.status + " " + xhr.statusText);
+					}
+		    	});  
+		    } 
+		});
+	}); 
+	
+	//Removes the input box when it is no longer focused.
+	//Not working at the moment, need to fix it.
+	$('#editbox').on('blur',function(){
+		//alert("hello!");
+		$('.ajax').html($('.ajax input').val());
+		$('.ajax').removeClass('ajax');
+	});
 
+	
+    
+    
 
  

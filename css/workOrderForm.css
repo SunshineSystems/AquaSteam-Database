@@ -75,6 +75,14 @@ body {
 	vertical-align: middle;
 }
 
+.travelField-div input {
+	text-align: right;
+}
+
+#travelTotal {
+	width: 63px;
+}
+
 #notesTab {
 	text-align:center;
 }
@@ -85,3 +93,39 @@ body {
 	height: 200px
 }
 
+/* modified tablesorter styling, removing styling designed around the sorting functionality */
+table.tablesorter {
+	font-family:arial;
+	background-color: #CDCDCD;
+	margin:10px 0pt 15px;
+	/*font-size: 8pt;*/
+	width: 100%;
+	text-align: left;
+	border-collapse: separate;
+	border-spacing: 1px;
+}
+table.tablesorter thead tr th{
+	background-color: #E3EFF5;
+	border: 1px solid #FFF;
+	font-size: 8pt;
+	padding: 4px;
+}
+
+table.tablesorter tbody td {
+	color: #3D3D3D;
+	padding: 4px;
+	background-color: #FFF;
+	vertical-align: top;
+	max-width: 50px;
+}
+table.tablesorter tbody tr.odd td {
+	background-color:#F0F0F6;
+}
+
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+background-color: #8dbdd8;
+}
+
+#editbox {
+	width: 90%;
+}
