@@ -301,7 +301,7 @@
     	calcTravel();
 		calcSqFt();
 		calcExtPrice();
-		calcTotalTabPrice();
+		//calcTotalTabPrice();
     }
     
     /************************************************************************************************/
@@ -309,7 +309,7 @@
     /*                                                                                              */
     /************************************************************************************************/
 	$(function() {
-	    $('td.editable').click(function(){
+	    $(document).on("click", 'td.editable', function(){
 	    	
 	    	//Prevents input from clearing if clicked twice
 	    	var cellText = $(this).text();
@@ -318,11 +318,15 @@
 	    	}
 	    	
 	    	var htmlData = '<input id="editbox" type="text" value="' +  cellText + '">';
+	    	
 	 		$('.ajax').html($('.ajax input').val());  
 	 		$('.ajax').removeClass('ajax');  
 	  
 	 		$(this).addClass('ajax');  
-	 		$(this).html(htmlData);  
+	 		$(this).html(htmlData);
+	 		if($('#editbox').val() == "undefined") {
+	    		$('#editbox').val("");
+	    	}  
 	  		
 	  		//Puts the cursor at the end of the input value, instead of highlighting it all
 			$('#editbox').focus(function() {
@@ -335,32 +339,9 @@
 	
 	//When enter is hit while editing a cell, the value of that cell is updated in the database.
 	$(function() {
-		$('td.editable').keydown(function(event){  
-		    var value = $('.ajax input').val();
-		    //Puts all of the classes into an array, to be passed to the controller.
-		    var data = $(this).attr('class').split( " " );
-		    //data[0] = editable
-		    //data[1] = table name
-		    //data[2] = table field
-		    //data[3] = primary key
-		    
-		    if(event.keyCode == 13)  
-		   	{  
-				$.ajax({    
-					type: "POST",  
-					url: home + "index.php/workOrderForm/updateTabTable",   
-					data: {
-						'id' : data[3], 'field' : data[2], 'table' : data[1], 'value' : value
-					},
-					success: function(data){ 
-						alert(data); 
-						$('.ajax').html($('.ajax input').val());  
-						$('.ajax').removeClass('ajax');  
-				  	},
-				  	error: function(xhr) {
-						alert("An error occured: " + xhr.status + " " + xhr.statusText);
-					}
-		    	});  
+		$(document).on("keydown", 'td.editable', function(event){
+		    if(event.keyCode == 13) {  
+		   		updateTabTable(this);
 		    } 
 		});
 	}); 
@@ -373,22 +354,66 @@
 		});
 	});
 	
+	//Takes the classes of the submitted element, and uses them to save the updated value to the database.
+	function updateTabTable(selector) {
+		var value = $('.ajax input').val();
+	   
+	    //Puts all of the classes into an array, to be passed to the controller.
+	    var data = $(selector).attr('class').split( " " );
+	    //data[0] = editable
+	    //data[1] = table name
+	    //data[2] = table field
+	    //data[3] = primary key
+	    
+		$.ajax({    
+			type: "POST",  
+			url: home + "index.php/workOrderForm/updateTabTable",   
+			data: {
+				'id' : data[3], 'field' : data[2], 'table' : data[1], 'value' : value
+			},
+			success: function(data){ 
+				alert(data); 
+				$('.ajax').html($('.ajax input').val());  
+				$('.ajax').removeClass('ajax');  
+		  	},
+		  	error: function(xhr) {
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			}
+    	});
+	}
+	
 	//Appends an empty row to the open table, and saves a new record into the database for that blank row
-	function addTableRow(woID, tableType) {
+	function addTableRow(woID, tableType, tableTab) {
 		
 		$.ajax({    
-				type: "POST",  
-				url: home + "index.php/workOrderForm/newTableRow",   
-				data: {
-					'woID' : woID, 'table' : tableType
-				},
-				success: function(data){ 
-					$('#carpetTab').html(data);
-			  	},
-			  	error: function(xhr) {
-					alert("An error occured: " + xhr.status + " " + xhr.statusText);
-				}
-	    	});
+			type: "POST",  
+			url: home + "index.php/workOrderForm/newTableRow",   
+			data: {
+				'woID' : woID, 'table' : tableType
+			},
+			success: function(data){ 
+				$(tableTab).html(data);
+		  	},
+		  	error: function(xhr) {
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			}
+    	});
+	}
+	
+	function deleteServiceRow(id, woID, tableType, idName, tableTab) {
+		$.ajax({    
+			type: "POST",  
+			url: home + "index.php/workOrderForm/deleteTableRow",   
+			data: {
+				'id' : id, 'woID' : woID, 'table' : tableType, 'idName' : idName
+			},
+			success: function(data){ 
+				$(tableTab).html(data);
+		  	},
+		  	error: function(xhr) {
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			}
+    	});
 	}
 	/************************************************************************************************/
     /*		                         *End of table editing functions*                               */

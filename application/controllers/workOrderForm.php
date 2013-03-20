@@ -193,6 +193,7 @@
 									<th>Quantity</th>
 									<th>Unit Price</th>
 									<th>Extended Price</th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>";
@@ -208,13 +209,14 @@
 				$serviceTable .= "<td>".$row['serv_sq_feet']."</td>";
 				$serviceTable .= "<td class='editable service serv_quantity ".$row['serv_id']."'>".$row['serv_quantity']."</td>";
 				$serviceTable .= "<td class='editable service serv_unit_price ".$row['serv_id']."'>".$row['serv_unit_price']."</td>";
-				$serviceTable .= "<td></td></tr>";
+				$serviceTable .= "<td class='service serv_ext_price ".$row['serv_id']."'></td>";
+				$serviceTable .= "<td class='serv-delete-row'><button class='btn btn-danger btn-deleterow' onclick='deleteServiceRow(".$row['serv_id'].", ".$row['wo_id'].", \"service\", \"serv_id\", \"#carpetTab\")'>Delete</button></td></tr>";
 			}
 			
 			$serviceTable .= "</tbody></table>";
 			$serviceTable .= "<div>";
 			$serviceTable .= '<div class="totals-div"><label>Total Carpet Sq Ft: </label><input id="total-service-sqft" type="text" value="0.00" readonly><label>Total Carpet Price: </label><input id="total-service-price" type="text" value="0.00" readonly></div>';
-			$serviceTable .= '<button id="newrow-serv-btn" class="btn btn-large btn-success newrow-button pull-right" onclick="addTableRow('.$woID.', \'service\')">+ New Row</button>';
+			$serviceTable .= '<button id="newrow-serv-btn" class="btn btn-large btn-success newrow-button pull-right" onclick="addTableRow('.$woID.', \'service\', \'#carpetTab\')">+ New Row</button>';
 			$serviceTable .= "</div>";
 			return $serviceTable;
 		}
@@ -243,6 +245,17 @@
 			$table = $_POST['table'];
 			
 			$this->dbm->newRecordByTable($woID, $table);
+			$updatedTable = $this->getServiceTableForWO($woID);
+			echo $updatedTable;
+		}
+
+		function deleteTableRow() {
+			$id = $_POST['id'];
+			$idName = $_POST['idName'];
+			$woID = $_POST['woID'];
+			$table = $_POST['table'];
+			
+			$this->dbm->deleteRecordByTable($id, $idName, $table);
 			$updatedTable = $this->getServiceTableForWO($woID);
 			echo $updatedTable;
 		}
