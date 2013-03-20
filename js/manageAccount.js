@@ -165,7 +165,7 @@
 			},
 			success: function(data) {
 				if(data == "error") {
-					alert("test");
+					alert("You must set a valid password when creating a new account");
 				}
 				else {
 					$("#alert-data").val(data);

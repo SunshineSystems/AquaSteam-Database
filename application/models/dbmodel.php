@@ -243,6 +243,11 @@ class Dbmodel extends CI_Model {
 		$this->db->set('wo_id', $woID);
 		$this->db->insert($table);	
 	}
+	
+	function deleteRecordByTable($id, $idName, $table) {
+		$this->db->where($idName, $id);
+		$this->db->delete($table);	
+	}
 }
 
 ?>

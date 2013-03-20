@@ -147,3 +147,8 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 .totals-div {
 	display: inline-block;
 }
+
+.btn-deleterow {
+	font-size: 12px;
+	padding: 5px 12px;
+}
