@@ -30,3 +30,40 @@ body {
     margin-bottom: 15px;
     padding: 7px 9px;
 }
+
+
+*
+    {
+        margin: 0;
+    }
+
+
+html, body
+{
+    height: 100%;
+}
+
+
+    #footer
+    {
+        background-color: #004669;
+        font-family: Tahoma, Arial;
+        font-size: 0.7em;
+        color: White;
+        
+    }
+
+
+
+    .footer-container
+    {
+        
+        height:auto !important;
+        height:100%;
+        width:100%;
+        font-family: Verdana, Arial, Tahoma, Times New Roman;
+        font-size: 0.8em;
+        word-spacing: 1px;
+        line-height: 170%;
+
+    }

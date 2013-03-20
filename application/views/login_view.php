@@ -20,5 +20,13 @@
 		var home = "<?php echo $home; ?>";
 	</script>
     <script src="<?php echo $home?>js/login.js"></script>
+    
+    <div class="footer-container">
+    	<div id="footer" align="center">
+    		<img src="../images/New Aqua Logo Web.png" alt="Aqua Steam Logo" width="20%" height="20%">
+    	</div>
+    </div>
+    
+    
     </body>
 </html>
