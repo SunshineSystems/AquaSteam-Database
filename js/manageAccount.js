@@ -166,6 +166,12 @@
 				$("#alert-data").val(data);
 				document.getElementById("alert-form").submit();
 			}, 
+			
+			failure: funtion(data) {
+				$("#alert-data").val(data);
+				document.getElementById("alert-form").submit();
+			},
+			
 			error: function(xhr) {
 				alert("An error occured: " + xhr.status + " " + xhr.statusText);
 			}

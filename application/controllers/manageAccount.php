@@ -102,7 +102,12 @@
 			$data['user_cphone'] = $_POST['cphone'];
 			$data['user_notes'] = $_POST['notes'];
 			
-			if(!$id) {
+			if($_POST['username'] == ''){
+			$echo = "<div class='alert alert-failure'><h4>Sorry!</h4>
+								Could not save. Users must have a username, first name or a last name </div>";
+			}
+			
+			else if(!$id) {
 				$this->dbm->insertNewUser($data);
 				$echo = "<div class='alert alert-success'><h4>Success!</h4>
 								The New User Has Been Created</div>";
