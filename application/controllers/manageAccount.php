@@ -78,10 +78,23 @@
 			$data = array();
 			$id = $_POST['id'];
 			$userType = $_POST['type'];
+			$password = $_POST['password'];
 			global $hasher;
 			
-			//Hashes password for security purposes.
-			$hashedPassword = $hasher->HashPassword($_POST['password']);
+			//If the password is blank or is all whitespace, set a flag that there is no new password
+			//else it hashes the password and puts it in the data array to be saved to the database.
+			if(strlen(preg_replace('/\s+/u','',$password)) == 0) {
+				$noNewPass = TRUE;
+			}
+			else {
+				$noNewPass = FALSE;
+				
+				//Hashes password for security purposes.
+				$hashedPassword = $hasher->HashPassword($password);
+				$data['user_password'] = $hashedPassword;
+			}
+			
+			
 			
 			if($userType == "Admin") {
 				$data['user_admin'] = 1;
@@ -91,7 +104,6 @@
 			}
 			
 			$data['user_username'] = $_POST['username'];
-			$data['user_password'] = $hashedPassword;
 			$data['user_fname'] = $_POST['fname'];
 			$data['user_lname'] = $_POST['lname'];
 			$data['user_address'] = $_POST['address'];
@@ -102,12 +114,12 @@
 			$data['user_cphone'] = $_POST['cphone'];
 			$data['user_notes'] = $_POST['notes'];
 			
-			if($_POST['username'] == ''){
-			$echo = "<div class='alert alert-failure'><h4>Sorry!</h4>
-								Could not save. Users must have a username, first name or a last name </div>";
-			}
-			
-			else if(!$id) {
+			if(!$id) {
+				//If there's no password entered, a new account cannot be saved, so kill the function and pass
+				//back an error.
+				if($noNewPass) {
+					die("error");
+				}
 				$this->dbm->insertNewUser($data);
 				$echo = "<div class='alert alert-success'><h4>Success!</h4>
 								The New User Has Been Created</div>";

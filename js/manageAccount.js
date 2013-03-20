@@ -31,9 +31,7 @@
 		        height: "50",
 		        width: "100",
 		        click: function () {
-		        	saveAccount();
-		        	$(this).dialog("close");
-		        	clearForm();	
+		        	saveAccount();	
 		        }
 		    },
 		    
@@ -101,9 +99,7 @@
 		        height: "50",
 		        width: "100",
 		        click: function () {
-		        	saveAccount();
-		        	$(this).dialog("close");
-		        	clearForm();	
+		        	saveAccount();	
 		        }
 		    },
 		    
@@ -151,6 +147,13 @@
 		var hphone = $("#userHPhone").val();
 		var cphone = $("#userCPhone").val();
 		var notes = $("#userNotes").val();
+		
+		//If there are no characters in username, alert the user and don't return from the function.
+		if(username == 0) {
+			alert("You must input a username to save an account");
+			return;
+		}
+		
 		$.ajax({
 			type: "POST",
 			url: "manageAccount/saveAccount",
@@ -161,17 +164,14 @@
 					"notes" : notes 	
 			},
 			success: function(data) {
-				//$("#alert-div").html(data);
-				
-				$("#alert-data").val(data);
-				document.getElementById("alert-form").submit();
+				if(data == "error") {
+					alert("test");
+				}
+				else {
+					$("#alert-data").val(data);
+					document.getElementById("alert-form").submit();
+				}
 			}, 
-			
-			failure: funtion(data) {
-				$("#alert-data").val(data);
-				document.getElementById("alert-form").submit();
-			},
-			
 			error: function(xhr) {
 				alert("An error occured: " + xhr.status + " " + xhr.statusText);
 			}
@@ -186,7 +186,6 @@
 			url: "manageAccount/deleteAccount",
 			data: { "id" : id},
 			success: function(data) {
-
 				$("#alert-data").val(data);
 				document.getElementById("alert-form").submit();
 			}, 

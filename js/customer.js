@@ -169,8 +169,7 @@
 		        height: "50",
 		        width: "100",
 		        click: function () {
-		        	saveCustomer();
-		        	$(this).dialog("close");	
+		        	saveCustomer();	
 		        }
 		    },
 		
@@ -260,7 +259,6 @@
 		        width: "100",
 		        click: function () {
 		        	saveCustomer();
-		        	$(this).dialog("close");	
 		        }
 		    },
 		
@@ -328,6 +326,12 @@
 		var ref = $("#custRef").val();
 		var notes = $("#custNotes").val();
 		
+		//If required variables don't contain any characters, then alert them and exit the function.
+		if(fname == 0 && lname == 0 && company == 0) {
+			alert("You must have either a first name, last name, or company to save a customer.");
+			return;
+		}
+		
 		$.ajax({
 			type: "POST",
 			url: "customer/savecustomer",
@@ -346,11 +350,6 @@
 				$("#alert-data").val(data);
 				document.getElementById("alert-form").submit();
 			}, 
-			
-			failure: function(data){
-				$("#alert-data").val(data);
-				document.getElementById("alert-form").submit();
-			},
 			error: function(xhr) {
 				alert("An error occured: " + xhr.status + " " + xhr.statusText);
 			}

@@ -159,12 +159,8 @@
 			$data['cust_referral'] = $_POST['ref'];
 			$data['cust_notes'] = $_POST['notes'];
 			
-			if($sanitizedFName == '' && $sanitizedLName == '' && $_POST['company'] == ''){
-				$feedback = "<div class='alert alert-failure'><h4>Sorry!</h4>
-								Could not save. The Customer must have a first name, last name or a company.</div>";	
-			}
 			
-			else if(!$id) {
+			if(!$id) {
 				$newCustID = $this->dbm->insertNewCustomer($data); //returns the id of the customer after insertion
 				
 				$feedback = "<div id='new-cust-alert' class='alert alert-success'><h4>Success!</h4>The New Customer Has Been Saved.<br>
