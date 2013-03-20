@@ -1,7 +1,8 @@
 body {
     padding-top: 40px;
-    padding-bottom: 40px;
+    /*padding-bottom: 40px;*/
     background-color: #69A6C5;
+    height: 100%;
 }
 
 .form-signin {
@@ -31,39 +32,34 @@ body {
     padding: 7px 9px;
 }
 
-
-*
-    {
-        margin: 0;
-    }
-
-
 html, body
 {
     height: 100%;
 }
 
+#footer {
+	background-color: white;
+	position: absolute;
+	bottom: 0;
+	padding: 10px 0;
+	width: 100%;
+	border-top: 2px ridge grey;
+}
 
-    #footer
-    {
-        background-color: #004669;
-        font-family: Tahoma, Arial;
-        font-size: 0.7em;
-        color: White;
-        
-    }
+.container-footer{
+	margin-right: auto;
+}
 
+#aqualogo{
+	max-width: 450px;
+	height: 80px;
+}
 
+#wrap{
+	min-height: 80%;
+}
 
-    .footer-container
-    {
-        
-        height:auto !important;
-        height:100%;
-        width:100%;
-        font-family: Verdana, Arial, Tahoma, Times New Roman;
-        font-size: 0.8em;
-        word-spacing: 1px;
-        line-height: 170%;
-
-    }
+img{
+	height: 100%;
+	
+}
