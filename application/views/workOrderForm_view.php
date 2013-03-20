@@ -191,7 +191,7 @@
 						<p>=</p>
 					</div>
 					<div class="travelField-div">
-						<label>Total Price:</label>
+						<label>Total Travel Price:</label>
 						<div class="input-prepend">
 							<span class="add-on">$</span>
 						  	<input id="travelTotal" class="input-small span2" type="text" value="0.00" readonly>
@@ -203,7 +203,15 @@
 					<textarea id="woNotes" placeholder="Insert Notes Here..."><?php if(isset($woNotes)) echo $woNotes; ?></textarea>
 				</div>
 			</div>
-		
+			<br>
+			<div>
+			<label>Total Price: </label>
+				<div class="input-prepend">
+					<span class="add-on">$</span>
+				  	<input class="total-wo-price" class="input-small span2" type="text" value="0.00" readonly>
+				</div>
+			</div>
+			<hr>
 			<div id="buttons-container">
 				<button id="save-button" class="btn btn-large btn-primary" onclick="saveWorkOrder()">Save Work Order</button>
 				<button id="start-new-button" class="btn btn-large btn-info" onclick="startAsNew()">Start as New</button>

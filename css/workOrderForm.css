@@ -56,7 +56,6 @@ body {
 }
 
 #buttons-container {
-	margin-top: 50px;
 	text-align: center;
 }
 
@@ -64,6 +63,10 @@ body {
 	margin: 0 15px 0;
 	padding-top: 15px;
 	padding-bottom: 15px;
+}
+
+#tabs {
+	margin-bottom: 25px;
 }
 
 .travelField-div {
@@ -123,9 +126,24 @@ table.tablesorter tbody tr.odd td {
 }
 
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
-background-color: #8dbdd8;
+	background-color: #8dbdd8;
 }
+/* End Table Styling*/
 
 #editbox {
 	width: 90%;
+}
+
+.newrow-button {
+	font-size: 18px !important;
+	margin-top: 5px;
+}
+
+#total-wo-price {
+	width: 63px;
+	text-align: right;
+}
+
+.totals-div {
+	display: inline-block;
 }

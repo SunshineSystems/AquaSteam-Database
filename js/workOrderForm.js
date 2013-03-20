@@ -14,8 +14,8 @@
 		$( "#tabs" ).tabs();
 	});
 	
-	//Calculates total in Travel Tab when the page first loads
-	calcTravel();
+	//Runs all of the data calculations on page load
+	runAllCalcs();
 	
 	//Calculates total in Travel Tab when the values have changed, and the changed input has lost focus.
 	$('#travelDist').change(function() {
@@ -184,16 +184,151 @@
     	}
     }
     
-    /*This section of code will handle all of the table editing stuff.*/
+    //Goes through each row, and calculates the square feet by multiplying the values in that rows length/width cells.
+    function calcSqFt(i) {
+    	$("#service-table tr").each(function(i) {
+    		var length = $('tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
+    		var width = $('tr:nth-child('+(i+1)+')>td:nth-child(4)').text();
+    		
+    		if(isValidNum(length) && isValidNum(width)) {
+    			var total = length * width;
+    			var roundedTotal = total.toFixed(2);
+    			$('tr:nth-child('+(i+1)+')>td:nth-child(5)').text(roundedTotal);
+    		}
+    		else {
+    			$('tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
+    		}
+    	});
+    	
+    	$("#upholstery-table tr").each(function(i) {
+    		var length = $('tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
+    		var width = $('tr:nth-child('+(i+1)+')>td:nth-child(4)').text();
+    		
+    		if(isValidNum(length) && isValidNum(width)) {
+    			var total = length * width;
+    			var roundedTotal = total.toFixed(2);
+    			$('tr:nth-child('+(i+1)+')>td:nth-child(5)').text(roundedTotal);
+    		}
+    		else {
+    			$('tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
+    		}
+    	});
+    	
+    	$("#stainguard-table tr").each(function(i) {
+    		var length = $('tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
+    		var width = $('tr:nth-child('+(i+1)+')>td:nth-child(4)').text();
+    		
+    		if(isValidNum(length) && isValidNum(width)) {
+    			var total = length * width;
+    			var roundedTotal = total.toFixed(2);
+    			$('tr:nth-child('+(i+1)+')>td:nth-child(5)').text(roundedTotal);
+    		}
+    		else {
+    			$('tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
+    		}
+    	});
+    }
+    
+    //Goes through each row in the data tables, and calculates the extended price by multiplying quantity by unit price.
+    function calcExtPrice() {
+    	$("#service-table tr").each(function(i) {
+    		var quantity = $('tr:nth-child('+(i+1)+')>td:nth-child(6)').text();
+    		var price = $('tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
+    		
+    		if(isValidNum(quantity) && isValidNum(price)) {
+    			var total = quantity * price;
+    			var roundedTotal = total.toFixed(2);
+    			$('tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
+    		}
+    		else {
+    			$('tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
+    		}
+    	});
+    	
+    	$("#upholstery-table tr").each(function(i) {
+    		var quantity = $('tr:nth-child('+(i+1)+')>td:nth-child(6)').text();
+    		var price = $('tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
+    		
+    		if(isValidNum(quantity) && isValidNum(price)) {
+    			var total = quantity * price;
+    			var roundedTotal = total.toFixed(2);
+    			$('tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
+    		}
+    		else {
+    			$('tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
+    		}
+    	});
+    	
+    	$("#stainguard-table tr").each(function(i) {
+    		var quantity = $('tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
+    		var price = $('tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
+    		
+    		if(isValidNum(quantity) && isValidNum(price)) {
+    			var total = quantity * price;
+    			var roundedTotal = total.toFixed(2);
+    			$('tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
+    		}
+    		else {
+    			$('tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
+    		}
+    	});
+    }
+    
+    /* WORK IN PROGRESS
+	function calcTotalTabPrice() {
+		var serviceTotal = 0;
+		var upholsteryTotal = 0;
+		var stainguardTotal = 0;
+		
+		$("#service-table tr").each(function(i) {
+			alert("here");
+			var rowPrice = $('tr:nth-child('+(i+1)+')>td:nth-child(8)').text();
+			if(isValidNum(rowPrice)) {
+				serviceTotal += rowPrice;
+				var roundedTotal = serviceTotal.toFixed(2);
+				$("#total-service-price").val(roundedTotal);
+				alert("hello");
+			}
+			else {
+				$("#total-service-price").val("0.00");
+				alert("nope");
+			}	
+		});
+	}
+	*/
+    
+    function runAllCalcs() {
+    	calcTravel();
+		calcSqFt();
+		calcExtPrice();
+		calcTotalTabPrice();
+    }
+    
+    /************************************************************************************************/
+    /*		     	 *This section of code will handle all of the table editing stuff*              */
+    /*                                                                                              */
+    /************************************************************************************************/
 	$(function() {
 	    $('td.editable').click(function(){
-	    	var htmlData = '<input id="editbox" type="text" value="' +  $(this).text() + '">';
+	    	
+	    	//Prevents input from clearing if clicked twice
+	    	var cellText = $(this).text();
+	    	if(cellText == 0) {
+	    		cellText = $('#editbox').val();
+	    	}
+	    	
+	    	var htmlData = '<input id="editbox" type="text" value="' +  cellText + '">';
 	 		$('.ajax').html($('.ajax input').val());  
 	 		$('.ajax').removeClass('ajax');  
 	  
 	 		$(this).addClass('ajax');  
 	 		$(this).html(htmlData);  
-	  
+	  		
+	  		//Puts the cursor at the end of the input value, instead of highlighting it all
+			$('#editbox').focus(function() {
+				this.selectionStart = this.selectionEnd = this.value.length;
+			});
+			
 			$('#editbox').focus();
 		});
 	});
@@ -231,12 +366,35 @@
 	}); 
 	
 	//Removes the input box when it is no longer focused.
-	//Not working at the moment, need to fix it.
-	$('#editbox').on('blur',function(){
-		//alert("hello!");
-		$('.ajax').html($('.ajax input').val());
-		$('.ajax').removeClass('ajax');
+	$(function() {
+		$(document).on('blur', '#editbox', function(){
+			$('.ajax').html($('.ajax input').val());
+			$('.ajax').removeClass('ajax');
+		});
 	});
+	
+	//Appends an empty row to the open table, and saves a new record into the database for that blank row
+	function addTableRow(woID, tableType) {
+		
+		$.ajax({    
+				type: "POST",  
+				url: home + "index.php/workOrderForm/newTableRow",   
+				data: {
+					'woID' : woID, 'table' : tableType
+				},
+				success: function(data){ 
+					$('#carpetTab').html(data);
+			  	},
+			  	error: function(xhr) {
+					alert("An error occured: " + xhr.status + " " + xhr.statusText);
+				}
+	    	});
+	}
+	/************************************************************************************************/
+    /*		                         *End of table editing functions*                               */
+    /*                                                                                              */
+    /************************************************************************************************/
+	
 
 	
     

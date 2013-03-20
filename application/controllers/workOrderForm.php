@@ -212,6 +212,10 @@
 			}
 			
 			$serviceTable .= "</tbody></table>";
+			$serviceTable .= "<div>";
+			$serviceTable .= '<div class="totals-div"><label>Total Carpet Sq Ft: </label><input id="total-service-sqft" type="text" value="0.00" readonly><label>Total Carpet Price: </label><input id="total-service-price" type="text" value="0.00" readonly></div>';
+			$serviceTable .= '<button id="newrow-serv-btn" class="btn btn-large btn-success newrow-button pull-right" onclick="addTableRow('.$woID.', \'service\')">+ New Row</button>';
+			$serviceTable .= "</div>";
 			return $serviceTable;
 		}
 
@@ -232,6 +236,15 @@
 			}
 			
 			echo "yay it saved!";
+		}
+		
+		function newTableRow() {
+			$woID = $_POST['woID'];
+			$table = $_POST['table'];
+			
+			$this->dbm->newRecordByTable($woID, $table);
+			$updatedTable = $this->getServiceTableForWO($woID);
+			echo $updatedTable;
 		}
 	}
 	

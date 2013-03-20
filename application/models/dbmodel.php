@@ -239,6 +239,10 @@ class Dbmodel extends CI_Model {
 		$this->db->update('service');
 	}
 	
+	function newRecordByTable($woID, $table) {
+		$this->db->set('wo_id', $woID);
+		$this->db->insert($table);	
+	}
 }
 
 ?>
