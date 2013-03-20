@@ -23,7 +23,7 @@
     
     <div class="footer-container">
     	<div id="footer" align="center">
-    		<img src="../images/New Aqua Logo Web.png" alt="Aqua Steam Logo" width="20%" height="20%">
+    		<img src="../images/New Aqua Logo Web.png" alt="Aqua Steam Logo" width="10%" height="10%">
     	</div>
     </div>
     
