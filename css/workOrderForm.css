@@ -134,6 +134,10 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	width: 90%;
 }
 
+.editable {
+	cursor: pointer;
+}
+
 .newrow-button {
 	font-size: 18px !important;
 	margin-top: 5px;

@@ -227,11 +227,25 @@
     			$('tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
     		}
     	});
+    	
+    	$("#other-table tr").each(function(i) {
+    		var length = $('tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
+    		var width = $('tr:nth-child('+(i+1)+')>td:nth-child(4)').text();
+    		
+    		if(isValidNum(length) && isValidNum(width)) {
+    			var total = length * width;
+    			var roundedTotal = total.toFixed(2);
+    			$('tr:nth-child('+(i+1)+')>td:nth-child(5)').text(roundedTotal);
+    		}
+    		else {
+    			$('tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
+    		}
+    	});
     }
     
     //Goes through each row in the data tables, and calculates the extended price by multiplying quantity by unit price.
     function calcExtPrice() {
-    	$("#service-table tr").each(function(i) {
+    	$("#service-table tbody tr").each(function(i) {
     		var quantity = $('tr:nth-child('+(i+1)+')>td:nth-child(6)').text();
     		var price = $('tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
     		
@@ -272,36 +286,119 @@
     			$('tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
     		}
     	});
+    	
+    	$("#other-table tr").each(function(i) {
+    		var quantity = $('tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
+    		var price = $('tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
+    		
+    		if(isValidNum(quantity) && isValidNum(price)) {
+    			var total = quantity * price;
+    			var roundedTotal = total.toFixed(2);
+    			$('tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
+    		}
+    		else {
+    			$('tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
+    		}
+    	});
     }
     
-    /* WORK IN PROGRESS
-	function calcTotalTabPrice() {
+    //For each data table, it goes through each body row, and gets the value of the extended price column
+    //and adds it to the total. Once it's gone through each row, it displays the total in the table total price field.
+	function calcTotalTablePrice() {
 		var serviceTotal = 0;
 		var upholsteryTotal = 0;
 		var stainguardTotal = 0;
+		var otherTotal = 0;
 		
-		$("#service-table tr").each(function(i) {
-			alert("here");
+		$("#service-table tbody tr").each(function(i) {
 			var rowPrice = $('tr:nth-child('+(i+1)+')>td:nth-child(8)').text();
 			if(isValidNum(rowPrice)) {
-				serviceTotal += rowPrice;
+				serviceTotal += parseFloat(rowPrice);
 				var roundedTotal = serviceTotal.toFixed(2);
 				$("#total-service-price").val(roundedTotal);
-				alert("hello");
 			}
-			else {
-				$("#total-service-price").val("0.00");
-				alert("nope");
+		});
+		
+		$("#upholstery-table tbody tr").each(function(i) {
+			var rowPrice = $('tr:nth-child('+(i+1)+')>td:nth-child(8)').text();
+			if(isValidNum(rowPrice)) {
+				upholsteryTotal += parseFloat(rowPrice);
+				var roundedTotal = upholsteryTotal.toFixed(2);
+				$("#total-upholstery-price").val(roundedTotal);
+			}
+		});
+		
+		$("#stainguard-table tbody tr").each(function(i) {
+			var rowPrice = $('tr:nth-child('+(i+1)+')>td:nth-child(8)').text();
+			if(isValidNum(rowPrice)) {
+				stainguardTotal += parseFloat(rowPrice);
+				var roundedTotal = stainguardTotal.toFixed(2);
+				$("#total-stainguard-price").val(roundedTotal);
+			}	
+		});
+		
+		$("#other-table tbody tr").each(function(i) {
+			var rowPrice = $('tr:nth-child('+(i+1)+')>td:nth-child(8)').text();
+			if(isValidNum(rowPrice)) {
+				otherTotal += parseFloat(rowPrice);
+				var roundedTotal = otherTotal.toFixed(2);
+				alert(roundedTotal);
+				$("#total-other-price").val(roundedTotal);
 			}	
 		});
 	}
-	*/
+	
+	//For each data table, it goes through each body row, and gets the value of the square feet column
+    //and adds it to the total. Once it's gone through each row, it displays the total in the table total sqft field.
+	function calcTotalTableSqFt() {
+		var serviceTotal = 0;
+		var upholsteryTotal = 0;
+		var stainguardTotal = 0;
+		var otherTotal = 0;
+		
+		$("#service-table tbody tr").each(function(i) {
+			var rowPrice = $('tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
+			if(isValidNum(rowPrice)) {
+				serviceTotal += parseFloat(rowPrice);
+				var roundedTotal = serviceTotal.toFixed(2);
+				$("#total-service-sqft").val(roundedTotal);
+			}	
+		});
+		
+		$("#upholstery-table tbody tr").each(function(i) {
+			var rowPrice = $('tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
+			if(isValidNum(rowPrice)) {
+				upholsteryTotal += parseFloat(rowPrice);
+				var roundedTotal = upholsteryTotal.toFixed(2);
+				$("#total-upholstery-sqft").val(roundedTotal);
+			}	
+		});
+		
+		$("#stainguard-table tbody tr").each(function(i) {
+			var rowPrice = $('tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
+			if(isValidNum(rowPrice)) {
+				stainguardTotal += parseFloat(rowPrice);
+				var roundedTotal = stainguardTotal.toFixed(2);
+				$("#total-stainguard-sqft").val(roundedTotal);
+			}	
+		});
+		
+		$("#other-table tbody tr").each(function(i) {
+			var rowPrice = $('tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
+			if(isValidNum(rowPrice)) {
+				otherTotal += parseFloat(rowPrice);
+				var roundedTotal = otherTotal.toFixed(2);
+				$("#total-other-sqft").val(roundedTotal);
+			}	
+		});
+	}
     
     function runAllCalcs() {
     	calcTravel();
 		calcSqFt();
 		calcExtPrice();
-		//calcTotalTabPrice();
+		calcTotalTablePrice();
+		calcTotalTableSqFt();
     }
     
     /************************************************************************************************/
@@ -374,7 +471,8 @@
 			success: function(data){ 
 				alert(data); 
 				$('.ajax').html($('.ajax input').val());  
-				$('.ajax').removeClass('ajax');  
+				$('.ajax').removeClass('ajax');
+				runAllCalcs();  
 		  	},
 		  	error: function(xhr) {
 				alert("An error occured: " + xhr.status + " " + xhr.statusText);
@@ -393,6 +491,8 @@
 			},
 			success: function(data){ 
 				$(tableTab).html(data);
+				runAllCalcs();
+				
 		  	},
 		  	error: function(xhr) {
 				alert("An error occured: " + xhr.status + " " + xhr.statusText);
@@ -400,20 +500,23 @@
     	});
 	}
 	
-	function deleteServiceRow(id, woID, tableType, idName, tableTab) {
-		$.ajax({    
-			type: "POST",  
-			url: home + "index.php/workOrderForm/deleteTableRow",   
-			data: {
-				'id' : id, 'woID' : woID, 'table' : tableType, 'idName' : idName
-			},
-			success: function(data){ 
-				$(tableTab).html(data);
-		  	},
-		  	error: function(xhr) {
-				alert("An error occured: " + xhr.status + " " + xhr.statusText);
-			}
-    	});
+	function deleteTableRow(id, woID, tableType, idName, tableTab) {
+		if(confirm("Are you sure you want to permanently delete this row?")) {
+			$.ajax({    
+				type: "POST",  
+				url: home + "index.php/workOrderForm/deleteTableRow",   
+				data: {
+					'id' : id, 'woID' : woID, 'table' : tableType, 'idName' : idName
+				},
+				success: function(data){ 
+					$(tableTab).html(data);
+					runAllCalcs();
+			  	},
+			  	error: function(xhr) {
+					alert("An error occured: " + xhr.status + " " + xhr.statusText);
+				}
+	    	});
+    	}
 	}
 	/************************************************************************************************/
     /*		                         *End of table editing functions*                               */

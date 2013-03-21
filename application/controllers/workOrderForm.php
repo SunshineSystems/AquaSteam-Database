@@ -210,7 +210,7 @@
 				$serviceTable .= "<td class='editable service serv_quantity ".$row['serv_id']."'>".$row['serv_quantity']."</td>";
 				$serviceTable .= "<td class='editable service serv_unit_price ".$row['serv_id']."'>".$row['serv_unit_price']."</td>";
 				$serviceTable .= "<td class='service serv_ext_price ".$row['serv_id']."'></td>";
-				$serviceTable .= "<td class='serv-delete-row'><button class='btn btn-danger btn-deleterow' onclick='deleteServiceRow(".$row['serv_id'].", ".$row['wo_id'].", \"service\", \"serv_id\", \"#carpetTab\")'>Delete</button></td></tr>";
+				$serviceTable .= "<td class='serv-delete-row'><button class='btn btn-danger btn-deleterow' onclick='deleteTableRow(".$row['serv_id'].", ".$row['wo_id'].", \"service\", \"serv_id\", \"#carpetTab\")'>Delete</button></td></tr>";
 			}
 			
 			$serviceTable .= "</tbody></table>";

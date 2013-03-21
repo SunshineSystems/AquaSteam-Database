@@ -160,6 +160,7 @@
 					<li><a href="#carpetTab">Carpet</a></li>
 					<li><a href="#upholsteryTab">Upholstery</a></li>
 					<li><a href="#stainGuardTab">Stain Guard</a></li>
+					<li><a href="#otherTab">Other</a></li>
 					<li><a href="#travelTab">Travel</a></li>
 					<li><a href="#notesTab">Notes</a></li>
 				</ul>
@@ -172,6 +173,10 @@
 				</div>
 				
 				<div id="stainGuardTab">
+					<p>Hello</p>
+				</div>
+				
+				<div id="otherTab">
 					<p>Hello</p>
 				</div>
 			
