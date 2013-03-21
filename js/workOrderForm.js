@@ -124,6 +124,11 @@
     	$('#woPad').attr('checked', false);
     	$('#woEncapsulate').attr('checked', false);
     	$('#woForm').attr('checked', false);
+    	$('#woNotes').val("");
+    	$('#travelDist').val(0);
+    	$('#travelPrice').val(0);
+    	$('tbody').html("");
+    	saveWorkOrder();
     }
     
     function printWorkOrder() {
