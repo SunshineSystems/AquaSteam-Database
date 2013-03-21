@@ -57,6 +57,9 @@
 				$data['travDistance'] = $row['travel_distance'];
 				$data['travPrice'] = $row['travel_price'];
 				$data['serviceTable'] = $this->getServiceTableForWO($id);
+				$data['upholsteryTable'] = $this->getUpholsteryTableForWO($id);
+				$data['stainguardTable'] = $this->getStainGuardTableForWO($id);
+				$data['otherTable'] = $this->getOtherTableForWO($id);
 			}
 			
 			$this->load->view('header.php', $data);
@@ -198,7 +201,7 @@
 							</thead>
 							<tbody>";
 			
-			//Gets each row from Service that is tied to the open work order.
+			//Gets each row from service that is tied to the open work order.
 			//Puts the content into a table to be displayed. Each cell has classes that will make them editable.				
 			$results = $this->dbm->getServiceByWOID($woID);
 			foreach($results->result_array() as $row) {
@@ -221,23 +224,151 @@
 			return $serviceTable;
 		}
 
+		function getUpholsteryTableForWO($woID) {
+			$upholsteryTable = "<table id='upholstery-table' class='tablesorter table-striped'>
+							<thead>
+								<tr>
+									<th>Color/Type</th>
+									<th>Description</th>
+									<th>Length</th>
+									<th>Width</th>
+									<th>Sq Feet</th>
+									<th>Quantity</th>
+									<th>Unit Price</th>
+									<th>Extended Price</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>";
+			
+			//Gets each row from upholstery that is tied to the open work order.
+			//Puts the content into a table to be displayed. Each cell has classes that will make them editable.				
+			$results = $this->dbm->getUpholsteryByWOID($woID);
+			foreach($results->result_array() as $row) {
+				$upholsteryTable .= "<tr><td class='editable upholstery up_type ".$row['up_id']."'>".$row['up_type']."</td>";
+				$upholsteryTable .= "<td class='editable upholstery up_description ".$row['up_id']."'>".$row['up_description']."</td>";
+				$upholsteryTable .= "<td class='editable upholstery up_length ".$row['up_id']."'>".$row['up_length']."</td>";
+				$upholsteryTable .= "<td class='editable upholstery up_width ".$row['up_id']."'>".$row['up_width']."</td>";
+				$upholsteryTable .= "<td>".$row['up_sq_feet']."</td>";
+				$upholsteryTable .= "<td class='editable upholstery up_quantity ".$row['up_id']."'>".$row['up_quantity']."</td>";
+				$upholsteryTable .= "<td class='editable upholstery up_unit_price ".$row['up_id']."'>".$row['up_unit_price']."</td>";
+				$upholsteryTable .= "<td class='upholstery up_ext_price ".$row['up_id']."'></td>";
+				$upholsteryTable .= "<td class='up-delete-row'><button class='btn btn-danger btn-deleterow' onclick='deleteTableRow(".$row['up_id'].", ".$row['wo_id'].", \"upholstery\", \"up_id\", \"#upholsteryTab\")'>Delete</button></td></tr>";
+			}
+			
+			$upholsteryTable .= "</tbody></table>";
+			$upholsteryTable .= "<div>";
+			$upholsteryTable .= '<div class="totals-div"><label>Total Upholstery Sq Ft: </label><input id="total-upholstery-sqft" type="text" value="0.00" readonly><label>Total Upholstery Price: </label><input id="total-upholstery-price" type="text" value="0.00" readonly></div>';
+			$upholsteryTable .= '<button id="newrow-up-btn" class="btn btn-large btn-success newrow-button pull-right" onclick="addTableRow('.$woID.', \'upholstery\', \'#upholsteryTab\')">+ New Row</button>';
+			$upholsteryTable .= "</div>";
+			return $upholsteryTable;
+		}
+		
+		function getStainGuardTableForWO($woID) {
+			$stainguardTable = "<table id='stainguard-table' class='tablesorter table-striped'>
+							<thead>
+								<tr>
+									<th>Color/Type</th>
+									<th>Description</th>
+									<th>Length</th>
+									<th>Width</th>
+									<th>Sq Feet</th>
+									<th>Quantity</th>
+									<th>Unit Price</th>
+									<th>Extended Price</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>";
+			
+			//Gets each row from stain_guard that is tied to the open work order.
+			//Puts the content into a table to be displayed. Each cell has classes that will make them editable.				
+			$results = $this->dbm->getStainGuardByWOID($woID);
+			foreach($results->result_array() as $row) {
+				$stainguardTable .= "<tr><td class='editable stain_guard sg_type ".$row['sg_id']."'>".$row['sg_type']."</td>";
+				$stainguardTable .= "<td class='editable stain_guard sg_description ".$row['sg_id']."'>".$row['sg_description']."</td>";
+				$stainguardTable .= "<td class='editable stain_guard sg_length ".$row['sg_id']."'>".$row['sg_length']."</td>";
+				$stainguardTable .= "<td class='editable stain_guard sg_width ".$row['sg_id']."'>".$row['sg_width']."</td>";
+				$stainguardTable .= "<td>".$row['sg_sq_feet']."</td>";
+				$stainguardTable .= "<td class='editable stain_guard sg_quantity ".$row['sg_id']."'>".$row['sg_quantity']."</td>";
+				$stainguardTable .= "<td class='editable stain_guard sg_unit_price ".$row['sg_id']."'>".$row['sg_unit_price']."</td>";
+				$stainguardTable .= "<td class='stain_guard sg_ext_price ".$row['sg_id']."'></td>";
+				$stainguardTable .= "<td class='sg-delete-row'><button class='btn btn-danger btn-deleterow' onclick='deleteTableRow(".$row['sg_id'].", ".$row['wo_id'].", \"stain_guard\", \"sg_id\", \"#stainGuardTab\")'>Delete</button></td></tr>";
+			}
+			
+			$stainguardTable .= "</tbody></table>";
+			$stainguardTable .= "<div>";
+			$stainguardTable .= '<div class="totals-div"><label>Total Stain Guard Sq Ft: </label><input id="total-stainguard-sqft" type="text" value="0.00" readonly><label>Total Stain Guard Price: </label><input id="total-stainguard-price" type="text" value="0.00" readonly></div>';
+			$stainguardTable .= '<button id="newrow-sg-btn" class="btn btn-large btn-success newrow-button pull-right" onclick="addTableRow('.$woID.', \'stain_guard\', \'#stainGuardTab\')">+ New Row</button>';
+			$stainguardTable .= "</div>";
+			return $stainguardTable;
+		}
+		
+		function getOtherTableForWO($woID) {
+			$otherTable = "<table id='other-table' class='tablesorter table-striped'>
+							<thead>
+								<tr>
+									<th>Color/Type</th>
+									<th>Description</th>
+									<th>Length</th>
+									<th>Width</th>
+									<th>Sq Feet</th>
+									<th>Quantity</th>
+									<th>Unit Price</th>
+									<th>Extended Price</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>";
+			
+			//Gets each row from other that is tied to the open work order.
+			//Puts the content into a table to be displayed. Each cell has classes that will make them editable.				
+			$results = $this->dbm->getOtherByWOID($woID);
+			foreach($results->result_array() as $row) {
+				$otherTable .= "<tr><td class='editable other other_type ".$row['other_id']."'>".$row['other_type']."</td>";
+				$otherTable .= "<td class='editable other other_description ".$row['other_id']."'>".$row['other_description']."</td>";
+				$otherTable .= "<td class='editable other other_length ".$row['other_id']."'>".$row['other_length']."</td>";
+				$otherTable .= "<td class='editable other other_width ".$row['other_id']."'>".$row['other_width']."</td>";
+				$otherTable .= "<td>".$row['other_sq_feet']."</td>";
+				$otherTable .= "<td class='editable other other_quantity ".$row['other_id']."'>".$row['other_quantity']."</td>";
+				$otherTable .= "<td class='editable other other_unit_price ".$row['other_id']."'>".$row['other_unit_price']."</td>";
+				$otherTable .= "<td class='other other_ext_price ".$row['other_id']."'></td>";
+				$otherTable .= "<td class='other-delete-row'><button class='btn btn-danger btn-deleterow' onclick='deleteTableRow(".$row['other_id'].", ".$row['wo_id'].", \"other\", \"other_id\", \"#otherTab\")'>Delete</button></td></tr>";
+			}
+			
+			$otherTable .= "</tbody></table>";
+			$otherTable .= "<div>";
+			$otherTable .= '<div class="totals-div"><label>Total "Other" Sq Ft: </label><input id="total-other-sqft" type="text" value="0.00" readonly><label>Total "Other" Price: </label><input id="total-other-price" type="text" value="0.00" readonly></div>';
+			$otherTable .= '<button id="newrow-other-btn" class="btn btn-large btn-success newrow-button pull-right" onclick="addTableRow('.$woID.', \'other\', \'#otherTab\')">+ New Row</button>';
+			$otherTable .= "</div>";
+			return $otherTable;
+		}
+		
+		
+		// Saves the posted value to the database in it's table, where the posted id == the id in the database
 		function updateTabTable() {
 			$id = $_POST['id'];
 			$field = $_POST['field'];
 			$table = $_POST['table'];
 			$value = $_POST['value'];
+
+			switch($table) {
+				case "service":
+					$idName = "serv_id";
+					break;
+				case "upholstery":
+					$idName = "up_id";
+					break;
+				case "stain_guard":
+					$idName = "sg_id";
+					break;
+				case "other":
+					$idName = "other_id";
+					break;
+			}
 			
-			if($table == 'service') {
-				$this->dbm->updateServiceValue($id, $field, $value);
-			}
-			else if($table == 'upholstery') {
-				//updateUpholsteryValue
-			}
-			else {
-				//updateStainGuardValue
-			}
-			
-			echo "yay it saved!";
+			$this->dbm->updateDataTableValue($id, $idName, $field, $value, $table);
+			echo "Value saved!";
 		}
 		
 		function newTableRow() {
@@ -245,10 +376,26 @@
 			$table = $_POST['table'];
 			
 			$this->dbm->newRecordByTable($woID, $table);
-			$updatedTable = $this->getServiceTableForWO($woID);
+			
+			switch($table) {
+				case "service":
+					$updatedTable = $this->getServiceTableForWO($woID);
+					break;
+				case "upholstery":
+					$updatedTable = $this->getUpholsteryTableForWO($woID);
+					break;
+				case "stain_guard":
+					$updatedTable = $this->getStainGuardTableForWO($woID);
+					break;
+				case "other":
+					$updatedTable = $this->getOtherTableForWO($woID);
+					break;
+			}
+			
 			echo $updatedTable;
 		}
-
+		
+		//Deletes the row in the posted table, that matches the posted id.
 		function deleteTableRow() {
 			$id = $_POST['id'];
 			$idName = $_POST['idName'];
@@ -256,7 +403,22 @@
 			$table = $_POST['table'];
 			
 			$this->dbm->deleteRecordByTable($id, $idName, $table);
-			$updatedTable = $this->getServiceTableForWO($woID);
+			
+			switch($table) {
+				case "service":
+					$updatedTable = $this->getServiceTableForWO($woID);
+					break;
+				case "upholstery":
+					$updatedTable = $this->getUpholsteryTableForWO($woID);
+					break;
+				case "stain_guard":
+					$updatedTable = $this->getStainGuardTableForWO($woID);
+					break;
+				case "other":
+					$updatedTable = $this->getOtherTableForWO($woID);
+					break;
+			}
+			
 			echo $updatedTable;
 		}
 	}

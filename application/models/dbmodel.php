@@ -233,10 +233,31 @@ class Dbmodel extends CI_Model {
 		return $query;
 	}
 	
-	function updateServiceValue($id, $field, $value) {
+	function getUpholsteryByWOID($woID) {
+		$this->db->where("wo_id", $woID);	
+		$query = $this->db->get('upholstery');
+		
+		return $query;
+	}
+	
+	function getStainGuardByWOID($woID) {
+		$this->db->where("wo_id", $woID);	
+		$query = $this->db->get('stain_guard');
+		
+		return $query;
+	}
+	
+	function getOtherByWOID($woID) {
+		$this->db->where("wo_id", $woID);	
+		$query = $this->db->get('other');
+		
+		return $query;
+	}
+	
+	function updateDataTableValue($id, $idName, $field, $value, $table) {
 		$this->db->set($field, $value);	
-		$this->db->where("serv_id", $id);
-		$this->db->update('service');
+		$this->db->where($idName, $id);
+		$this->db->update($table);
 	}
 	
 	function newRecordByTable($woID, $table) {

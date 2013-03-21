@@ -15,7 +15,7 @@
 			<div id="top-container">
 				<div id="inputs-div">
 		    		<div class="control-group">
-		    			<label class="control-label" for="workOrderID">Work Order ID</label>
+		    			<label class="control-label" for="workOrderID">Work Order ID:</label>
 		    				<div class="controls">
 		    					<input  class="input-small" type="text" id="workOrderID" placeholder="######" readonly value="<?php if(isset($woID)) echo $woID; ?>">
 		   		 			</div>
@@ -169,15 +169,15 @@
 				</div>
 			
 				<div id="upholsteryTab">
-					<p>Hello</p>
+					<?php if(isset($upholsteryTable)) echo $upholsteryTable; ?>
 				</div>
 				
 				<div id="stainGuardTab">
-					<p>Hello</p>
+					<?php if(isset($stainguardTable)) echo $stainguardTable; ?>
 				</div>
 				
 				<div id="otherTab">
-					<p>Hello</p>
+					<?php if(isset($otherTable)) echo $otherTable; ?>
 				</div>
 			
 				<div id="travelTab">

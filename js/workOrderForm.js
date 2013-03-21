@@ -133,7 +133,7 @@
     function deleteWorkOrder() {
     	var id = $("#workOrderID").val();
     	if(id == "") {
-    		alert("You can't delete what don't exist son");
+    		alert("You can't delete a work order that doesn't exist");
     		return;
     	}
     	
@@ -186,59 +186,59 @@
     
     //Goes through each row, and calculates the square feet by multiplying the values in that rows length/width cells.
     function calcSqFt(i) {
-    	$("#service-table tr").each(function(i) {
-    		var length = $('tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
-    		var width = $('tr:nth-child('+(i+1)+')>td:nth-child(4)').text();
+    	$("#service-table tbody tr").each(function(i) {
+    		var length = $('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
+    		var width = $('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(4)').text();
     		
     		if(isValidNum(length) && isValidNum(width)) {
     			var total = length * width;
     			var roundedTotal = total.toFixed(2);
-    			$('tr:nth-child('+(i+1)+')>td:nth-child(5)').text(roundedTotal);
+    			$('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text(roundedTotal);
     		}
     		else {
-    			$('tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
+    			$('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
     		}
     	});
     	
-    	$("#upholstery-table tr").each(function(i) {
-    		var length = $('tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
-    		var width = $('tr:nth-child('+(i+1)+')>td:nth-child(4)').text();
+    	$("#upholstery-table tbody tr").each(function(i) {
+    		var length = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
+    		var width = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(4)').text();
     		
     		if(isValidNum(length) && isValidNum(width)) {
     			var total = length * width;
     			var roundedTotal = total.toFixed(2);
-    			$('tr:nth-child('+(i+1)+')>td:nth-child(5)').text(roundedTotal);
+    			$('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text(roundedTotal);
     		}
     		else {
-    			$('tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
+    			$('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
     		}
     	});
     	
-    	$("#stainguard-table tr").each(function(i) {
-    		var length = $('tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
-    		var width = $('tr:nth-child('+(i+1)+')>td:nth-child(4)').text();
+    	$("#stainguard-table tbody tr").each(function(i) {
+    		var length = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
+    		var width = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(4)').text();
     		
     		if(isValidNum(length) && isValidNum(width)) {
     			var total = length * width;
     			var roundedTotal = total.toFixed(2);
-    			$('tr:nth-child('+(i+1)+')>td:nth-child(5)').text(roundedTotal);
+    			$('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text(roundedTotal);
     		}
     		else {
-    			$('tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
+    			$('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
     		}
     	});
     	
-    	$("#other-table tr").each(function(i) {
-    		var length = $('tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
-    		var width = $('tr:nth-child('+(i+1)+')>td:nth-child(4)').text();
+    	$("#other-table tbody tr").each(function(i) {
+    		var length = $('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
+    		var width = $('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(4)').text();
     		
     		if(isValidNum(length) && isValidNum(width)) {
     			var total = length * width;
     			var roundedTotal = total.toFixed(2);
-    			$('tr:nth-child('+(i+1)+')>td:nth-child(5)').text(roundedTotal);
+    			$('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text(roundedTotal);
     		}
     		else {
-    			$('tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
+    			$('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
     		}
     	});
     }
@@ -246,58 +246,58 @@
     //Goes through each row in the data tables, and calculates the extended price by multiplying quantity by unit price.
     function calcExtPrice() {
     	$("#service-table tbody tr").each(function(i) {
-    		var quantity = $('tr:nth-child('+(i+1)+')>td:nth-child(6)').text();
-    		var price = $('tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
+    		var quantity = $('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(6)').text();
+    		var price = $('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
     		
     		if(isValidNum(quantity) && isValidNum(price)) {
     			var total = quantity * price;
     			var roundedTotal = total.toFixed(2);
-    			$('tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
+    			$('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
     		}
     		else {
-    			$('tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
+    			$('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
     		}
     	});
     	
-    	$("#upholstery-table tr").each(function(i) {
-    		var quantity = $('tr:nth-child('+(i+1)+')>td:nth-child(6)').text();
-    		var price = $('tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
+    	$("#upholstery-table tbody tr").each(function(i) {
+    		var quantity = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(6)').text();
+    		var price = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
     		
     		if(isValidNum(quantity) && isValidNum(price)) {
     			var total = quantity * price;
     			var roundedTotal = total.toFixed(2);
-    			$('tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
+    			$('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
     		}
     		else {
-    			$('tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
+    			$('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
     		}
     	});
     	
-    	$("#stainguard-table tr").each(function(i) {
-    		var quantity = $('tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
-    		var price = $('tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
+    	$("#stainguard-table tbody tr").each(function(i) {
+    		var quantity = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(6)').text();
+    		var price = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
     		
     		if(isValidNum(quantity) && isValidNum(price)) {
     			var total = quantity * price;
     			var roundedTotal = total.toFixed(2);
-    			$('tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
+    			$('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
     		}
     		else {
-    			$('tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
+    			$('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
     		}
     	});
     	
-    	$("#other-table tr").each(function(i) {
-    		var quantity = $('tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
-    		var price = $('tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
+    	$("#other-table tbody tr").each(function(i) {
+    		var quantity = $('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(6)').text();
+    		var price = $('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
     		
     		if(isValidNum(quantity) && isValidNum(price)) {
     			var total = quantity * price;
     			var roundedTotal = total.toFixed(2);
-    			$('tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
+    			$('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
     		}
     		else {
-    			$('tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
+    			$('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
     		}
     	});
     }
@@ -311,7 +311,7 @@
 		var otherTotal = 0;
 		
 		$("#service-table tbody tr").each(function(i) {
-			var rowPrice = $('tr:nth-child('+(i+1)+')>td:nth-child(8)').text();
+			var rowPrice = $('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text();
 			if(isValidNum(rowPrice)) {
 				serviceTotal += parseFloat(rowPrice);
 				var roundedTotal = serviceTotal.toFixed(2);
@@ -320,7 +320,7 @@
 		});
 		
 		$("#upholstery-table tbody tr").each(function(i) {
-			var rowPrice = $('tr:nth-child('+(i+1)+')>td:nth-child(8)').text();
+			var rowPrice = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text();
 			if(isValidNum(rowPrice)) {
 				upholsteryTotal += parseFloat(rowPrice);
 				var roundedTotal = upholsteryTotal.toFixed(2);
@@ -329,7 +329,7 @@
 		});
 		
 		$("#stainguard-table tbody tr").each(function(i) {
-			var rowPrice = $('tr:nth-child('+(i+1)+')>td:nth-child(8)').text();
+			var rowPrice = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text();
 			if(isValidNum(rowPrice)) {
 				stainguardTotal += parseFloat(rowPrice);
 				var roundedTotal = stainguardTotal.toFixed(2);
@@ -338,11 +338,10 @@
 		});
 		
 		$("#other-table tbody tr").each(function(i) {
-			var rowPrice = $('tr:nth-child('+(i+1)+')>td:nth-child(8)').text();
+			var rowPrice = $('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text();
 			if(isValidNum(rowPrice)) {
 				otherTotal += parseFloat(rowPrice);
 				var roundedTotal = otherTotal.toFixed(2);
-				alert(roundedTotal);
 				$("#total-other-price").val(roundedTotal);
 			}	
 		});
@@ -357,7 +356,7 @@
 		var otherTotal = 0;
 		
 		$("#service-table tbody tr").each(function(i) {
-			var rowPrice = $('tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
+			var rowPrice = $('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
 			if(isValidNum(rowPrice)) {
 				serviceTotal += parseFloat(rowPrice);
 				var roundedTotal = serviceTotal.toFixed(2);
@@ -366,7 +365,7 @@
 		});
 		
 		$("#upholstery-table tbody tr").each(function(i) {
-			var rowPrice = $('tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
+			var rowPrice = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
 			if(isValidNum(rowPrice)) {
 				upholsteryTotal += parseFloat(rowPrice);
 				var roundedTotal = upholsteryTotal.toFixed(2);
@@ -375,7 +374,7 @@
 		});
 		
 		$("#stainguard-table tbody tr").each(function(i) {
-			var rowPrice = $('tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
+			var rowPrice = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
 			if(isValidNum(rowPrice)) {
 				stainguardTotal += parseFloat(rowPrice);
 				var roundedTotal = stainguardTotal.toFixed(2);
@@ -384,7 +383,7 @@
 		});
 		
 		$("#other-table tbody tr").each(function(i) {
-			var rowPrice = $('tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
+			var rowPrice = $('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
 			if(isValidNum(rowPrice)) {
 				otherTotal += parseFloat(rowPrice);
 				var roundedTotal = otherTotal.toFixed(2);
