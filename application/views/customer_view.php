@@ -4,6 +4,7 @@
 		        
         <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/customer.css">
         <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/table css/style.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/table cssspager.css">
 		
 		<div class="container cust-container">
 			<h1>Customers</h1>
@@ -95,6 +96,7 @@
 			var home = "<?php echo $home; ?>";
 		</script>
 		<script src="<?php echo $home?>js/jquery.tablesorter.js"></script>
+		<script src="<?php echo $home?>js/jquery.tablesorter.pager.js"></script>
 		<script src="<?php echo $home?>js/customer.js"></script>
 	</body>
 </html>

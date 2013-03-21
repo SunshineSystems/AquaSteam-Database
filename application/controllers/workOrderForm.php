@@ -26,10 +26,15 @@
 			foreach($results->result_array() as $row) {
 				$data['custID'] = $row['cust_id'];
 				
-				//Formats date to MM/DD/YYYY, before being output to the table.
-				$unix = strtotime($row["wo_date"]);
-				$formattedDate = date("m/d/Y", $unix);
-				$data['woDate'] = $formattedDate;
+				//Formats date to MM/DD/YYYY, before being output to the table, if it's 0's output no date.
+				if($row['wo_date'] == "0000-00-00") {
+					$data['woDate'] = "";
+				}
+				else {
+					$unix = strtotime($row["wo_date"]);
+					$formattedDate = date("m/d/Y", $unix);
+					$data['woDate'] = $formattedDate;
+				}
 				
 				$data['woAddress'] = $row['wo_address'];
 				$data['woCity'] = $row['wo_city'];
@@ -95,7 +100,7 @@
 			$unix = strtotime($_POST['woDate']); //Creates Unix Timestamp based on input date.
 			$formattedDate = date("Y-m-d H:i:s", $unix); //Formats Unix Timestamp to work with SQL DateTime.
 			$woData['wo_date'] = $formattedDate;
-			if($woData['wo_date'] == "") $woData['wo_date'] = "0000-00-00 00:00:00";
+			if($woData['wo_date'] == "") $woData['wo_date'] = "0000-00-00";
 			$woData['wo_address'] = $_POST['woAddress'];
 			$woData['wo_city'] = $_POST['woCity'];
 			$woData['wo_prov'] = $_POST['woProv'];
@@ -194,8 +199,8 @@
 									<th>Width</th>
 									<th>Sq Feet</th>
 									<th>Quantity</th>
-									<th>Unit Price</th>
-									<th>Extended Price</th>
+									<th>Unit Price($)</th>
+									<th>Extended Price($)</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -234,8 +239,8 @@
 									<th>Width</th>
 									<th>Sq Feet</th>
 									<th>Quantity</th>
-									<th>Unit Price</th>
-									<th>Extended Price</th>
+									<th>Unit Price($)</th>
+									<th>Extended Price($)</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -274,8 +279,8 @@
 									<th>Width</th>
 									<th>Sq Feet</th>
 									<th>Quantity</th>
-									<th>Unit Price</th>
-									<th>Extended Price</th>
+									<th>Unit Price($)</th>
+									<th>Extended Price($)</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -314,8 +319,8 @@
 									<th>Width</th>
 									<th>Sq Feet</th>
 									<th>Quantity</th>
-									<th>Unit Price</th>
-									<th>Extended Price</th>
+									<th>Unit Price($)</th>
+									<th>Extended Price($)</th>
 									<th></th>
 								</tr>
 							</thead>

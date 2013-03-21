@@ -251,11 +251,12 @@
     //Goes through each row in the data tables, and calculates the extended price by multiplying quantity by unit price.
     function calcExtPrice() {
     	$("#service-table tbody tr").each(function(i) {
+    		var sqft = $('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
     		var quantity = $('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(6)').text();
     		var price = $('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
     		
-    		if(isValidNum(quantity) && isValidNum(price)) {
-    			var total = quantity * price;
+    		if(isValidNum(quantity) && isValidNum(price) && isValidNum(sqft)) {
+    			var total = sqft * quantity * price;
     			var roundedTotal = total.toFixed(2);
     			$('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
     		}
@@ -265,11 +266,12 @@
     	});
     	
     	$("#upholstery-table tbody tr").each(function(i) {
+    		var sqft = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
     		var quantity = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(6)').text();
     		var price = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
     		
-    		if(isValidNum(quantity) && isValidNum(price)) {
-    			var total = quantity * price;
+    		if(isValidNum(quantity) && isValidNum(price) && isValidNum(sqft)) {
+    			var total = sqft * quantity * price;
     			var roundedTotal = total.toFixed(2);
     			$('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
     		}
@@ -279,11 +281,12 @@
     	});
     	
     	$("#stainguard-table tbody tr").each(function(i) {
+    		var sqft = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
     		var quantity = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(6)').text();
     		var price = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
     		
-    		if(isValidNum(quantity) && isValidNum(price)) {
-    			var total = quantity * price;
+    		if(isValidNum(quantity) && isValidNum(price) && isValidNum(sqft)) {
+    			var total = sqft * quantity * price;
     			var roundedTotal = total.toFixed(2);
     			$('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
     		}
@@ -293,11 +296,12 @@
     	});
     	
     	$("#other-table tbody tr").each(function(i) {
+    		var sqft = $('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
     		var quantity = $('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(6)').text();
     		var price = $('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
     		
-    		if(isValidNum(quantity) && isValidNum(price)) {
-    			var total = quantity * price;
+    		if(isValidNum(quantity) && isValidNum(price) && isValidNum(sqft)) {
+    			var total = sqft * quantity * price;
     			var roundedTotal = total.toFixed(2);
     			$('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
     		}
