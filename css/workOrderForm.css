@@ -49,6 +49,11 @@ body {
 	float: left;
 }
 
+#address-div{
+	width: 900px;
+	float: left;
+	
+}
 #checkboxes-div {
 	width: 250px;
 	clear: both;
@@ -63,6 +68,22 @@ body {
 	margin: 0 15px 0;
 	padding-top: 15px;
 	padding-bottom: 15px;
+}
+#address-div{
+
+	clear: both;
+	display: inline-block;	
+}
+.address-container{
+	padding-top: 19px;
+	padding-left: 29px;
+	padding-right: 29px;
+	padding-bottom: 19px;
+  	margin: 10px auto 20px;
+  	background-color: #FAFAFA;
+  	border: 1px solid #e5e5e5;
+
+	
 }
 
 #tabs {
