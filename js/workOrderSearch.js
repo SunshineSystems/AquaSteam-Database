@@ -119,7 +119,8 @@
 				success: function(data) {
 					$("#id_result_table").html(data);
 					$("#result-table").tablesorter({
-						sortList: sorter
+						sortList: sorter,
+						headers: { 0 : { sorter: "shortDate" } } // Makes the first column sort dates properly
 					});
 				}, 
 				error: function(xhr) {
