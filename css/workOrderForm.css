@@ -184,7 +184,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	width: 50px;
 }
 
-hr {
+.address-hr {
 	margin: 0; /*Removes bootstraps margins*/
 	margin-right: 30px
 }

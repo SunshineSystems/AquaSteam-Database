@@ -47,7 +47,7 @@
 	    					<input type="text" id="custLName" maxlength="20" readonly value="<?php if(isset($custLName)) echo $custLName; ?>">
 	    				</div>
 		    		</div>
-				    <hr>
+				    <hr class="address-hr">
 					<div class="address-container">
 						<h4>Cleaning to be done at</h4>
 					    <div class="addr-control-group">
@@ -85,7 +85,7 @@
 		    				</div>
 		    			</div>
 		    		</div>
-		    		<hr>
+		    		<hr class="address-hr">
 		    		<div class="control-group">
 						<label class="control-label" for="workOrderDate">Date:</label>
 						<input type="text" id="datepicker" placeholder="mm/dd/yyyy" value="<?php if(isset($woDate)) echo $woDate; ?>">
@@ -219,7 +219,7 @@
 			<label>Total Price: </label>
 				<div class="input-prepend">
 					<span class="add-on">$</span>
-				  	<input class="total-wo-price" class="input-small span2" type="text" value="0.00" readonly>
+				  	<input id="total-wo-price" class="input-small span2" type="text" value="0.00" readonly>
 				</div>
 			</div>
 			<hr>

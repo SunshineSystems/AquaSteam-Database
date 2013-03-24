@@ -17,13 +17,21 @@
 	//Runs all of the data calculations on page load
 	runAllCalcs();
 	
-	//Calculates total in Travel Tab when the values have changed, and the changed input has lost focus.
+	//Calculates totals when the values have changed, and the changed input has lost focus.
 	$('#travelDist').change(function() {
-		calcTravel();
+		runAllCalcs();
 	});
 	
 	$('#travelPrice').change(function() {
-		calcTravel();
+		runAllCalcs();
+	});
+	
+	$('#workOrderDiscount').change(function() {
+		runAllCalcs();
+	});
+	
+	$('#workOrderDiscountType').change(function() {
+		runAllCalcs();
 	});
     
     function saveWorkOrder() {
@@ -400,6 +408,35 @@
 			}	
 		});
 	}
+	
+	// Calculates
+	function calcTotalWOPrice() {
+		var carpetTotal = $("#total-service-price").val();
+		var upholsteryTotal = $("#total-upholstery-price").val();
+		var stainGuardTotal = $("#total-stainguard-price").val();
+		var otherTotal = $("#total-other-price").val();
+		var travelTotal = $("#travelTotal").val();
+		var discount = $("#workOrderDiscount").val();
+		var discountType = $("#workOrderDiscountType").val();
+		
+		var totalPrice = parseFloat(carpetTotal) 
+						   + parseFloat(upholsteryTotal) 
+						   + parseFloat(stainGuardTotal) 
+						   + parseFloat(otherTotal) 
+						   + parseFloat(travelTotal);
+		
+		if(discountType == "$") {
+			totalPrice -= parseFloat(discount);
+		}
+		else {
+			discount = parseFloat(discount);
+			discount = discount.toFixed(2) / 100;
+			var percentOff = totalPrice * discount;
+			totalPrice -= percentOff;
+		}
+		
+		$("#total-wo-price").val(totalPrice.toFixed(2));
+	}
     
     function runAllCalcs() {
     	calcTravel();
@@ -407,6 +444,7 @@
 		calcExtPrice();
 		calcTotalTablePrice();
 		calcTotalTableSqFt();
+		calcTotalWOPrice();
     }
     
     /************************************************************************************************/
