@@ -235,6 +235,8 @@
 			var home = "<?php echo $home; ?>";
 		</script>
 		<script src="<?php echo $home?>js/workorderform.js"></script>
-
+		<script>
+			<?php if(isset($newForCust)) echo "startAsNew();";?>
+		</script>
     </body>
 </html>

@@ -46,6 +46,12 @@
 			$searchQuery = $_POST['searchQ'];
 			$searchType = $_POST['searchType'];
 			
+			// If they're searching by date, need to format the date to match the database
+			if($searchType == "wo_date") {
+				$unix = strtotime($searchQuery); //Creates Unix Timestamp based on input date.
+				$searchQuery = date("Y-m-d", $unix); //Formats Unix Timestamp to work with SQL Date Format.
+			}
+			
 			//checks to see what is being searched, and adds other fields if needed.
 			if($searchType == "cust_fname") {
 				
@@ -88,7 +94,7 @@
 				$tableData .= "<tr onclick='openWorkOrder(".$row['wo_id'].")'>";
 				
 				//Formats date to MM/DD/YYYY, before being output to the table, if it's 0's output no date.
-				if($row['wo_date'] == "0000-00-00") {
+				if($row['wo_date'] == "0000-00-00" || $row['wo_date'] == "1970-01-01") {
 					$tableData .= '<td></td>';
 				}
 				else {
@@ -96,7 +102,6 @@
 					$formattedDate = date("m/d/Y", $unix);
 					$tableData .= '<td>'.$formattedDate.'</td>';
 				}
-				$tableData .= '<td>'.$formattedDate.'</td>';
 				
 				$tableData .= '<td>'.$row["cust_fname"]. ' ' .$row["cust_lname"].'</td>';
 				$tableData .= '<td>'.$row["cust_company"].'</td>';

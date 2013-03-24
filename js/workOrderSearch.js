@@ -77,7 +77,7 @@
 				break;
 			case "date":
 				for(var i=0;  i < custNum; i++) {
-					tagArray[i] = obj[i]['wo_date'];
+					tagArray[i] = ""; //obj[i]['wo_date'] if we do want autocomplete for dates.
 				}
 				searchField = "wo_date";
 				sorter = [[0,0]];

@@ -27,7 +27,7 @@
 				$data['custID'] = $row['cust_id'];
 				
 				//Formats date to MM/DD/YYYY, before being output to the table, if it's 0's output no date.
-				if($row['wo_date'] == "0000-00-00") {
+				if($row['wo_date'] == "0000-00-00" || $row['wo_date'] == "1970-01-01") {
 					$data['woDate'] = "";
 				}
 				else {
@@ -88,6 +88,8 @@
 				$data['woPCode'] = $row['cust_pcode'];
 			}
 			
+			$data['newForCust'] = TRUE;
+			
 			$this->load->view('header.php', $data);
 			$this->load->view('workOrderForm_view.php', $data);
 		}
@@ -98,7 +100,7 @@
 			//Puts all posted work order data from the ajax call, into the $woData array, to be put into the database.
 			$woData['cust_id'] = $_POST['custID'];
 			$unix = strtotime($_POST['woDate']); //Creates Unix Timestamp based on input date.
-			$formattedDate = date("Y-m-d H:i:s", $unix); //Formats Unix Timestamp to work with SQL DateTime.
+			$formattedDate = date("Y-m-d", $unix); //Formats Unix Timestamp to work with SQL DateTime.
 			$woData['wo_date'] = $formattedDate;
 			if($woData['wo_date'] == "") $woData['wo_date'] = "0000-00-00";
 			$woData['wo_address'] = $_POST['woAddress'];
@@ -142,7 +144,7 @@
 				$this->dbm->insertNewTravel($travData);
 				$feedback = "<div class='alert alert-success'>
 								<button type='button' class='close' data-dismiss='alert'>&times;</button>
-								<h4>Success!</h4>The New Work Order Has Been Saved</div>
+								<h4></h4>A New Work Order Has Been Started</div>
 								<input id='new-woID-val' type='hidden' value='".$newWorkOrderID."'>"; //Sets a hidden input, with the value of the newly saved workorder, to be passed back to the view.
 			}
 			else {
