@@ -47,25 +47,56 @@
 	    					<input type="text" id="custLName" maxlength="20" readonly value="<?php if(isset($custLName)) echo $custLName; ?>">
 	    				</div>
 		    		</div>
-		    		
-		    		<div class="control-group">
+				    <hr>
+					<div class="address-container">
+						<h4>Cleaning to be done at</h4>
+					    <div class="addr-control-group">
+			    			<label class="control-label" for="woAddress">Address:</label>
+		    				<div class="controls">
+		    					<input type="text" id="woAddress" maxlength="30" value="<?php if(isset($woAddress)) echo $woAddress; ?>">
+		    				</div>
+			    		</div>
+			    		
+			    		<div class="addr-control-group">
+			    			<label class="control-label" for="woCity">City:</label>
+		    				<div class="controls">
+		    					<input type="text" id="woCity" maxlength="20" value="<?php if(isset($woCity)) echo $woCity; ?>">
+		    				</div>
+			    		</div>
+			    		
+			    		<div class="addr-control-group">
+			    			<label class="control-label" for="woProvince">Province:</label>
+		    				<div class="controls">
+		    					<input type="text" id="woProvince" maxlength="2" value="<?php if(isset($woProv)) echo $woProv; ?>">
+		    				</div>
+			    		</div>
+			    		
+			    		<div class="addr-control-group">
+			    			<label class="control-label" for="woPCode">Postal Code:</label>
+		    				<div class="controls">
+		    					<input type="text" id="woPCode" maxlength="7" value="<?php if(isset($woPCode)) echo $woPCode; ?>">
+		    				</div>
+			    		</div>
+			    		
+			    		<div class="addr-control-group">
 		    			<label class="control-label" for="woPhone">Phone:</label>
-	    				<div class="controls">
-	    					<input type="text" id="woPhone" maxlength="12" value="<?php if(isset($woPhone)) echo $woPhone; ?>">
-	    				</div>
+		    				<div class="controls">
+		    					<input type="text" id="woPhone" maxlength="12" value="<?php if(isset($woPhone)) echo $woPhone; ?>">
+		    				</div>
+		    			</div>
 		    		</div>
-		
+		    		<hr>
+		    		<div class="control-group">
+						<label class="control-label" for="workOrderDate">Date:</label>
+						<input type="text" id="datepicker" placeholder="mm/dd/yyyy" value="<?php if(isset($woDate)) echo $woDate; ?>">
+					</div>
+										
 					<div class="control-group">
 			    		<label class="control-label" for="workOrderGift">Gift:</label>
 		    			<div class="controls">
 		    				<input type="text" id="workOrderGift" maxlength="30" value="<?php if(isset($payGift)) echo $payGift; ?>">
 		    			</div> 
 			    	</div> 
-		    	 	
-				    <div class="control-group">
-						<label class="control-label" for="workOrderDate">Date:</label>
-						<input type="text" id="datepicker" placeholder="mm/dd/yyyy" value="<?php if(isset($woDate)) echo $woDate; ?>">
-					</div>  		
 				
 				 	<div class="control-group">
 				    	<label class="control-label" for="workOrderDiscount">Discount:</label>
@@ -77,39 +108,6 @@
 							</select>
 			   			</div>
 				    </div>
-				    
-				<div id="address-div">
-					<div class="address-container">
-						<h4>Address</h4>
-				    <div class="control-group">
-		    			<label class="control-label" for="woAddress">Address:</label>
-	    				<div class="controls">
-	    					<input type="text" id="woAddress" maxlength="30" value="<?php if(isset($woAddress)) echo $woAddress; ?>">
-	    				</div>
-		    		</div>
-		    		
-		    		<div class="control-group">
-		    			<label class="control-label" for="woCity">City:</label>
-	    				<div class="controls">
-	    					<input type="text" id="woCity" maxlength="20" value="<?php if(isset($woCity)) echo $woCity; ?>">
-	    				</div>
-		    		</div>
-		    		
-		    		<div class="control-group">
-		    			<label class="control-label" for="woProvince">Province:</label>
-	    				<div class="controls">
-	    					<input type="text" id="woProvince" maxlength="2" value="<?php if(isset($woProv)) echo $woProv; ?>">
-	    				</div>
-		    		</div>
-		    		
-		    		<div class="control-group">
-		    			<label class="control-label" for="woPCode">Postal Code:</label>
-	    				<div class="controls">
-	    					<input type="text" id="woPCode" maxlength="7" value="<?php if(isset($woPCode)) echo $woPCode; ?>">
-	    				</div>
-		    		</div>
-		    	</div>
-		    </div>
 				</div> <!-- End of inputs-div -->
 		
 				<div id="checkboxes-div">

@@ -5,7 +5,7 @@ body {
 }
 
 #top-container {
-	padding-bottom: 40px;
+	padding-bottom: 20px;
 }
 
 .wo-container {
@@ -25,6 +25,14 @@ body {
 	width: 300px;
 	margin-top: 25px;	
 }
+
+.addr-control-group {
+	display: inline-block;
+	width: 250px;
+	margin-top: 15px;
+	margin-bottom: 10px	
+}
+
 .checkbox{
 	display: inline-block;
 	width: 300px;
@@ -49,11 +57,6 @@ body {
 	float: left;
 }
 
-#address-div{
-	width: 900px;
-	float: left;
-	
-}
 #checkboxes-div {
 	width: 250px;
 	clear: both;
@@ -75,18 +78,12 @@ body {
 	display: inline-block;	
 }
 .address-container{
-	padding-top: 19px;
-	padding-left: 29px;
+	padding-top: 10px;
 	padding-right: 29px;
-	padding-bottom: 19px;
-  	margin: 10px auto 20px;
-  	background-color: #FAFAFA;
-  	border: 1px solid #e5e5e5;
-
-	
 }
 
 #tabs {
+	clear: both;
 	margin-bottom: 25px;
 }
 
@@ -176,4 +173,18 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 .btn-deleterow {
 	font-size: 12px;
 	padding: 5px 12px;
+}
+
+#workOrderDiscount {
+	text-align: right;
+	width: 100px;
+}
+
+#workOrderDiscountType {
+	width: 50px;
+}
+
+hr {
+	margin: 0; /*Removes bootstraps margins*/
+	margin-right: 30px
 }
