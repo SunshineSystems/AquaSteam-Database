@@ -37,7 +37,7 @@
 				</div>
 				<div class="field-row">
 					<label>New Password:</label>
-					<input id="userPass" type="password"/>
+					<input id="userPass" type="password" title="If you input a password here, it will set this user's password as such"/>
 				</div>
 				<div class="field-row">
 					<label>First Name:</label>

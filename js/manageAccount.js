@@ -20,6 +20,8 @@
 	    resizeDialog();
 	});
 	
+	$('#userPass').tooltip();
+	
 	$("#user-table").tablesorter();
 
 	function newAccount() {
