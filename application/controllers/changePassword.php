@@ -24,8 +24,25 @@
 			$retypeNewPassword = $_POST['retypeNewPassword'];
 			$userID = $_SESSION['id'];
 			
+			//Checks for whitespace in the password, if there is return an error message.
+			if(strpos($newPassword, " ")) {
+				$error = "<div class='alert alert-error'>
+						  <button type='button' class='close' data-dismiss='alert'>&times;</button>
+						  <h4>Whoops!</h4>Whitespace/spaces aren't allowed in passwords!</div>";
+				echo $error;
+				return;
+			}
+			
+			//Checks fthe length of the new password, if it does not meet the requirements return an error message
+			if(strlen($newPassword) < 6) {
+				$error = "<div class='alert alert-error'>
+						  <button type='button' class='close' data-dismiss='alert'>&times;</button>
+						  <h4>Whoops!</h4>Passwords must be at least 6  characters</div>";
+				echo $error;
+				return;
+			}
+			
 			global $hasher; //calls the global variable from hasher.php
-			//die("something");
 			$result = $this->dbm->getUserById($userID); 
 			
 			foreach($result->result_array() as $row) {

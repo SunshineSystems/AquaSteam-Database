@@ -167,6 +167,9 @@
 				if(data == "error") {
 					alert("You must set a valid password when creating a new account");
 				}
+				else if(data == "existing") {
+					alert("This username is already in use!");
+				}
 				else {
 					$("#alert-data").val(data);
 					document.getElementById("alert-form").submit();

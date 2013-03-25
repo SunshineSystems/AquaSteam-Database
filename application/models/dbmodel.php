@@ -36,6 +36,12 @@ class Dbmodel extends CI_Model {
 		return $query;
 	}
 	
+	function getUserByUsername($username) {
+		$this->db->where("user_username", $username);
+		$query = $this->db->get('user');
+		return $query;
+	}
+	
 	function updateUserPassword($id, $password) {
 		$this->db->where("user_id", $id);
 		$this->db->set("user_password", $password);	

@@ -120,6 +120,13 @@
 				if($noNewPass) {
 					die("error");
 				}
+				
+				//Checks to see if the given username is already in the database, if it is we kill the function and return "existing"
+				$existing = $this->dbm->getUserByUsername($data['user_username']);
+				if($existing->num_rows() != 0) {
+					die("existing");
+				}
+				
 				$this->dbm->insertNewUser($data);
 				$echo = "<div class='alert alert-success'><h4>Success!</h4>
 								The New User Has Been Created</div>";
