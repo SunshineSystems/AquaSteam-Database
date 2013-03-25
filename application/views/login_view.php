@@ -28,6 +28,9 @@
     		<div id="aqualogo">
     			<img src="<?php echo $home; ?>images/New Aqua Logo Web.png" alt="Aqua Steam Logo">
     		</div>
+    		<div id="sunshinelogo">
+    			<img src="<?php echo $home; ?>images/logo2.png" alt="Sunshine Systems Logo">
+    		</div>
     	</div>
     
     </body>
