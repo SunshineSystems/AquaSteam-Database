@@ -519,6 +519,13 @@
 	    //data[1] = table name
 	    //data[2] = table field
 	    //data[3] = primary key
+	    //data[4] = data type
+	    
+	    //If the value in a number cell isn't a number, it defaults it back to 0.00, so that there are no errors saving to the database.
+	    if(data[4] == "num" && isNaN(value)) {
+	    	value = 0;
+	    	$('.ajax input').val("0.00");
+	    }
 	    
 		$.ajax({    
 			type: "POST",  
@@ -526,15 +533,11 @@
 			data: {
 				'id' : data[3], 'field' : data[2], 'table' : data[1], 'value' : value
 			},
-			success: function(data){ 
-				alert(data); 
+			success: function(data){
 				$('.ajax').html($('.ajax input').val());  
 				$('.ajax').removeClass('ajax');
 				runAllCalcs();  
-		  	},
-		  	error: function(xhr) {
-				alert("An error occured: " + xhr.status + " " + xhr.statusText);
-			}
+		  	}
     	});
 	}
 	

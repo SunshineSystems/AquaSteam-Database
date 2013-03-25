@@ -238,13 +238,13 @@
 			//Puts the content into a table to be displayed. Each cell has classes that will make them editable.				
 			$results = $this->dbm->getServiceByWOID($woID);
 			foreach($results->result_array() as $row) {
-				$serviceTable .= "<tr><td class='editable service serv_type ".$row['serv_id']."'>".$row['serv_type']."</td>";
-				$serviceTable .= "<td class='editable service serv_description ".$row['serv_id']."'>".$row['serv_description']."</td>";
-				$serviceTable .= "<td class='editable service serv_length ".$row['serv_id']."'>".$row['serv_length']."</td>";
-				$serviceTable .= "<td class='editable service serv_width ".$row['serv_id']."'>".$row['serv_width']."</td>";
+				$serviceTable .= "<tr><td class='editable service serv_type ".$row['serv_id']." text'>".$row['serv_type']."</td>";
+				$serviceTable .= "<td class='editable service serv_description ".$row['serv_id']." text'>".$row['serv_description']."</td>";
+				$serviceTable .= "<td class='editable service serv_length ".$row['serv_id']." num'>".$row['serv_length']."</td>";
+				$serviceTable .= "<td class='editable service serv_width ".$row['serv_id']." num'>".$row['serv_width']."</td>";
 				$serviceTable .= "<td>".$row['serv_sq_feet']."</td>";
-				$serviceTable .= "<td class='editable service serv_quantity ".$row['serv_id']."'>".$row['serv_quantity']."</td>";
-				$serviceTable .= "<td class='editable service serv_unit_price ".$row['serv_id']."'>".$row['serv_unit_price']."</td>";
+				$serviceTable .= "<td class='editable service serv_quantity ".$row['serv_id']." num'>".$row['serv_quantity']."</td>";
+				$serviceTable .= "<td class='editable service serv_unit_price ".$row['serv_id']." num'>".$row['serv_unit_price']."</td>";
 				$serviceTable .= "<td class='service serv_ext_price ".$row['serv_id']."'></td>";
 				$serviceTable .= "<td class='serv-delete-row'><button class='btn btn-danger btn-deleterow' onclick='deleteTableRow(".$row['serv_id'].", ".$row['wo_id'].", \"service\", \"serv_id\", \"#carpetTab\")'>Delete</button></td></tr>";
 			}
@@ -278,13 +278,13 @@
 			//Puts the content into a table to be displayed. Each cell has classes that will make them editable.				
 			$results = $this->dbm->getUpholsteryByWOID($woID);
 			foreach($results->result_array() as $row) {
-				$upholsteryTable .= "<tr><td class='editable upholstery up_type ".$row['up_id']."'>".$row['up_type']."</td>";
-				$upholsteryTable .= "<td class='editable upholstery up_description ".$row['up_id']."'>".$row['up_description']."</td>";
-				$upholsteryTable .= "<td class='editable upholstery up_length ".$row['up_id']."'>".$row['up_length']."</td>";
-				$upholsteryTable .= "<td class='editable upholstery up_width ".$row['up_id']."'>".$row['up_width']."</td>";
+				$upholsteryTable .= "<tr><td class='editable upholstery up_type ".$row['up_id']." text'>".$row['up_type']."</td>";
+				$upholsteryTable .= "<td class='editable upholstery up_description ".$row['up_id']." text'>".$row['up_description']."</td>";
+				$upholsteryTable .= "<td class='editable upholstery up_length ".$row['up_id']." num'>".$row['up_length']."</td>";
+				$upholsteryTable .= "<td class='editable upholstery up_width ".$row['up_id']." num'>".$row['up_width']."</td>";
 				$upholsteryTable .= "<td>".$row['up_sq_feet']."</td>";
-				$upholsteryTable .= "<td class='editable upholstery up_quantity ".$row['up_id']."'>".$row['up_quantity']."</td>";
-				$upholsteryTable .= "<td class='editable upholstery up_unit_price ".$row['up_id']."'>".$row['up_unit_price']."</td>";
+				$upholsteryTable .= "<td class='editable upholstery up_quantity ".$row['up_id']." num'>".$row['up_quantity']."</td>";
+				$upholsteryTable .= "<td class='editable upholstery up_unit_price ".$row['up_id']." num'>".$row['up_unit_price']."</td>";
 				$upholsteryTable .= "<td class='upholstery up_ext_price ".$row['up_id']."'></td>";
 				$upholsteryTable .= "<td class='up-delete-row'><button class='btn btn-danger btn-deleterow' onclick='deleteTableRow(".$row['up_id'].", ".$row['wo_id'].", \"upholstery\", \"up_id\", \"#upholsteryTab\")'>Delete</button></td></tr>";
 			}
@@ -318,13 +318,13 @@
 			//Puts the content into a table to be displayed. Each cell has classes that will make them editable.				
 			$results = $this->dbm->getStainGuardByWOID($woID);
 			foreach($results->result_array() as $row) {
-				$stainguardTable .= "<tr><td class='editable stain_guard sg_type ".$row['sg_id']."'>".$row['sg_type']."</td>";
-				$stainguardTable .= "<td class='editable stain_guard sg_description ".$row['sg_id']."'>".$row['sg_description']."</td>";
-				$stainguardTable .= "<td class='editable stain_guard sg_length ".$row['sg_id']."'>".$row['sg_length']."</td>";
-				$stainguardTable .= "<td class='editable stain_guard sg_width ".$row['sg_id']."'>".$row['sg_width']."</td>";
+				$stainguardTable .= "<tr><td class='editable stain_guard sg_type ".$row['sg_id']." text'>".$row['sg_type']."</td>";
+				$stainguardTable .= "<td class='editable stain_guard sg_description ".$row['sg_id']." text'>".$row['sg_description']."</td>";
+				$stainguardTable .= "<td class='editable stain_guard sg_length ".$row['sg_id']." num'>".$row['sg_length']."</td>";
+				$stainguardTable .= "<td class='editable stain_guard sg_width ".$row['sg_id']." num'>".$row['sg_width']."</td>";
 				$stainguardTable .= "<td>".$row['sg_sq_feet']."</td>";
-				$stainguardTable .= "<td class='editable stain_guard sg_quantity ".$row['sg_id']."'>".$row['sg_quantity']."</td>";
-				$stainguardTable .= "<td class='editable stain_guard sg_unit_price ".$row['sg_id']."'>".$row['sg_unit_price']."</td>";
+				$stainguardTable .= "<td class='editable stain_guard sg_quantity ".$row['sg_id']." num'>".$row['sg_quantity']."</td>";
+				$stainguardTable .= "<td class='editable stain_guard sg_unit_price ".$row['sg_id']." num'>".$row['sg_unit_price']."</td>";
 				$stainguardTable .= "<td class='stain_guard sg_ext_price ".$row['sg_id']."'></td>";
 				$stainguardTable .= "<td class='sg-delete-row'><button class='btn btn-danger btn-deleterow' onclick='deleteTableRow(".$row['sg_id'].", ".$row['wo_id'].", \"stain_guard\", \"sg_id\", \"#stainGuardTab\")'>Delete</button></td></tr>";
 			}
@@ -358,13 +358,13 @@
 			//Puts the content into a table to be displayed. Each cell has classes that will make them editable.				
 			$results = $this->dbm->getOtherByWOID($woID);
 			foreach($results->result_array() as $row) {
-				$otherTable .= "<tr><td class='editable other other_type ".$row['other_id']."'>".$row['other_type']."</td>";
-				$otherTable .= "<td class='editable other other_description ".$row['other_id']."'>".$row['other_description']."</td>";
-				$otherTable .= "<td class='editable other other_length ".$row['other_id']."'>".$row['other_length']."</td>";
-				$otherTable .= "<td class='editable other other_width ".$row['other_id']."'>".$row['other_width']."</td>";
+				$otherTable .= "<tr><td class='editable other other_type ".$row['other_id']." text'>".$row['other_type']."</td>";
+				$otherTable .= "<td class='editable other other_description ".$row['other_id']." text'>".$row['other_description']."</td>";
+				$otherTable .= "<td class='editable other other_length ".$row['other_id']." num'>".$row['other_length']."</td>";
+				$otherTable .= "<td class='editable other other_width ".$row['other_id']." num'>".$row['other_width']."</td>";
 				$otherTable .= "<td>".$row['other_sq_feet']."</td>";
-				$otherTable .= "<td class='editable other other_quantity ".$row['other_id']."'>".$row['other_quantity']."</td>";
-				$otherTable .= "<td class='editable other other_unit_price ".$row['other_id']."'>".$row['other_unit_price']."</td>";
+				$otherTable .= "<td class='editable other other_quantity ".$row['other_id']." num'>".$row['other_quantity']."</td>";
+				$otherTable .= "<td class='editable other other_unit_price ".$row['other_id']." num'>".$row['other_unit_price']."</td>";
 				$otherTable .= "<td class='other other_ext_price ".$row['other_id']."'></td>";
 				$otherTable .= "<td class='other-delete-row'><button class='btn btn-danger btn-deleterow' onclick='deleteTableRow(".$row['other_id'].", ".$row['wo_id'].", \"other\", \"other_id\", \"#otherTab\")'>Delete</button></td></tr>";
 			}

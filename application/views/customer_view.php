@@ -65,7 +65,7 @@
 				</div>
 				<div class="field-row">		
 					<label>City:</label>
-					<input id="custCity" type="text" maxlength="20"/>
+					<input id="custCity" type="text" value="Lethbridge" maxlength="20"/>
 				</div>
 				<div class="field-row">
 					<label>Province:</label>
