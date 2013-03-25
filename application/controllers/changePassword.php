@@ -13,9 +13,14 @@
 		}
 	
 		public function index(){
-			$data['title'] = "Change Password";
-			$this->load->view('header', $data);
-			$this->load->view('changePassword_view');
+			if(!isset($_SESSION['id'])) {
+				header('Location: login');
+			}
+			else {
+				$data['title'] = "Change Password";
+				$this->load->view('header', $data);
+				$this->load->view('changePassword_view');
+			}
 		}
 		
 		function checkCredentials() {

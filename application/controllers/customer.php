@@ -6,6 +6,7 @@
 			parent::__construct();
 			//Loads the database model functions as "dbm"
 			$this->load->model("dbmodel", "dbm", true);
+			session_start();
 		}
 		
 		/*This is called when SiteDomain/aquasteam-database/index.php/customer is loaded in the browser.
@@ -13,31 +14,36 @@
 		 */
 		public function index()
 		{
-			$i = 0;
-			$tags = array();
-			
-			//Gets all customers from the database, and adds certain fields to an array
-			//to be used for our auto complete.
-			$custs = $this->dbm->getAllCustomers();
-			foreach($custs->result_array() as $row) {
-				$tags[$i]['cust_fname'] = $row['cust_fname'];
-				$tags[$i]['cust_lname'] = $row['cust_lname'];
-				$tags[$i]['cust_company'] = $row['cust_company'];
-				$tags[$i]['cust_address'] = $row['cust_address'];
-				$tags[$i]['cust_city'] = $row['cust_city'];
-				$tags[$i]['cust_hphone'] = $row['cust_hphone'];
-				$tags[$i]['cust_bphone'] = $row['cust_bphone'];
-				$tags[$i]['cust_cphone'] = $row['cust_cphone'];
-				$i++;
+			if(!isset($_SESSION['id'])) {
+				header('Location: login');
 			}
-			
-			$tags = json_encode($tags);
-			
-			$data['title'] = "Customers";
-			$data['tags'] = $tags;
-			$data['custNum'] = $i;
-			$this->load->view('header', $data);
-			$this->load->view('customer_view', $data);
+			else {
+				$i = 0;
+				$tags = array();
+				
+				//Gets all customers from the database, and adds certain fields to an array
+				//to be used for our auto complete.
+				$custs = $this->dbm->getAllCustomers();
+				foreach($custs->result_array() as $row) {
+					$tags[$i]['cust_fname'] = $row['cust_fname'];
+					$tags[$i]['cust_lname'] = $row['cust_lname'];
+					$tags[$i]['cust_company'] = $row['cust_company'];
+					$tags[$i]['cust_address'] = $row['cust_address'];
+					$tags[$i]['cust_city'] = $row['cust_city'];
+					$tags[$i]['cust_hphone'] = $row['cust_hphone'];
+					$tags[$i]['cust_bphone'] = $row['cust_bphone'];
+					$tags[$i]['cust_cphone'] = $row['cust_cphone'];
+					$i++;
+				}
+				
+				$tags = json_encode($tags);
+				
+				$data['title'] = "Customers";
+				$data['tags'] = $tags;
+				$data['custNum'] = $i;
+				$this->load->view('header', $data);
+				$this->load->view('customer_view', $data);
+			}
 		}
 		
 		
@@ -198,33 +204,39 @@
 		//immediately.
 		public function gotoCustomer($id)
 		{
-			$i = 0;
-			$tags = array();
-			
-			//Gets all customers from the database, and adds certain fields to an array
-			//to be used for our auto complete.
-			$custs = $this->dbm->getAllCustomers();
-			foreach($custs->result_array() as $row) {
-				$tags[$i]['cust_fname'] = $row['cust_fname'];
-				$tags[$i]['cust_lname'] = $row['cust_lname'];
-				$tags[$i]['cust_company'] = $row['cust_company'];
-				$tags[$i]['cust_address'] = $row['cust_address'];
-				$tags[$i]['cust_city'] = $row['cust_city'];
-				$tags[$i]['cust_hphone'] = $row['cust_hphone'];
-				$tags[$i]['cust_bphone'] = $row['cust_bphone'];
-				$tags[$i]['cust_cphone'] = $row['cust_cphone'];
-				$i++;
+			if(!isset($_SESSION['id'])) {
+				$this->load->helper('url'); 
+    			$home = base_url();
+				header("Location: ".$home."index.php/login");
 			}
-			
-			$tags = json_encode($tags);
-			
-			$data['id'] = $id;
-			$data['title'] = "Customers";
-			$data['tags'] = $tags;
-			$data['custNum'] = $i;
-			$this->load->view('header', $data);
-			$this->load->view('customer_view', $data);
+			else {	
+				$i = 0;
+				$tags = array();
+				
+				//Gets all customers from the database, and adds certain fields to an array
+				//to be used for our auto complete.
+				$custs = $this->dbm->getAllCustomers();
+				foreach($custs->result_array() as $row) {
+					$tags[$i]['cust_fname'] = $row['cust_fname'];
+					$tags[$i]['cust_lname'] = $row['cust_lname'];
+					$tags[$i]['cust_company'] = $row['cust_company'];
+					$tags[$i]['cust_address'] = $row['cust_address'];
+					$tags[$i]['cust_city'] = $row['cust_city'];
+					$tags[$i]['cust_hphone'] = $row['cust_hphone'];
+					$tags[$i]['cust_bphone'] = $row['cust_bphone'];
+					$tags[$i]['cust_cphone'] = $row['cust_cphone'];
+					$i++;
+				}
+				
+				$tags = json_encode($tags);
+				
+				$data['id'] = $id;
+				$data['title'] = "Customers";
+				$data['tags'] = $tags;
+				$data['custNum'] = $i;
+				$this->load->view('header', $data);
+				$this->load->view('customer_view', $data);
+			}
 		}
-		
 	}
 ?>

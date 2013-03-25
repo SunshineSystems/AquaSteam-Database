@@ -49,19 +49,19 @@
 				</div>
 				<div class="field-row">		
 					<label>Company:</label>
-					<input id="custCompany" type="text" maxlength="40"/>
+					<input id="custCompany" type="text" maxlength="75"/>
 				</div>
 				<div class="field-row">
 					<label>First Name:</label>
-					<input id="custFName" type="text" maxlength="20"/>
+					<input id="custFName" type="text" maxlength="50"/>
 				</div>
 				<div class="field-row">		
 					<label>Last Name:</label>
-					<input id="custLName" type="text" maxlength="20"/>
+					<input id="custLName" type="text" maxlength="50"/>
 				</div>
 				<div class="field-row">
 					<label>Personal Address:</label>
-					<input id="custAddress" type="text" maxlength="30"/>
+					<input id="custAddress" type="text" maxlength="150"/>
 				</div>
 				<div class="field-row">		
 					<label>City:</label>
@@ -89,11 +89,11 @@
 				</div>
 				<div class="field-row">		
 					<label>Email:</label>
-					<input id="custEmail" type="text" maxlength="30"/>
+					<input id="custEmail" type="text" maxlength="100"/>
 				</div>
 				<div class="field-long-row">		
 					<label>Referral:</label>
-					<input id="custRef" type="text" maxlength="40"/>
+					<input id="custRef" type="text" maxlength="75"/>
 				</div>
 				<div class="field-long-row">		
 					<label>Notes:</label>

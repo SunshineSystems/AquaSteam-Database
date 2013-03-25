@@ -30,21 +30,21 @@
 		    		<div class="control-group">
 		    			<label class="control-label" for="custCompany">Company:</label>
 	    				<div class="controls">
-	    					<input type="text" id="custCompany" maxlength="40" readonly value="<?php if(isset($custCompany)) echo $custCompany; ?>">
+	    					<input type="text" id="custCompany" maxlength="75" readonly value="<?php if(isset($custCompany)) echo $custCompany; ?>">
 	    				</div>
 		    		</div>
 		    		
 		    		<div class="control-group">
 		    			<label class="control-label" for="custFName">First Name:</label>
 	    				<div class="controls">
-	    					<input type="text" id="custFName" maxlength="20" readonly value="<?php if(isset($custFName)) echo $custFName; ?>" >
+	    					<input type="text" id="custFName" maxlength="50" readonly value="<?php if(isset($custFName)) echo $custFName; ?>" >
 	    				</div>
 		    		</div>
 		    		
 		    		<div class="control-group">
 		    			<label class="control-label" for="custLName">Last Name:</label>
 	    				<div class="controls">
-	    					<input type="text" id="custLName" maxlength="20" readonly value="<?php if(isset($custLName)) echo $custLName; ?>">
+	    					<input type="text" id="custLName" maxlength="50" readonly value="<?php if(isset($custLName)) echo $custLName; ?>">
 	    				</div>
 		    		</div>
 				    <hr class="address-hr">
@@ -53,14 +53,14 @@
 					    <div class="addr-control-group">
 			    			<label class="control-label" for="woAddress">Address:</label>
 		    				<div class="controls">
-		    					<input type="text" id="woAddress" maxlength="30" value="<?php if(isset($woAddress)) echo $woAddress; ?>">
+		    					<input type="text" id="woAddress" maxlength="150" value="<?php if(isset($woAddress)) echo $woAddress; ?>">
 		    				</div>
 			    		</div>
 			    		
 			    		<div class="addr-control-group">
 			    			<label class="control-label" for="woCity">City:</label>
 		    				<div class="controls">
-		    					<input type="text" id="woCity" maxlength="20" value="<?php if(isset($woCity)) echo $woCity; ?>">
+		    					<input type="text" id="woCity" maxlength="50" value="<?php if(isset($woCity)) echo $woCity; ?>">
 		    				</div>
 			    		</div>
 			    		
@@ -94,7 +94,7 @@
 					<div class="control-group">
 			    		<label class="control-label" for="workOrderGift">Gift:</label>
 		    			<div class="controls">
-		    				<input type="text" id="workOrderGift" maxlength="30" value="<?php if(isset($payGift)) echo $payGift; ?>">
+		    				<input type="text" id="workOrderGift" maxlength="250" value="<?php if(isset($payGift)) echo $payGift; ?>">
 		    			</div> 
 			    	</div> 
 				

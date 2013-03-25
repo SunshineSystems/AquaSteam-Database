@@ -8,42 +8,50 @@
 			parent::__construct();
 			//Loads the database model functions as "dbm"
 			$this->load->model("dbmodel", "dbm", true);
+			session_start();
 		}
 		
 		public function index()
 		{
-			$results = $this->dbm->getAllUsers();
-			$tableData = "<table id='user-table' class='tablesorter table-striped table-hover'>
-							<thead>
-								<tr>
-									<th>Username</th>
-									<th>First Name</th>
-									<th>Last Name</th>
-									<th>Account Type</th>
-								</tr>
-							</thead>
-							<tbody>";
-						
-			foreach($results->result_array() as $row) {
-				if($row['user_admin'] == 1) {
-					$type = "Admin";
-				}
-				else {
-					$type = "Employee";
-				}
-				$tableData .= "<tr onclick='openUser(".$row['user_id'].")'>";
-				$tableData .= '<td>'.$row["user_username"].'</td>';
-				$tableData .= '<td>'.$row["user_fname"].'</td>';
-				$tableData .= '<td>'.$row["user_lname"].'</td>';
-				$tableData .= '<td>'.$type.'</td></tr>';
+			if(!isset($_SESSION['id'])) {
+				$this->load->helper('url'); 
+    			$home = base_url();
+				header("Location: ".$home."index.php/login");
 			}
-			
-			$tableData .= "</tbody></table>";
-			
-			$data['table'] = $tableData;
-			$data['title'] = "Manage Accounts";
-			$this->load->view('header', $data);
-			$this->load->view('manageAccount_view.php', $data);
+			else {
+				$results = $this->dbm->getAllUsers();
+				$tableData = "<table id='user-table' class='tablesorter table-striped table-hover'>
+								<thead>
+									<tr>
+										<th>Username</th>
+										<th>First Name</th>
+										<th>Last Name</th>
+										<th>Account Type</th>
+									</tr>
+								</thead>
+								<tbody>";
+							
+				foreach($results->result_array() as $row) {
+					if($row['user_admin'] == 1) {
+						$type = "Admin";
+					}
+					else {
+						$type = "Employee";
+					}
+					$tableData .= "<tr onclick='openUser(".$row['user_id'].")'>";
+					$tableData .= '<td>'.$row["user_username"].'</td>';
+					$tableData .= '<td>'.$row["user_fname"].'</td>';
+					$tableData .= '<td>'.$row["user_lname"].'</td>';
+					$tableData .= '<td>'.$type.'</td></tr>';
+				}
+				
+				$tableData .= "</tbody></table>";
+				
+				$data['table'] = $tableData;
+				$data['title'] = "Manage Accounts";
+				$this->load->view('header', $data);
+				$this->load->view('manageAccount_view.php', $data);
+			}
 		}
 		
 		function getUserInfo() {
