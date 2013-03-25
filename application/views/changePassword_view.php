@@ -10,6 +10,7 @@
 		        <div id="error-div"></div>
         <div id="form">
             <input id="oldPassword"type="password" class="input-block-level" placeholder="Old Password"><br><br>
+            <p>*Min 6 Characters</p>
 		    <input id="newPassword"type="password" class="input-block-level" placeholder="New Password">
 		    <input id="retypeNewPassword"type="password" class="input-block-level" placeholder="Re-type New Password">
             <button id="changePasswordButton" class="btn btn-large btn-primary" onclick="verifyChangePassword()">Change Password</button>

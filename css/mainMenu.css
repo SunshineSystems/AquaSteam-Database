@@ -24,3 +24,37 @@ body {
 	padding: 8px;
 	
 }
+
+#footer {
+	background-color: white;
+	position: absolute;
+	bottom: 0;
+	padding: 10px 0;
+	width: 100%;
+	border-top: 2px ridge grey;
+}
+
+.container-footer{
+	margin-right: auto;
+}
+
+#aqualogo{
+	max-width: 450px;
+	height: 80px;
+	float: left;
+}
+
+#sunshinelogo{
+	max-width:450px;
+	height:80px;
+	float: right;
+	
+}
+#wrap{
+	min-height: 80%;
+}
+
+img{
+	height: 100%;
+	
+}

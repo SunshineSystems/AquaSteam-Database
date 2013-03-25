@@ -53,8 +53,15 @@ html, body
 #aqualogo{
 	max-width: 450px;
 	height: 80px;
+	float: left;
 }
 
+#sunshinelogo{
+	max-width:450px;
+	height:80px;
+	float: right;
+	
+}
 #wrap{
 	min-height: 80%;
 }
