@@ -149,3 +149,11 @@ table td {
 	margin: 0px;
 	
 }
+
+#id_searchTips_button {
+	margin-top: 25px;
+}
+
+.hidden {
+	display: none;
+}

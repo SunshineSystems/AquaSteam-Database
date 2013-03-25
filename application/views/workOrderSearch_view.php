@@ -13,13 +13,13 @@
         <!-- Keep all displayed content inside container div -->
         <div class="container wo-container">
 	    	<h1><?php if(isset($header)) echo $header; else echo 'Search Work Orders';?></h1>
-	    	<div id="search-div">
+	    	<div id="search-div" class= "hidden">
 				<div class="search-container">
 					<h4>Search Tips</h4></br>
 						<p><b>Name:</b> Searches both first and last name for work order. Eg. First Last</p></br>
 						<p><b>Company:</b> Searches for work orders with company.</p></br>
 						<p><b>City:</b> Searches for work orders with city.</p></br>
-						<p><b>Address:</b> Searches addresses for work orders that contain selected variables.</p></br>
+						<p><b>Address:</b> Searches in addresses for workorders.</p></br>
 						<p><b>Date:</b> Searches work order dates. When searching must search complete dates. Eg. YYYY/MM/DD</p></br>
 				</div>
 			</div>
@@ -32,6 +32,9 @@
 			</select>
 			<input id="searchbar" placeholder="Search..." onClick="this.select();"/>
 			<button id="id_search_button" class="btn btn-primary" onclick="getSearchResults()">Search</button>
+			<div>
+				<button id="id_searchTips_button" class="btn btn-large btn-info" onclick="showTips()">Show Search Help</button>
+			</div>
 			<div id="id_result_table"><?php if(isset($tableData)) echo $tableData; if(isset($_POST['alert-data'])) echo $_POST['alert-data'];?></div>
 		
 	    </div>

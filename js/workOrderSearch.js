@@ -34,6 +34,19 @@
 		}
 	});
 	
+	//If the search tips are hidden, it removes the hidden class to display them.
+	//If they are not hidden, it hides them.
+	function showTips() {
+		if($('#search-div').hasClass('hidden')) {
+			$('#search-div').removeClass('hidden');
+			$('#id_searchTips_button').html("Hide Search Help");
+		}
+		else {
+			$('#search-div').addClass('hidden');
+			$('#id_searchTips_button').html("Show Search Help");
+		}
+	}
+	
 	//Sets the current page as active on the header menu
 	$(".active").removeClass("active");
 	$("#workOrderLink").addClass("active");
