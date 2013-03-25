@@ -320,8 +320,11 @@
 		var prov = $("#custProvince").val();
 		var pcode = $("#custPCode").val();
 		var hphone = $("#custHPhone").val();
+		if(hphone == "403-") hphone = "";
 		var bphone = $("#custBPhone").val();
+		if(bphone == "403-") bphone = "";
 		var cphone = $("#custCPhone").val();
+		if(cphone == "403-") cphone = "";
 		var email = $("#custEmail").val();
 		var ref = $("#custRef").val();
 		var notes = $("#custNotes").val();

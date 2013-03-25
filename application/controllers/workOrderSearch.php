@@ -94,7 +94,7 @@
 				$tableData .= "<tr onclick='openWorkOrder(".$row['wo_id'].")'>";
 				
 				//Formats date to MM/DD/YYYY, before being output to the table, if it's 0's output no date.
-				if($row['wo_date'] == "0000-00-00" || $row['wo_date'] == "1970-01-01") {
+				if($row['wo_date'] == "0000-00-00" || $row['wo_date'] == "1970-01-01" ||  $row['wo_date'] == "1969-12-31") {
 					$tableData .= '<td></td>';
 				}
 				else {
