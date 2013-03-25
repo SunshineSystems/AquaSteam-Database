@@ -6,7 +6,19 @@
         <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/table css/style.css">
 		
 		<div class="container cust-container">
+			
+			<div id="search-div">
+				<div class="search-container">
+					<h4>Search Tips</h4></br>
+						<p><b>Name:</b> Searches both first and last name for customer. Eg. First Last</p></br>
+						<p><b>Company:</b> Searches for customer's company.</p></br>
+						<p><b>City:</b> Searches for customer's city.</p></br>
+						<p><b>Address:</b> Searches addresses that contain selected variables.</p></br>
+						<p><b>Phone Number:</b> Searches customer's business, home, and cell phones. When searching must conatin dashes. Eg. XXX-XXX-XXXX</p></br>
+				</div>
+			</div>
 			<h1>Customers</h1>
+			
 			<select id="searchType" onchange="loadSearch()">
 				<option value="name" selected="selected">Name</option>
 				<option value="company">Company</option>
@@ -18,6 +30,7 @@
 			<button id="id_search_button" class="btn btn-primary" onclick="getSearchResults()">Search</button>
 			<div><button id="id_newCust_button" class="btn btn-large btn-primary" onclick="newCustomer()">Create New Customer</button></div>
 			<div id="id_result_table"><?php if(isset($_POST['alert-data'])) { echo $_POST['alert-data']; }?></div>
+			
 		</div>
 		
 		<!--Hidden form that contains will contain the alert code after a customer is saved/deleted-->
