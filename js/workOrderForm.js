@@ -8,7 +8,7 @@
 		$( "#datepicker" ).datepicker();
 	});
  
- 	
+ 	$('.dropdown-toggle').dropdown()
  
  	$(function() {
 		$( "#tabs" ).tabs();
@@ -140,7 +140,9 @@
     }
     
     function printWorkOrder() {
-    	alert("This will open a printable PDF in a new tab with the formatted work order");
+    	var id = $("#workOrderID").val();
+    	var url = home + "index.php/workorderform/printWorkOrder/" + id;
+		var page = window.open(url, '_blank');
     }
     
     function deleteWorkOrder() {

@@ -1,0 +1,15 @@
+img {
+	width: 25%;
+	display: inline-block;
+}
+
+#workOrderHeader {
+	display: inline-block;
+	margin-left: 200px;
+}
+
+#date {
+	display: inline-block;
+	float: right;
+	margin-top: 75px;
+}
