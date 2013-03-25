@@ -33,38 +33,26 @@
 					      <li id="customerLink"><a class="menu-links" href="<?php echo $home?>index.php/customer">Customers</a></li>
 					      <li id="workOrderLink"><a href="<?php echo $home?>index.php/workOrderSearch">Work Orders</a></li>
 					      <li><a href="https://www.google.com/calendar" target="_blank">Google Calendar</a></li>
-					      
 				      </ul>
-						  <div class="btn-group">
-  						  	  <button class="btn dropdown-toggle" data-toggle="dropdown" align="right">
-									You're logged in <?php if(isset($user_username)) echo $user_username; ?>
-									<span class="caret"></span>
-							  </button>
-							  <ul class="dropdown-menu"> 
-							  	<?php function index()
-									{
-										
-										if(!isset($_SESSION['id'])) {
-											header('Location: login');
-										}
-										else {
-											$data['title'] = "Home";
-											$this->load->view('header', $data);
-											if($_SESSION['usertype'] == 1) {
-												?> <li><a href="<?php echo $home?>index.php/manageAccount">Manage Accounts</a></li>
-												//$this->load->view('adminMainMenu_view');
-											<?php }
-											else { ?>
-												<li><a href="<?php echo $home?>index.php/changePassword">Change Password</a></li>
-												<?php //$this->load->view('empMainMenu_view');
-											}
-										}
-									} ?>
-							  	  
-							  	  
-							  	  <li id="logoutLink"><a href="<?php echo $home?>">Logout</a></li>
-							  </ul>
+				      <ul class="nav pull-right">
+						  <li class="dropdown">
+						  	  <?php if(!isset($_SESSION['username'])) {echo '<a href="'.$home.'index.php/login">Log In</a>';} 
+						  	  		else { echo '<a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+						  	  						Logged in: '.$_SESSION['username'].' <span class="caret"></span>
+						  	  						<ul class="dropdown-menu">';
+														if($_SESSION['usertype'] == 1) {
+															echo '<li id="accountLink"><a href="'.$home.'index.php/manageAccount">Manage Accounts</a></li>';
+														}
+														else {
+															echo '<li id="accountLink"><a href="'.$home.'index.php/changePassword">Change Password</a></li>';
+														} 
+													  	echo '<li id="logoutLink"><a href="'.$home.'index.php/login">Logout</a></li>
+													  </ul>';
+									
+									}?>
+
 						  </div>
+				  	  </ul>
 			      </div>
 			    </div>
 		    </div>

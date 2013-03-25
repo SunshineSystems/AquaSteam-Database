@@ -44,6 +44,7 @@
 				$id = $row['user_id'];	
 				$storedPass = $row['user_password'];
 				$type = $row['user_admin'];
+				$username = $row['user_username'];
 			}
 			
 			//Compares the input password to the stored password.
@@ -58,6 +59,7 @@
 			
 			$_SESSION['id'] = $id;
 			$_SESSION['usertype'] = $type;
+			$_SESSION['username'] = $username;
 			echo 1;		
 		}
 	}
