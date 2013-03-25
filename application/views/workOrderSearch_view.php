@@ -20,7 +20,7 @@
 						<p><b>Company:</b> Searches for work orders with company.</p></br>
 						<p><b>City:</b> Searches for work orders with city.</p></br>
 						<p><b>Address:</b> Searches addresses for work orders that contain selected variables.</p></br>
-						<p><b>Phone Number:</b> Searches work order phone numbers. When searching must conatin dashes. Eg. XXX-XXX-XXXX</p></br>
+						<p><b>Date:</b> Searches work order dates. When searching must search complete dates. Eg. YYYY/MM/DD</p></br>
 				</div>
 			</div>
 	    	<select id="searchType" onchange="loadSearch()">
