@@ -1,4 +1,6 @@
 <?php
+
+	require_once APPPATH.'third_party/dompdf/dompdf_config.inc.php';
 	class WorkOrderForm extends CI_Controller {
 		
 		public function WorkOrderForm() {
@@ -189,6 +191,30 @@
 			$feedback = "<div class='alert alert-success'><h4>Success!</h4>
 								The Work Order Has Been Deleted</div>";
 			echo $feedback;					
+		}
+		
+		//Printable work orders aren't going to happen, because I don't have enough time to do it by the deadline.
+		//If somebody does get around to implementing it, it'll be done here.
+		function printWorkOrder($id) {
+			$this->load->helper('url'); 
+    		$home = base_url();
+	
+			$html = "<html>
+						<head>
+							<link rel='stylesheet' type='text/css' href=".$home."css/printableWO.css>
+						</head>
+						<body>
+							<div id='container'>
+								<img src='".$home."images/New Aqua Logo Web.png' alt='Aqua Steam Logo'>
+								<h1 id='workOrderHeader'>Work Order</h1>
+								<p id='date'>Date: 09/11/2013</p>
+								<hr>
+							</div>
+						</body>
+					</html>";
+					
+			$this->createPDF($html);
+			echo $html;
 		}
 		
 		function getServiceTableForWO($woID) {
@@ -427,6 +453,13 @@
 			}
 			
 			echo $updatedTable;
+		}
+		
+		function createPDF($html) {
+			$dompdf = new DOMPDF();
+			$dompdf->load_html($html);
+			$dompdf->render();
+			$dompdf->stream("testing.pdf", array('Attatchement'=>0));
 		}
 	}
 	

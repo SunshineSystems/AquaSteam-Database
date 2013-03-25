@@ -226,8 +226,19 @@
 			<div id="buttons-container">
 				<button id="save-button" class="btn btn-large btn-primary" onclick="saveWorkOrder()">Save Work Order</button>
 				<button id="start-new-button" class="btn btn-large btn-info" onclick="startAsNew()">Start as New</button>
-				<button id="print-button" class="btn btn-large btn-info" onclick="printWorkOrder()">Print Work Order</button>
+				<div class="btn-group">
+					<button id="print-button" class="btn btn-large btn-info dropdown-toggle" data-toggle="dropdown">Print Work Order</button>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+						<li>
+							<a href="<?php echo $home?>documents/Work Order.pdf">Work Order</a>
+						</li>
+						<li>
+							<a href="<?php echo $home?>documents/Customer Work Order.pdf">Cust Work Order</a>
+						</li>
+					</ul>
+				</div>
 				<button id="delete-button" class="btn btn-large btn-danger" onclick="deleteWorkOrder()">Delete Work Order</button>
+				
 			</div> 
 		</div> <!-- End of Container -->
 		
