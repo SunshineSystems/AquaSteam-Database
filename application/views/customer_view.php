@@ -96,5 +96,8 @@
 		</script>
 		<script src="<?php echo $home?>js/jquery.tablesorter.js"></script>
 		<script src="<?php echo $home?>js/customer.js"></script>
+		<script>
+			<?php if(isset($id)) echo "openCustomer($id);";?>
+		</script>
 	</body>
 </html>

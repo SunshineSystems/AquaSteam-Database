@@ -223,9 +223,11 @@
 				</div>
 			</div>
 			<hr>
+			<!-- Need button groups in order for the formatting to work properly for the dropdown -->
 			<div id="buttons-container">
-				<button id="save-button" class="btn btn-large btn-primary" onclick="saveWorkOrder()">Save Work Order</button>
-				<button id="start-new-button" class="btn btn-large btn-info" onclick="startAsNew()">Start as New</button>
+				<div class="btn-group">
+					<button id="delete-button" class="btn btn-large btn-danger" onclick="deleteWorkOrder()">Delete Work Order</button>
+				</div>
 				<div class="btn-group">
 					<button id="print-button" class="btn btn-large btn-info dropdown-toggle" data-toggle="dropdown">Print Work Order</button>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
@@ -237,8 +239,15 @@
 						</li>
 					</ul>
 				</div>
-				<button id="delete-button" class="btn btn-large btn-danger" onclick="deleteWorkOrder()">Delete Work Order</button>
-				
+				<div class="btn-group">
+					<button id="start-new-button" class="btn btn-large btn-info" onclick="startAsNew()">Start as New</button>
+				</div>
+				<div class="btn-group">
+					<button id="save-button" class="btn btn-large btn-primary" onclick="saveWorkOrder()">Save Work Order</button>
+				</div>
+				<div class="btn-group">
+					<button id="customer-button" class="btn btn-large btn-success" onclick="gotoCustomer()">View Customer</button>
+				</div>
 			</div> 
 		</div> <!-- End of Container -->
 		

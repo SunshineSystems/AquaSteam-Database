@@ -10,9 +10,7 @@
 		        <div id="error-div"></div>
 		        <input id="loginUsername"type="text" class="input-block-level" placeholder="Username">
 		        <input id="loginPassword"type="password" class="input-block-level" placeholder="Password">
-		        <label class="checkbox">
-		          <input type="checkbox" value="remember-me"> Remember me
-		        </label>
+
 		        <button id="signin-button" class="btn btn-large btn-primary" onclick="verifyLogin()">Sign in</button>
 	        </div>
 	    	

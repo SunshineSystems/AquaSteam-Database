@@ -141,7 +141,7 @@
 			
 			$.ajax({
 				type: "POST",
-				url: "customer/showresults",
+				url: home + "index.php/customer/showresults",
 				data: { "searchQ" : searchQuery,
 					    "searchType" : searchField
 					
@@ -225,7 +225,7 @@
 		$("#custID").val(id);
 		$.ajax({
 				type: "POST",
-				url: "customer/getCustInfo",
+				url: home + "index.php/customer/getCustInfo",
 				data: { "id" : id
 					
 				},
@@ -334,7 +334,7 @@
 		
 		$.ajax({
 			type: "POST",
-			url: "customer/savecustomer",
+			url: home + "index.php/customer/savecustomer",
 			data: { "id" : id,         "company" : company, "fname" : fname,
 					"lname" : lname,   "address" : address, "city" : city,
 					"prov" : prov,     "pcode" : pcode,     "hphone" : hphone,
@@ -361,7 +361,7 @@
 			
 		$.ajax({
 			type: "POST",
-			url: "customer/deletecustomer",
+			url: home + "index.php/customer/deletecustomer",
 			data: { "id" : id},
 			success: function(data) {
 				

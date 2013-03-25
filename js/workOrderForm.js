@@ -145,6 +145,12 @@
 		var page = window.open(url, '_blank');
     }
     
+    function gotoCustomer() {
+    	var id = $("#custID").val();
+    	var url = home + "index.php/customer/gotoCustomer/" + id;
+		var page = window.open(url, '_blank');
+    }
+    
     function deleteWorkOrder() {
     	var id = $("#workOrderID").val();
     	if(id == "") {
@@ -453,6 +459,8 @@
     /*		     	 *This section of code will handle all of the table editing stuff*              */
     /*                                                                                              */
     /************************************************************************************************/
+	
+	//When an editable table cell is clicked, an input box with the value of that td will show up inside of the cell.
 	$(function() {
 	    $(document).on("click", 'td.editable', function(){
 	    	
@@ -485,7 +493,8 @@
 	//When enter is hit while editing a cell, the value of that cell is updated in the database.
 	$(function() {
 		$(document).on("keydown", 'td.editable', function(event){
-		    if(event.keyCode == 13) {  
+		    if(event.keyCode == 13) {
+		    	console.log(this);  
 		   		updateTabTable(this);
 		    } 
 		});
@@ -494,6 +503,7 @@
 	//Removes the input box when it is no longer focused.
 	$(function() {
 		$(document).on('blur', '#editbox', function(){
+			updateTabTable($(this).parent()); //Calls the updateTabTable function when the input box is blurred.
 			$('.ajax').html($('.ajax input').val());
 			$('.ajax').removeClass('ajax');
 		});
