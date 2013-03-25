@@ -13,8 +13,8 @@
 						<p><b>Name:</b> Searches both first and last name for customer. Eg. First Last</p></br>
 						<p><b>Company:</b> Searches for customer's company.</p></br>
 						<p><b>City:</b> Searches for customer's city.</p></br>
-						<p><b>Address:</b> Searches addresses that contain selected variables.</p></br>
-						<p><b>Phone Number:</b> Searches customer's business, home, and cell phones. When searching must conatin dashes. Eg. XXX-XXX-XXXX</p></br>
+						<p><b>Address:</b> Searches addresses for cutomer's that contain selected variables.</p></br>
+						<p><b>Phone Number:</b> Searches customer's business, home, and cell phone numbers. When searching must conatin dashes. Eg. XXX-XXX-XXXX</p></br>
 				</div>
 			</div>
 			<h1>Customers</h1>
