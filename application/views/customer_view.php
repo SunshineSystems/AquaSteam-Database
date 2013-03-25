@@ -7,9 +7,9 @@
 		
 		<div class="container cust-container">
 			
-			<div id="search-div">
+			<div id="search-div" class="hidden">
 				<div class="search-container">
-					<h4>Search Tips</h4></br>
+					<h4>Search Help</h4></br>
 						<p><b>Name:</b> Searches both first and last name for customer. Eg. First Last</p></br>
 						<p><b>Company:</b> Searches for customer's company.</p></br>
 						<p><b>City:</b> Searches for customer's city.</p></br>
@@ -28,7 +28,10 @@
 			</select>
 			<input id="searchbar" placeholder="Search..." onClick="this.select();"/>
 			<button id="id_search_button" class="btn btn-primary" onclick="getSearchResults()">Search</button>
-			<div><button id="id_newCust_button" class="btn btn-large btn-primary" onclick="newCustomer()">Create New Customer</button></div>
+			<div>
+				<button id="id_newCust_button" class="btn btn-large btn-primary" onclick="newCustomer()">Create New Customer</button>
+				<button id="id_searchTips_button" class="btn btn-large btn-info" onclick="showTips()">Show Search Help</button>
+			</div>
 			<div id="id_result_table"><?php if(isset($_POST['alert-data'])) { echo $_POST['alert-data']; }?></div>
 			
 		</div>

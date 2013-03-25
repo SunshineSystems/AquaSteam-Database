@@ -252,3 +252,12 @@ table td {
 	margin: 0px;
 	
 }
+
+.hidden {
+	display: none;
+}
+
+#id_searchTips_button {
+	margin-left: 25px;
+	margin-top: 25px;
+}

@@ -393,6 +393,20 @@
 		page.focus();
 	}
 	
+	
+	//If the search tips are hidden, it removes the hidden class to display them.
+	//If they are not hidden, it hides them.
+	function showTips() {
+		if($('#search-div').hasClass('hidden')) {
+			$('#search-div').removeClass('hidden');
+			$('#id_searchTips_button').html("Hide Search Help");
+		}
+		else {
+			$('#search-div').addClass('hidden');
+			$('#id_searchTips_button').html("Show Search Help");
+		}
+	}
+	
 	//Resets the form in the dialog
 	function clearForm() {
 		$("#custID").val("");
@@ -400,7 +414,7 @@
 		$("#custFName").val("");
 		$("#custLName").val("");
 		$("#custAddress").val("");
-		$("#custCity").val("");
+		$("#custCity").val("Lethbridge");
 		$("#custProvince").val("AB");
 		$("#custPCode").val("");
 		$("#custHPhone").val("403-");

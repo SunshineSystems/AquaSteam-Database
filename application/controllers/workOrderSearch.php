@@ -167,7 +167,7 @@
 			$data['tags'] = $tags; //this passes $tags to each page that $data is loaded.
 			$data['custNum'] = $i; //this passes $custNum to each page that $data is loaded.
 			$data['title'] = "Viewing Work Orders";
-			$data['header'] = "Showing Work Orders for Customer: $custID";
+			$data['header'] = "Showing Customer Work Orders";
 			$data['tableData'] = $tableData;
 			
 			$this->load->view('header.php', $data);

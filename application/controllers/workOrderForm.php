@@ -19,7 +19,7 @@
 		
 		//Loads the page, with an existing Work Order's information
 		public function openWorkOrder($id) {
-			$data['title'] = "Work Order Form";
+			$data['title'] = "Work Order: $id";
 			$data['woID'] = $id;
 			
 			$results = $this->dbm->getWorkOrderById($id);
