@@ -32,8 +32,19 @@
 					      <li id="homeLink"class="active"><a class="menu-links" href="<?php echo $home?>index.php/MainMenu">Home</a></li>
 					      <li id="customerLink"><a class="menu-links" href="<?php echo $home?>index.php/customer">Customers</a></li>
 					      <li id="workOrderLink"><a href="<?php echo $home?>index.php/workOrderSearch">Work Orders</a></li>
-					      <li id="logoutLink"><a href="<?php echo $home?>">Logout</a></li>
+					      <li><a href="https://www.google.com/calendar" target="_blank">Google Calendar</a></li>
+					      <li id="drop-down"></li>
 				      </ul>
+						  <div class="btn-group">
+  						  	  <button class="btn dropdown-toggle" data-toggle="dropdown" align="right">
+									Username <?php if(isset($user_username)) echo $user_username; ?>
+									<span class="caret"></span>
+							  </button>
+							  <ul class="dropdown-menu">
+							  	  <li id="changePassword"><a href="<?php echo $home?>index.php/changePassword">Change Password</a></li>
+							  	  <li id="logoutLink"><a href="<?php echo $home?>">Logout</a></li>
+							  </ul>
+						  </div>
 			      </div>
 			    </div>
 		    </div>
