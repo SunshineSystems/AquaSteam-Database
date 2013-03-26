@@ -1,9 +1,16 @@
 <?php
-	
+
+	/**
+	 * @file login.php
+	 * @brief Contains the login class that handles all the functionality of the login page.
+	 */
+	 
 	require_once(APPPATH."libraries/hasher.php");
 	
 	class Login extends CI_Controller {
-	
+		
+		/** Default Constructor
+		 */
 		public function Login() {
 			//Call CI Controller's default constructor
 			parent::__construct();
@@ -16,6 +23,7 @@
 			}
 		}
 		
+		
 		public function index()
 		{	
 			$data['title'] = "Log In";
@@ -23,6 +31,11 @@
 			$this->load->view('login_view');
 		}
 		
+		/**
+		 * Checks the username and password that get passed to the function, and makes sure that the user exists, and the password
+		 * matches the password that is in the database. If all is well, it sets some session variables and returns 1, for the
+		 * javascript to know that the login was successful.
+		 */
 		function checkCredentials() {
 			$username = $_POST['username'];
 			$password = $_POST['password'];

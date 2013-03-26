@@ -1,6 +1,14 @@
 <?php
+
+	/**
+	 * @file mainmenu.php
+	 * @brief Contains the mainmenu class that handles all the functionality of the main menu pages.
+	 */
+	 
 	class MainMenu extends CI_Controller {
 	
+		/** Default Constructor
+		 */ 
 		public function MainMenu() {
 			//Call CI Controller's default constructor
 			parent::__construct();
@@ -9,6 +17,10 @@
 			session_start();
 		}
 		
+		/**
+		 * All This page does is check to see whether the logged in user is an admin or employee, and loads
+		 * their respective menu pages. The only difference between these pages is some account management buttons.
+		 */
 		public function index()
 		{
 			

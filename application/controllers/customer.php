@@ -1,6 +1,16 @@
 <?php
+
+	/**
+	 * @file customer.php
+	 * @brief Contains the customer class that handles all of the customer page functionality
+	 */
+	 
+	 
 	class Customer extends CI_Controller {
 		
+		 
+		 /** Default Constructor
+		 */
 		public function Customer() {
 			//Call CI Controller's default constructor
 			parent::__construct();
@@ -9,8 +19,8 @@
 			session_start();
 		}
 		
-		/*This is called when SiteDomain/aquasteam-database/index.php/customer is loaded in the browser.
-		  It passes select customer values to the view that are to be used as our tags for autocomplete
+		/** This is called when SiteDomain/aquasteam-database/index.php/customer is loaded in the browser.
+		 *  It passes select customer values to the view that are to be used as our tags for autocomplete.			
 		 */
 		public function index()
 		{
@@ -48,8 +58,9 @@
 		
 		
 		
-		// Gets the results of the search, based on the string that the user inputs, as well
-		// as the type of search specified in the dropdown.
+		/**  Gets the results of the search, based on the string that the user inputs, as well
+		 *  as the type of search specified in the dropdown.
+		 */
 		function showResults() {
 			$this->load->helper('url');
 			$home = base_url();
@@ -117,9 +128,11 @@
 			
 			echo $tableData;
 		}
-		
-		// Gets all of the data fields associated with the given customer ID
-		// Returns a json string to be handled by javascript.
+
+		/**
+		 * Gets all of the data fields associated with the given customer ID.
+		 * Returns a json string to be handled by javascript.
+		 */
 		function getCustInfo() {
 			$id = $_POST['id'];
 			$output = array();
@@ -145,13 +158,15 @@
 			echo $output;
 		}
 		
-		//Takes the values passed from the view, and inserts them into the database,
-		//as either a new customer, or updating an existing customer.
+		/**
+		 * Takes the values passed from the view, and inserts them into the database,
+		 * as either a new customer, or updating an existing customer.
+		 */
 		function saveCustomer() {
 			$data = array();
-			$id = $_POST['id'];
-			$sanitizedFName = str_replace(" ", "", $_POST['fname']);
-			$sanitizedLName = str_replace(" ", "", $_POST['lname']);
+			$id = $_POST['id']; //The id posted from the ajax call.
+			$sanitizedFName = str_replace(" ", "", $_POST['fname']); //removes spaces from first name.
+			$sanitizedLName = str_replace(" ", "", $_POST['lname']); //removes spaces from last name.
 			
 			$data['cust_fname'] = $sanitizedFName;
 			$data['cust_lname'] = $sanitizedLName;
@@ -183,7 +198,11 @@
 			
 			echo $feedback;
 		}
-
+		
+		/**
+		 * Gets the customer's id from an ajax call, if for some reason there's no id, it returns an error to be displayed.
+		 * else it deletes the customer using the model function, and returns the success message to be displayed.
+		 */
 		function deleteCustomer() {
 			$id = $_POST['id'];
 			
@@ -199,9 +218,11 @@
 			echo $feedback;
 		}
 		
-		//Is called when the "view customer" button is clicked on a work order form, only difference from
-		//regular page is that it sets a variable $id to be passed to the view, so that a customer will be opened
-		//immediately.
+		/**
+		 * gotoCustomer is called when the "view customer" button is clicked on a work order form, the only difference
+		 * from the regular page is that it sets a variable $id to be passed to the view, so that a customer will be
+		 * opened immediately when the page loads.
+		 */
 		public function gotoCustomer($id)
 		{
 			if(!isset($_SESSION['id'])) {

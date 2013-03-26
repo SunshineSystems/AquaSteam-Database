@@ -1,9 +1,16 @@
 <?php
-
+	
+	/**
+	 * @file changepassword.php
+	 * @brief Contains the changepassword class that handles all the functionality of the change passwords page.
+	 */
+	
 	require_once(APPPATH."libraries/hasher.php");
 
 	class changePassword extends CI_Controller {
-	
+		
+		/** Default Constructor
+		 */
 		public function ChangePassword() {
 			//Call CI Controller's default constructor
 			parent::__construct();
@@ -23,6 +30,11 @@
 			}
 		}
 		
+		/**
+		 * Gets the three values passed from the ajax call in the changepassword.js file, and validates the credentials
+		 * before it saves the new password to the database. If the credentials aren't valid, it returns an error to be displayed
+		 * to the user.
+		 */
 		function checkCredentials() {
 			$oldPassword = $_POST['oldPassword'];
 			$newPassword = $_POST['newPassword'];

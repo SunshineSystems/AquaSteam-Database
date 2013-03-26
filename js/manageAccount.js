@@ -9,7 +9,7 @@
 	    maxWidth: 850,
 	    modal: true,
 	    autoOpen: false,
-	    resizable, false;
+	    resizable: false,
 	    close: function() {
 	    	$(this).dialog("close");
 	    	clearForm();

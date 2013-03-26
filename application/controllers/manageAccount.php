@@ -1,8 +1,16 @@
 <?php
+
+	/**
+	 * @file manageAccount.php
+	 * @brief Contains the manageAccount class that handles all the functionality of the manage accounts page.
+	 */
+	 
 	require_once(APPPATH."libraries/hasher.php");
 	
 	class ManageAccount extends CI_Controller {
 	
+		/** Default Constructor
+		 */
 		public function ManageAccount() {
 			//Call CI Controller's default constructor
 			parent::__construct();
@@ -11,6 +19,10 @@
 			session_start();
 		}
 		
+		/**
+		 * Creates a table of all the users in the user table, and passes it to the view to be displayed.
+		 * Once the table is created it loads the manageAccount view.
+		 */
 		public function index()
 		{
 			if(!isset($_SESSION['id'])) {
@@ -54,6 +66,10 @@
 			}
 		}
 		
+		/**
+		 * Uses the userID posted from the ajax call, to get all the information from a specific customer.
+		 * returns an array of the data recieved, to be used by the javascript.
+		 */
 		function getUserInfo() {
 			$id = $_POST['id'];
 			$output = array();
@@ -82,6 +98,9 @@
 			echo $output;
 		}
 		
+		/**
+		 * 
+		 */
 		function saveAccount() {
 			$data = array();
 			$id = $_POST['id'];
