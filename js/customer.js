@@ -1,11 +1,17 @@
-
+	/**
+	 * @file customer.js
+	 * @brief This page contains all the javascript functions for the cutsomer_view.php page 
+	 */
+	
 	var tagArray = new Array();
 	var searchField = "cust_fname";
 	var sorter = [[0,0],[1,0]]; //Sets which column will be sorted by default
 	
-	//Gets the data that we got from the database, and puts the first/last name of each customer
-	//Into a string which is used for the autocomplete. Also replaces null values with empty strings
-	// so "null" isn't displayed in the autocomplete
+	/** 
+	 *Gets the data that we got from the database, and puts the first/last name of each customer
+	 *Into a string which is used for the autocomplete. Also replaces null values with empty strings
+	 *so "null" isn't displayed in the autocomplete
+	 */
 	for(var i=0;  i < custNum; i++) {
 		if (obj[i]['cust_fname'] == null) {
 			obj[i]['cust_fname'] = "";
@@ -19,14 +25,18 @@
 	// Removes duplicate elements from the array, so autocomplete only displays unique values.
 	tagArray = eliminateDuplicates(tagArray);
 	
-	//Creates the initial autoComplete by using the tagArray created above
+	/**
+	 * Creates the initial autoComplete by using the tagArray created above
+	 */
 	$(function() {
 		$("#searchbar").autocomplete({
 			source: tagArray
 		});
 	});
 	
-	// If the user hits "Enter" in the searchbar, it runs the onclick event of the search button.
+	/**
+	 * If the user hits "Enter" in the searchbar, it runs the onclick event of the search button.
+	 */
 	$("#searchbar").keydown(function(event) {
 		if(event.keyCode == 13) {
 			$("#id_search_button").click();
@@ -34,17 +44,24 @@
 		}
 	});
 	
-	//Resizes the dialog box when the window is resized by calling the resizeDialog function 
+	/**
+	 * Resizes the dialog box when the window is resized by calling the resizeDialog function 
+	 */
 	$(window).resize(function () {
 	    resizeDialog();
 	});
 	
+	/**
+	 * When the New Customer button is clicked, it gets the value of the cust ID box and passes it to the openCustomer(id) function
+	 */
 	$('#new-cust-btn').click(function() {
 		var id = $('#new-cust-btn').val();
 		openCustomer(id);
 	});
 	
-	//creates the dialog that contains our customer information form.
+	/**
+	 * Creates the dialog that contains our customer information form.
+	 */
 	$("#dialog_customer_form").dialog({
 	    title: "Create New Customer",
 	    height: 735,
@@ -58,14 +75,19 @@
 	    }
 	});
 	
-	//Sets the customers page as active on the header menu
+	/**
+	 * Sets the customers page as active on the header menu
+	 */
 	$(".active").removeClass("active");
 	$("#customerLink").addClass("active");
 	
+	/**
+	 * This function loads the search depending on the search catagory 
+	 */
 	function loadSearch() {
 		var searchType = $("#searchType").val();
 		switch(searchType) {
-			case "name":
+			case "name": //if the catagory was Name
 				for(var i=0;  i < custNum; i++) {
 					if (obj[i]['cust_fname'] == null) {
 						obj[i]['cust_fname'] = "";
@@ -114,17 +136,19 @@
 				break;
 		}
 		
-		//replaces NULL values with an empty string, otherwise the autocomplete breaks.
+		/**
+		 * Replaces NULL values with an empty string, otherwise the autocomplete breaks.
+		 */
 		for(var i=0; i<tagArray.length; i++) {
 			if(tagArray[i] == null) {
 				tagArray[i] = "";
-				
 			}
 		}
 		
 		tagArray = eliminateDuplicates(tagArray);
 		
 		$("#searchbar").autocomplete( "destroy" ); // Need to destroy the autocomplete in order to make a new one
+		
 		$(function() {
 			$("#searchbar").autocomplete({
 				source: tagArray
@@ -132,6 +156,10 @@
 		});
 	}
 	
+	/**
+	 * This function gets the values from the search box and posts that data to the showresults controller function
+	 * If successful, returns a string of html to the id_result_table div.
+	 */
 	function getSearchResults() {
 		$(function() {
 			var searchQuery = $("#searchbar").val();
@@ -160,6 +188,9 @@
 		});
 	}
 	
+	/**
+	 * This function creates the buttons and sets their functions on the form when creating a new customer
+	 */
 	function newCustomer() {
 		//Need to implement buttons like this, in order to format properly
 		$( "#dialog_customer_form" ).dialog({ title: "Create New Customer" });
@@ -222,6 +253,10 @@
 		resizeDialog();
 	}
 	
+	/**
+	 * @param id The customer id.
+	 * This function opens the customer form based on the customer id that has been passed to it.
+	 */
 	function openCustomer(id) {
 		$("#custID").val(id);
 		$.ajax({
@@ -251,6 +286,7 @@
 				}
 			});
 		
+		//The buttons are created below
 		$( "#dialog_customer_form" ).dialog({ title: "Showing Customer" });
 		$("#dialog_customer_form").dialog("option", "buttons", [
 		
@@ -310,7 +346,10 @@
 		resizeDialog();
 	}
 	
-	//Gets the values in the form, and passes them to the controller, to be input to the database
+	/**
+	 * Gets the values in the form, and passes them to the controller, to be input to the database
+	 */
+	
 	function saveCustomer() {
 		var id = $("#custID").val();
 		var company = $("#custCompany").val();
@@ -345,12 +384,12 @@
 					"bphone" : bphone, "cphone" : cphone,   "email" : email,
 					"ref" : ref,       "notes" : notes 	
 			},
+			
+			/**	Gives a value to the hidden input, and then submits the form.
+			 *	This will reload the page, and put the form data into the table-results div.
+			 *	The page is reloaded so that the autocomplete has the data that they just saved.
+			 */
 			success: function(data) {
-				
-				/*	Gives a value to the hidden input, and then submits the form.
-				 *	This will reload the page, and put the form data into the table-results div.
-				 *	The page is reloaded so that the autocomplete has the data that they just saved.
-				 */
 				$("#alert-data").val(data);
 				document.getElementById("alert-form").submit();
 			}, 
@@ -360,6 +399,9 @@
 		});
 	}
 	
+	/**
+	 * This function grabs the customer id and passes it to the deletecustomer controller function. 
+	 */
 	function deleteCustomer() {
 		var id = $("#custID").val();
 			
@@ -367,8 +409,7 @@
 			type: "POST",
 			url: home + "index.php/customer/deletecustomer",
 			data: { "id" : id},
-			success: function(data) {
-				
+			success: function(data) {	
 				/*	Gives a value to the hidden input, and then submits the form.
 				 *	This will reload the page, and put the form data into the table-results div.
 				 *	The page is reloaded so that the autocomplete has the data that they just saved.
@@ -383,6 +424,9 @@
 	
 	}
 	
+	/**
+	 * This function grabs the customers id and opens up a new tab with all of the corrosponding work orders
+	 */
 	function viewWorkOrders() {
 		var id = $("#custID").val();
 		var url = home + "index.php/workordersearch/showAllForCust/" + id;
@@ -390,6 +434,9 @@
 		page.focus();
 	}
 	
+	/**
+	 * This function grabs the customers id and opens a new tab with a blank worker order for the corrosponding customer 
+	 */
 	function newWorkOrder() {
 		var id = $("#custID").val();
 		var url = home + "index.php/workorderform/newForCust/" + id;
@@ -398,8 +445,11 @@
 	}
 	
 	
-	//If the search tips are hidden, it removes the hidden class to display them.
-	//If they are not hidden, it hides them.
+	/**
+	 * This function displays or hides the search tips.
+	 * If the search tips are hidden, it removes the hidden class to display them.
+	 * If they are not hidden, it hides them.
+	 */
 	function showTips() {
 		if($('#search-div').hasClass('hidden')) {
 			$('#search-div').removeClass('hidden');
@@ -411,7 +461,9 @@
 		}
 	}
 	
-	//Resets the form in the dialog
+	/*
+	 * This function resets all the values in the form
+	 */
 	function clearForm() {
 		$("#custID").val("");
 		$("#custCompany").val("");
@@ -429,7 +481,10 @@
 		$("#custNotes").val("");
 	}
 
-	// Takes an array, removes all duplicate elements and returns it.
+	/*
+	 * @param arr Array with search results
+	 * This function removes duplicates from the search results
+	 */
 	function eliminateDuplicates(arr) {
 		var i,
 	  	len=arr.length,
@@ -445,6 +500,10 @@
 	 	return out;
 	}
 	
+	/*
+	 * This function changes the size of the dialog box based on the size of the window
+	 * This prevents the dialog box extending past the borders of the window and breaking (useful for mobile devices).
+	 */
 	function resizeDialog() {
 		var timerid;
 		(timerid && clearTimeout(timerid));
