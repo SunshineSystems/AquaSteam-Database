@@ -31,7 +31,8 @@
 			success: function(data) {
 				if(data == 1) {
 					alert("Password successfully changed!\nPlease log in with the new password");
-					window.location = home;
+					var url = home + "index.php";
+					window.location = url;
 				}
 				else {
 					$("#error-div").html(data);

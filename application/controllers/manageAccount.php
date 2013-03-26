@@ -165,7 +165,10 @@
 			}
 			echo $echo;
 		}
-
+		
+		/**
+		 * Recieves a userID from an ajax call, and if it exists it deletes the user with that id from the database.
+		 */
 		function deleteAccount() {
 			$id = $_POST['id'];
 			

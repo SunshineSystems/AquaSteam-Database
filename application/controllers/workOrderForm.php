@@ -1,5 +1,9 @@
 <?php
 
+	/**
+	 * @file workOrderForm.php
+	 * @brief Contains the WorkOrderForm class that handles all the functionality of the work order form page.
+	 */
 	require_once APPPATH.'third_party/dompdf/dompdf_config.inc.php';
 	class WorkOrderForm extends CI_Controller {
 		
