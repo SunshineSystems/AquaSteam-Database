@@ -1,3 +1,12 @@
+	/**
+	 * @file changePassword.js
+	 * @brief Contains all the javascript functions for the changePassword_view.php page.
+	 */
+	
+	/**  
+	 * When the "Enter" key is clicked for each of these fields
+	 * it emulates the changepassword button being pressed 
+	 */
 	$("#oldPassword").keydown(function(event) {
 		if(event.keyCode == 13) {
 			$("#changePasswordButton").click();
@@ -16,6 +25,10 @@
 		}
 	});
 	
+	/**
+	 * This function gets the values of the password boxes and posts that data to the "checkCredentials" controller function
+	 * to be validated. If successful, alerts a success message and loads login page. If not successful, alerts an error message. 
+	 */
 	function verifyChangePassword() {
 		var oldPassword = $("#oldPassword").val();
         var newPassword = $("#newPassword").val();
