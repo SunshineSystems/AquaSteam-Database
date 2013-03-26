@@ -99,7 +99,7 @@
 		}
 		
 		/**
-		 * 
+		 * Takes the posted data from an ajax call, and saves the data to the database.
 		 */
 		function saveAccount() {
 			$data = array();
