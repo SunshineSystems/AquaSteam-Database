@@ -6,7 +6,9 @@
 	 */
 	require_once APPPATH.'third_party/dompdf/dompdf_config.inc.php';
 	class WorkOrderForm extends CI_Controller {
-		
+		/**
+		 * Default Constructor
+		 */
 		public function WorkOrderForm() {
 			//Call CI Controller's default constructor
 			parent::__construct();
@@ -19,7 +21,12 @@
 				header("Location: ".$home."mainmenu"); //Goes to main menu, because this page has nothing of use by default.
 		}
 		
-		//Loads the page, with an existing Work Order's information
+		/**
+		 * Gets the information from a work order using it's $id, and passes that information to the workorderform view to be
+		 * displayed in the proper fields.
+		 * 
+		 * @param $id the id of the work order that is to be opened.
+		 */
 		public function openWorkOrder($id) {
 			if(!isset($_SESSION['id'])) {
 				$this->load->helper('url'); 
@@ -82,7 +89,12 @@
 			}
 		}
 
-		//Loads the page when givin a customer to create a new workorder for, and fills in some default information.
+		/**
+		 * Loads the page when given a customer to create a work order for, and fills in some default information
+		 * based on the customer's information.
+		 * 
+		 * @param $custID the customer ID to be used to get a customer's information
+		 */
 		function newForCust($custID) {
 			if(!isset($_SESSION['id'])) {
 				$this->load->helper('url'); 
@@ -111,7 +123,12 @@
 				$this->load->view('workOrderForm_view.php', $data);
 			}
 		}
-
+		
+		/**
+		 * Recieves the values of all the work order information through post variables, and saves them to their respective tables
+		 * in the database. If the workorderID recieved is blank, it saves the information as a new work order, else it just updates
+		 * the tables with the information.
+		 */
 		function saveWorkOrder() {
 			$woID = $_POST["woID"];
 			
@@ -198,7 +215,11 @@
 			}
 			echo $feedback;
 		}
-
+		/**
+		 * Recieves a post variable containing a work order id, and passes it to a database function.
+		 * The database function will delete the work order record and all of it's child records from the database
+		 * based on the ID that is passed.
+		 */
 		function deleteWorkOrder() {
 			$woID = $_POST["id"];
 			
@@ -208,9 +229,14 @@
 								The Work Order Has Been Deleted</div>";
 			echo $feedback;					
 		}
-		
-		//Printable work orders aren't going to happen, because I don't have enough time to do it by the deadline.
-		//If somebody does get around to implementing it, it'll be done here.
+
+		/**
+		 * Printable work orders aren't going to happen, because I don't have enough time to do it by the deadline.
+		 * It takes a huge amount of time to get it to format properly, and is a giant time sink.
+		 * When I work on implementing it for the final system/later it will be done here.
+		 * 
+		 * @param $id the work order id that will be used to generate a printable report.
+		 */
 		function printWorkOrder($id) {
 			$this->load->helper('url'); 
     		$home = base_url();
@@ -233,6 +259,12 @@
 			echo $html;
 		}
 		
+		/**
+		 * Gets all of the records from the service table that match the $woID, and puts them into an editable table.
+		 * Returns the table as a string, to be loaded into the view.
+		 * 
+		 * @param $woID The work order ID to be used to get the service records.
+		 */
 		function getServiceTableForWO($woID) {
 			$serviceTable = "<table id='service-table' class='tablesorter table-striped'>
 							<thead>
@@ -251,7 +283,7 @@
 							<tbody>";
 			
 			//Gets each row from service that is tied to the open work order.
-			//Puts the content into a table to be displayed. Each cell has classes that will make them editable.				
+			//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.				
 			$results = $this->dbm->getServiceByWOID($woID);
 			foreach($results->result_array() as $row) {
 				$serviceTable .= "<tr><td class='editable service serv_type ".$row['serv_id']." text'>".$row['serv_type']."</td>";
@@ -267,6 +299,8 @@
 			
 			$serviceTable .= "</tbody></table>";
 			$serviceTable .= "<div>";
+								
+							  //Formats the two total price outputs properly, in order to use bootstrap.	
 			$serviceTable .= '<div class="totals-div"><label>Total Carpet Sq Ft: </label>
 								<div class="input-prepend">
 									<span class="add-on">$</span>
@@ -282,6 +316,12 @@
 			return $serviceTable;
 		}
 
+		/**
+		 * Gets all of the records from the upholstery table that match the $woID, and puts them into an editable table.
+		 * Returns the table as a string, to be loaded into the view.
+		 * 
+		 * @param $woID The work order ID to be used to get the upholstery records.
+		 */
 		function getUpholsteryTableForWO($woID) {
 			$upholsteryTable = "<table id='upholstery-table' class='tablesorter table-striped'>
 							<thead>
@@ -300,7 +340,7 @@
 							<tbody>";
 			
 			//Gets each row from upholstery that is tied to the open work order.
-			//Puts the content into a table to be displayed. Each cell has classes that will make them editable.				
+			//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.				
 			$results = $this->dbm->getUpholsteryByWOID($woID);
 			foreach($results->result_array() as $row) {
 				$upholsteryTable .= "<tr><td class='editable upholstery up_type ".$row['up_id']." text'>".$row['up_type']."</td>";
@@ -331,6 +371,12 @@
 			return $upholsteryTable;
 		}
 		
+		/**
+		 * Gets all of the records from the stain_guard table that match the $woID, and puts them into an editable table.
+		 * Returns the table as a string, to be loaded into the view.
+		 * 
+		 * @param $woID The work order ID to be used to get the stain_guard records.
+		 */
 		function getStainGuardTableForWO($woID) {
 			$stainguardTable = "<table id='stainguard-table' class='tablesorter table-striped'>
 							<thead>
@@ -349,7 +395,7 @@
 							<tbody>";
 			
 			//Gets each row from stain_guard that is tied to the open work order.
-			//Puts the content into a table to be displayed. Each cell has classes that will make them editable.				
+			//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.				
 			$results = $this->dbm->getStainGuardByWOID($woID);
 			foreach($results->result_array() as $row) {
 				$stainguardTable .= "<tr><td class='editable stain_guard sg_type ".$row['sg_id']." text'>".$row['sg_type']."</td>";
@@ -380,6 +426,12 @@
 			return $stainguardTable;
 		}
 		
+		/**
+		 * Gets all of the records from the other table that match the $woID, and puts them into an editable table.
+		 * Returns the table as a string, to be loaded into the view.
+		 * 
+		 * @param $woID The work order ID to be used to get the other records.
+		 */
 		function getOtherTableForWO($woID) {
 			$otherTable = "<table id='other-table' class='tablesorter table-striped'>
 							<thead>
@@ -398,7 +450,7 @@
 							<tbody>";
 			
 			//Gets each row from other that is tied to the open work order.
-			//Puts the content into a table to be displayed. Each cell has classes that will make them editable.				
+			//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.				
 			$results = $this->dbm->getOtherByWOID($woID);
 			foreach($results->result_array() as $row) {
 				$otherTable .= "<tr><td class='editable other other_type ".$row['other_id']." text'>".$row['other_type']."</td>";
@@ -430,7 +482,10 @@
 		}
 		
 		
-		// Saves the posted value to the database in it's table, where the posted id == the id in the database
+		/**
+		 * update the value in a table record based on the posted values. It recieves an id, table, field, and value
+		 * so it knows exaclty what field in what record to change. This happens when a table cell is updated in the view.
+		 */
 		function updateTabTable() {
 			$id = $_POST['id'];
 			$field = $_POST['field'];
@@ -456,12 +511,17 @@
 			echo "Value saved!";
 		}
 		
+		/**
+		 * saves a new blank record in the table that matches the post variable 'table', in order to add a new empty row to
+		 * one of the editable datatables in the view.
+		 */
 		function newTableRow() {
 			$woID = $_POST['woID'];
 			$table = $_POST['table'];
 			
 			$this->dbm->newRecordByTable($woID, $table);
 			
+			//Gets the updated table based on which one had the record update.
 			switch($table) {
 				case "service":
 					$updatedTable = $this->getServiceTableForWO($woID);
@@ -477,10 +537,14 @@
 					break;
 			}
 			
+			//echo's the updated table to the view.
 			echo $updatedTable;
 		}
 		
-		//Deletes the row in the posted table, that matches the posted id.
+		/**
+		 * Deletes a record from a table that matches the post variable 'table' and the post variable 'id' as it's primary key.
+		 * This will result in a row being removed from the editable datatable in the view.
+		 */
 		function deleteTableRow() {
 			$id = $_POST['id'];
 			$idName = $_POST['idName'];
@@ -489,6 +553,7 @@
 			
 			$this->dbm->deleteRecordByTable($id, $idName, $table);
 			
+			//Gets the updated table based on which one had the record deleted.
 			switch($table) {
 				case "service":
 					$updatedTable = $this->getServiceTableForWO($woID);
@@ -504,6 +569,7 @@
 					break;
 			}
 			
+			//Echo's the updated table back to the view.
 			echo $updatedTable;
 		}
 		
