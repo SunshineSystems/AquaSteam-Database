@@ -188,3 +188,8 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	margin: 0; /*Removes bootstraps margins*/
 	margin-right: 30px
 }
+
+.input-small {
+	text-align: right;
+	width: 100px !important;
+}

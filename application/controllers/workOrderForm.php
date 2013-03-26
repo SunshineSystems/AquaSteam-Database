@@ -263,7 +263,16 @@
 			
 			$serviceTable .= "</tbody></table>";
 			$serviceTable .= "<div>";
-			$serviceTable .= '<div class="totals-div"><label>Total Carpet Sq Ft: </label><input id="total-service-sqft" type="text" value="0.00" readonly><label>Total Carpet Price: </label><input id="total-service-price" type="text" value="0.00" readonly></div>';
+			$serviceTable .= '<div class="totals-div"><label>Total Carpet Sq Ft: </label>
+								<div class="input-prepend">
+									<span class="add-on">$</span>
+								  	<input id="total-service-sqft" class="input-small span2" type="text" value="0.00" readonly>
+								</div>
+								<label>Total Carpet Price: </label>
+								<div class="input-prepend">
+									<span class="add-on">$</span>
+								  	<input id="total-service-price" class="input-small span2" type="text" value="0.00" readonly>
+								</div></div>';
 			$serviceTable .= '<button id="newrow-serv-btn" class="btn btn-large btn-success newrow-button pull-right" onclick="addTableRow('.$woID.', \'service\', \'#carpetTab\')">+ New Row</button>';
 			$serviceTable .= "</div>";
 			return $serviceTable;
@@ -303,7 +312,16 @@
 			
 			$upholsteryTable .= "</tbody></table>";
 			$upholsteryTable .= "<div>";
-			$upholsteryTable .= '<div class="totals-div"><label>Total Upholstery Sq Ft: </label><input id="total-upholstery-sqft" type="text" value="0.00" readonly><label>Total Upholstery Price: </label><input id="total-upholstery-price" type="text" value="0.00" readonly></div>';
+			$upholsteryTable .= '<div class="totals-div"><label>Total Upholstery Sq Ft: </label>
+								<div class="input-prepend">
+									<span class="add-on">$</span>
+								  	<input id="total-upholstery-sqft" class="input-small span2" type="text" value="0.00" readonly>
+								</div>
+								<label>Total Upholstery Price: </label>
+								<div class="input-prepend">
+									<span class="add-on">$</span>
+								  	<input id="total-upholstery-price" class="input-small span2" type="text" value="0.00" readonly>
+								</div></div>';
 			$upholsteryTable .= '<button id="newrow-up-btn" class="btn btn-large btn-success newrow-button pull-right" onclick="addTableRow('.$woID.', \'upholstery\', \'#upholsteryTab\')">+ New Row</button>';
 			$upholsteryTable .= "</div>";
 			return $upholsteryTable;
@@ -343,7 +361,16 @@
 			
 			$stainguardTable .= "</tbody></table>";
 			$stainguardTable .= "<div>";
-			$stainguardTable .= '<div class="totals-div"><label>Total Stain Guard Sq Ft: </label><input id="total-stainguard-sqft" type="text" value="0.00" readonly><label>Total Stain Guard Price: </label><input id="total-stainguard-price" type="text" value="0.00" readonly></div>';
+			$stainguardTable .= '<div class="totals-div"><label>Total Stain Guard Sq Ft: </label>
+								<div class="input-prepend">
+									<span class="add-on">$</span>
+								  	<input id="total-stainguard-sqft" class="input-small span2" type="text" value="0.00" readonly>
+								</div>
+								<label>Total Stain Guard Price: </label>
+								<div class="input-prepend">
+									<span class="add-on">$</span>
+								  	<input id="total-stainguard-price" class="input-small span2" type="text" value="0.00" readonly>
+								</div></div>';
 			$stainguardTable .= '<button id="newrow-sg-btn" class="btn btn-large btn-success newrow-button pull-right" onclick="addTableRow('.$woID.', \'stain_guard\', \'#stainGuardTab\')">+ New Row</button>';
 			$stainguardTable .= "</div>";
 			return $stainguardTable;
@@ -383,7 +410,16 @@
 			
 			$otherTable .= "</tbody></table>";
 			$otherTable .= "<div>";
-			$otherTable .= '<div class="totals-div"><label>Total "Other" Sq Ft: </label><input id="total-other-sqft" type="text" value="0.00" readonly><label>Total "Other" Price: </label><input id="total-other-price" type="text" value="0.00" readonly></div>';
+			$otherTable .= '<div class="totals-div"><label>Total Other Sq Ft: </label>
+								<div class="input-prepend">
+									<span class="add-on">$</span>
+								  	<input id="total-other-sqft" class="input-small span2" type="text" value="0.00" readonly>
+								</div>
+								<label>Total Other Price: </label>
+								<div class="input-prepend">
+									<span class="add-on">$</span>
+								  	<input id="total-other-price" class="input-small span2" type="text" value="0.00" readonly>
+								</div></div>';
 			$otherTable .= '<button id="newrow-other-btn" class="btn btn-large btn-success newrow-button pull-right" onclick="addTableRow('.$woID.', \'other\', \'#otherTab\')">+ New Row</button>';
 			$otherTable .= "</div>";
 			return $otherTable;
