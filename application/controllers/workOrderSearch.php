@@ -1,6 +1,14 @@
 <?php
+
+	/**
+	 * @file workOrderSearch.php
+	 * @brief Contains the WorkOrderSearch class that handles all the functionality of the work order search page.
+	 */
 	class WorkOrderSearch extends CI_Controller {
 		
+		/**
+		 * Default Constructor
+		 */
 		public function WorkOrderSearch() {
 			//Call CI Controller's default constructor
 			parent::__construct();
@@ -9,6 +17,10 @@
 			session_start();
 		}
 		
+		/**
+		 * Does session varification, and then loads certain fields of all work orders, to be used in the autocomplete tags.
+		 * The workorderSearch view is loaded and has the tags passed to it.
+		 */
 		public function index() {
 			if(!isset($_SESSION['id'])) {
 				$this->load->helper('url'); 
@@ -49,6 +61,13 @@
 		
 		// Gets the results of the search, based on the string that the user inputs, as well
 		// as the type of search specified in the dropdown.
+		
+		/**
+		 * Gets the results of a search, based on the string that the user inputs, as well as the type
+		 * of search specified in the dropdown box. It takes these results and outputs them to a table to be 
+		 * displayed on the view.
+		 * Returns the resulting table as a string.
+		 */
 		function showResults() {
 			$searchQuery = $_POST['searchQ'];
 			$searchType = $_POST['searchType'];
@@ -78,11 +97,14 @@
 			else {
 				$results = $this->dbm->getWorkOrdersBySearch($searchQuery, $searchType, false, false);
 			}
+			
+			//if nothing's returned from the database query, return this error message.
 			if(!$results->result()) {
 				echo "<div class='alert alert-error'><h4>Whoops!</h4>
 					  There's nothing in the database matching that search</div>";
 				return;
 			}
+			
 			//creates table that will be returned as string, and will be output to workordersearch_view.
 			$tableData = "<table id='result-table' class='tablesorter table-striped table-hover'>
 							<thead>
@@ -121,6 +143,12 @@
 			echo $tableData;
 		}
 		
+		/**
+		 * This function recieves a customer id, and gets all workorders that are tied to that customer id.
+		 * It outputs the results to a table and returns the table as a string, to be displayed in the view.
+		 * 
+		 * @param $custID the customer id used to search for work orders.
+		 */
 		function showAllForCust($custID) {
 			if(!isset($_SESSION['id'])) {
 				$this->load->helper('url'); 

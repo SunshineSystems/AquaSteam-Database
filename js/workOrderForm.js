@@ -1,4 +1,8 @@
 
+	/**
+	 * @file workOrderForm.js
+	 * @brief Contains the javascript functions that are used by the workOrderForm_view.php file.
+	 */
 	
 	//Sets the current page as active on the header menu
 	$(".active").removeClass("active");
@@ -18,6 +22,7 @@
 	runAllCalcs();
 	
 	//Calculates totals when the values have changed, and the changed input has lost focus.
+	/**************************************************************************************/
 	$('#travelDist').change(function() {
 		runAllCalcs();
 	});
@@ -33,7 +38,12 @@
 	$('#workOrderDiscountType').change(function() {
 		runAllCalcs();
 	});
-    
+    /**************************************************************************************/
+   
+   /**
+    * Gets the values of all of the fields in the work order form, and passes them to the saveWorkOrder function in the controller.
+    * It outputs the recieved success/error message to the #alert-div div. 
+    */
     function saveWorkOrder() {
     	var woID = $('#workOrderID').val();
     	var custID = $('#custID').val();
@@ -111,9 +121,11 @@
 			}
 		});
     }
-    
-    //Clears information specific to an individual work order, so that they may save a new one with the consistent
-    //information.
+
+    /**
+     * Clears information specific to an individial work order, and saves it as a new one so that a new work order may be 
+     * worked on that has the same location/customer information. 
+     */
     function startAsNew() {
     	$('#workOrderID').val("");
     	$('#workOrderGift').val("");
@@ -139,18 +151,35 @@
     	saveWorkOrder();
     }
     
+    /**
+     * gets the value of the workorderID field, and passes it to the printWorkOrder function in the controller, to create a printable
+     * PDF, and then opens the returned pdf in a new window.
+     * 
+     * CURRENTLY NOT IN USE 
+
     function printWorkOrder() {
     	var id = $("#workOrderID").val();
     	var url = home + "index.php/workorderform/printWorkOrder/" + id;
 		var page = window.open(url, '_blank');
     }
-    
+    */
+   
+   /**
+    * Gets the value of the customerID field, and passes it to the gotoCustomer() function in the controller,
+    * and opens the page in a new window. 
+    */
     function gotoCustomer() {
     	var id = $("#custID").val();
     	var url = home + "index.php/customer/gotoCustomer/" + id;
 		var page = window.open(url, '_blank');
     }
     
+    
+    /**
+     * Gets the value of the workorderID field. It confirms if the user really wants to delete the work order, and if yes
+     * it passes the workorderID to the deleteWorkOrder() function in the controller to be deleted. If successful
+     * the workorderSearch page is opened, and the success message is displayed there. 
+     */
     function deleteWorkOrder() {
     	var id = $("#workOrderID").val();
     	if(id == "") {
@@ -178,6 +207,10 @@
 		}
     }
     
+    /**
+     * Calculates the total travel price based on the value in the distance traveled field, and the travel rate field
+     * and outputs the result to the travel total field. 
+     */
     function calcTravel() {
     	var distance = $('#travelDist').val();
     	var rate = $('#travelPrice').val();
@@ -204,8 +237,11 @@
     		return false;
     	}
     }
-    
-    //Goes through each row, and calculates the square feet by multiplying the values in that rows length/width cells.
+
+    /**
+     * Goes through each row in the service/upholstery/stainguard/other tables, and calculates the square feet by multiplying
+     * the values in that rows length and with fields, and outputting the results to the square feet column in each row. 
+     */
     function calcSqFt(i) {
     	$("#service-table tbody tr").each(function(i) {
     		var length = $('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
@@ -264,7 +300,11 @@
     	});
     }
     
-    //Goes through each row in the data tables, and calculates the extended price by multiplying quantity by unit price.
+    /**
+     * Goes through each row in the service/upholstery/stainguard/other tables, and calculates the extended price by multiplying
+     * the values in that rows squarefeet, quantity, and unit price fields and outputting the results 
+     * to the extended price column in each row. 
+     */
     function calcExtPrice() {
     	$("#service-table tbody tr").each(function(i) {
     		var sqft = $('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
@@ -327,8 +367,10 @@
     	});
     }
     
-    //For each data table, it goes through each body row, and gets the value of the extended price column
-    //and adds it to the total. Once it's gone through each row, it displays the total in the table total price field.
+    /**
+     * For each data table, the function goes through each body row, and gets the value of the extended price column
+     * and adds it to the total. Once it's gone through each row, it displays the total in the total talbe price field. 
+     */
 	function calcTotalTablePrice() {
 		var serviceTotal = 0;
 		var upholsteryTotal = 0;
@@ -372,8 +414,10 @@
 		});
 	}
 	
-	//For each data table, it goes through each body row, and gets the value of the square feet column
-    //and adds it to the total. Once it's gone through each row, it displays the total in the table total sqft field.
+    /**
+     * For each data table, the function goes through each body row, and gets the value of the square feet column
+     * and adds it to the total. Once it's gone through each row, it displays the total in the total talbe sqft field. 
+     */
 	function calcTotalTableSqFt() {
 		var serviceTotal = 0;
 		var upholsteryTotal = 0;
@@ -417,7 +461,10 @@
 		});
 	}
 	
-	// Calculates
+	/**
+	 * Calculates the total price of the work order by adding all the total price fields in the work orders, and subtracting
+	 * the discount. It displays the results in the Total Work Order Price field. 
+	 */
 	function calcTotalWOPrice() {
 		var carpetTotal = $("#total-service-price").val();
 		var upholsteryTotal = $("#total-upholstery-price").val();
@@ -433,10 +480,10 @@
 						   + parseFloat(otherTotal) 
 						   + parseFloat(travelTotal);
 		
-		if(discountType == "$") {
+		if(discountType == "$") { //If the discount is in dollars, just subtract the dollars.
 			totalPrice -= parseFloat(discount);
 		}
-		else {
+		else { // Else if the discount is in %, calculate the percentage of the total, and subtract it from the total's price.
 			discount = parseFloat(discount);
 			discount = discount.toFixed(2) / 100;
 			var percentOff = totalPrice * discount;
@@ -445,7 +492,10 @@
 		
 		$("#total-wo-price").val(totalPrice.toFixed(2));
 	}
-    
+	
+    /**
+     * Runs all calculation functions at once. 
+     */
     function runAllCalcs() {
     	calcTravel();
 		calcSqFt();
@@ -561,6 +611,11 @@
     	});
 	}
 	
+	/**
+	 * Confirms if the user really wants to delete a row from the table, then passes the information of that table row
+	 * to the deleteTableRow() function in the controller to have the table row deleted. 
+	 * Outputs the returned data to the table tab that had the table updated, and runs all calculations again. 
+	 */
 	function deleteTableRow(id, woID, tableType, idName, tableTab) {
 		if(confirm("Are you sure you want to permanently delete this row?")) {
 			$.ajax({    

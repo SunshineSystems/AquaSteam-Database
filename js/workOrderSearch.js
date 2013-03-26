@@ -1,3 +1,8 @@
+
+	/**
+	 * @file workOrderSearch.js
+	 * @brief Contains the javascript functions that are used by the workOrderSearch_view.php file.
+	 */
 	
 	var tagArray = new Array();
 	var searchField = "cust_fname";
@@ -51,6 +56,11 @@
 	$(".active").removeClass("active");
 	$("#workOrderLink").addClass("active");
 	
+	
+	/**
+	 * Gets the value of the searchType dropdown box, and loads/formats the appropriate tags into the autocomplete
+	 * widget. 
+	 */
 	function loadSearch() {
 		var searchType = $("#searchType").val();
 		switch(searchType) {
@@ -105,6 +115,7 @@
 			}
 		}
 		
+		//Removes duplicate strings from the autocomplete tags
 		tagArray = eliminateDuplicates(tagArray);
 		
 		$("#searchbar").autocomplete( "destroy" ); // Need to destroy the autocomplete in order to make a new one
@@ -114,7 +125,15 @@
 			});
 		});
 	}
+	
+	/**
+	 * Gets the value of the searchbar, and passes it to the showResults() function in the controller.
+	 * Takes the returned table string from the controller function, and outputs it to the #result-table div, and initializes
+	 * the tablesorter on the output table.
+	 */
 	function getSearchResults() {
+		
+		//If nothing is in the searchbar, return an error message.
 		$(function() {
 			var searchQuery = $("#searchbar").val();
 			if(searchQuery == "") {
@@ -145,13 +164,23 @@
 	
 	
 	//When you click on a row, it will bring you to the workorder page and send the wo_id over
+	/**
+	 * Passes the id of the work order to be opened to the openWorkOrder() function in the WorkOrderForm controller, and opens the page.
+	 * 
+ 	 * @param id is the id of the workorder to be opened.
+	 */
 	function openWorkOrder(id) {
 		var url = home + "index.php/workorderform/openWorkOrder/" + id;
 		var page = window.open(url, '_blank');
 		page.focus();
-		//alert("You've opened work order: " + id);
 	}
 	
+	
+	/**
+	 * Goes through an array and removes strings if they've already been seen.
+	 * 
+ 	 * @param {Array} arr
+	 */
 	function eliminateDuplicates(arr) {
 		var i,
 	  	len=arr.length,
