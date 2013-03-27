@@ -9,7 +9,6 @@
         <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
         
         <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/bootstrap.css">
-        <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/bootstrap-responsive.css">
 	    <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/jquery-ui-1.10.0.custom.css">
 	    <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/header.css">
 	    

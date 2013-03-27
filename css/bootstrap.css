@@ -6156,3 +6156,13 @@ a.badge:focus {
 .affix {
   position: fixed;
 }
+
+/*Written by Logan Martin - Sunshine Systems for site specific styling*/
+.container {
+	width: 1170px;
+}
+
+.navbar {
+	min-width: 900px;
+}
+/* End Sunshine Systems edits*/
