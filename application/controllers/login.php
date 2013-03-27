@@ -37,7 +37,7 @@
 		 * javascript to know that the login was successful.
 		 */
 		function checkCredentials() {
-			$username = $_POST['username'];
+			$username = htmlspecialchars($_POST['username']);
 			$password = $_POST['password'];
 			global $hasher; //calls the global variable from hasher.php
 			

@@ -82,16 +82,16 @@
 				else {
 					$output['user_admin'] = "Employee";
 				}
-				$output['user_fname'] = $row['user_fname'];
-				$output['user_lname'] = $row['user_lname'];
-				$output['user_username'] = $row['user_username'];
-				$output['user_address'] = $row['user_address'];
-				$output['user_city'] = $row['user_city'];
-				$output['user_prov'] = $row['user_prov'];
-				$output['user_pcode'] = $row['user_pcode'];
-				$output['user_hphone'] = $row['user_hphone'];
-				$output['user_cphone'] = $row['user_cphone'];
-				$output['user_notes'] = $row['user_notes'];
+				$output['user_fname'] = htmlspecialchars_decode($row['user_fname']);
+				$output['user_lname'] =  htmlspecialchars_decode($row['user_lname']);
+				$output['user_username'] = htmlspecialchars_decode($row['user_username']);
+				$output['user_address'] =  htmlspecialchars_decode($row['user_address']);
+				$output['user_city'] =  htmlspecialchars_decode($row['user_city']);
+				$output['user_prov'] =  htmlspecialchars_decode($row['user_prov']);
+				$output['user_pcode'] =  htmlspecialchars_decode($row['user_pcode']);
+				$output['user_hphone'] =  htmlspecialchars_decode($row['user_hphone']);
+				$output['user_cphone'] =  htmlspecialchars_decode($row['user_cphone']);
+				$output['user_notes'] =  htmlspecialchars_decode($row['user_notes'], ENT_NOQUOTES);
 			}
 			
 			$output = json_encode($output);
@@ -130,16 +130,16 @@
 				$data['user_admin'] = 0;
 			}
 			
-			$data['user_username'] = $_POST['username'];
-			$data['user_fname'] = $_POST['fname'];
-			$data['user_lname'] = $_POST['lname'];
-			$data['user_address'] = $_POST['address'];
-			$data['user_city'] = $_POST['city'];
-			$data['user_prov']= $_POST['prov'];
-			$data['user_pcode'] = $_POST['pcode'];
-			$data['user_hphone'] = $_POST['hphone'];
-			$data['user_cphone'] = $_POST['cphone'];
-			$data['user_notes'] = $_POST['notes'];
+			$data['user_username'] = htmlspecialchars($_POST['username']);
+			$data['user_fname'] = htmlspecialchars($_POST['fname']);
+			$data['user_lname'] = htmlspecialchars($_POST['lname']);
+			$data['user_address'] = htmlspecialchars($_POST['address']);
+			$data['user_city'] = htmlspecialchars($_POST['city']);
+			$data['user_prov']= htmlspecialchars($_POST['prov']);
+			$data['user_pcode'] = htmlspecialchars($_POST['pcode']);
+			$data['user_hphone'] = htmlspecialchars($_POST['hphone']);
+			$data['user_cphone'] = htmlspecialchars($_POST['cphone']);
+			$data['user_notes'] = htmlspecialchars($_POST['notes']);
 			
 			if(!$id) {
 				//If there's no password entered, a new account cannot be saved, so kill the function and pass

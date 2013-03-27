@@ -34,10 +34,10 @@
 					      <li><a href="https://www.google.com/calendar" target="_blank">Google Calendar</a></li>
 				      </ul>
 				      <ul class="nav pull-right">
-						  <li class="dropdown">
+						  <li id="account-dropdown" class="dropdown">
 						  	  <?php if(!isset($_SESSION['username'])) {echo '<a href="'.$home.'index.php/login">Log In</a>';} 
 						  	  		else { echo '<a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-						  	  						Logged in: '.$_SESSION['username'].' <span class="caret"></span>
+						  	  						Logged in: <b>'.$_SESSION['username'].'</b> <span class="caret"></span>
 						  	  						<ul class="dropdown-menu">';
 														if($_SESSION['usertype'] == 1) {
 															echo '<li id="accountLink"><a href="'.$home.'index.php/manageAccount">Manage Accounts</a></li>';

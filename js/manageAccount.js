@@ -16,6 +16,13 @@
 	    }
 	});
 		 
+		 
+	/**
+	 * Sets the customers page as active on the header menu
+	 */
+	$(".active").removeClass("active");
+	$("#account-dropdown").addClass("active");
+		 
 	//Resizes the dialog box when the window is resized by calling the resizeDialog function 
 	$(window).resize(function () {
 	    resizeDialog();
