@@ -6165,4 +6165,8 @@ a.badge:focus {
 .navbar {
 	min-width: 900px;
 }
+
+#footer {
+	min-width: 900px;
+}
 /* End Sunshine Systems edits*/
