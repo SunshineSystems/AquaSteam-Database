@@ -10,11 +10,11 @@
 			<div id="search-div" class="hidden">
 				<div class="search-container">
 					<h4>Search Help</h4></br>
-						<p><b>Name:</b> Searches both first and last name for customer. Eg. First Last</p></br>
-						<p><b>Company:</b> Searches for customer's company.</p></br>
-						<p><b>City:</b> Searches for customer's city.</p></br>
-						<p><b>Address:</b> Searches addresses for cutomer's that contain selected variables.</p></br>
-						<p><b>Phone Number:</b> Searches customer's business, home, and cell phone numbers. When searching must conatin dashes. Eg. XXX-XXX-XXXX</p></br>
+						<p><b>Name:</b> Searches for customers by their first and/or last name e.g John Doe.</p></br>
+						<p><b>Company:</b> Searches for customers by their company name.</p></br>
+						<p><b>City:</b> Searches for customers by their city.</p></br>
+						<p><b>Address:</b> Searches customers by their address.</p></br>
+						<p><b>Phone Number:</b> Searches for customers by their home, business, and cell phone numbers. When searching, input must contain dashes. i.e. XXX-XXX-XXXX.</p></br>
 				</div>
 			</div>
 			<h1>Customers</h1>

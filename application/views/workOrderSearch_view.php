@@ -16,11 +16,11 @@
 	    	<div id="search-div" class= "hidden">
 				<div class="search-container">
 					<h4>Search Tips</h4></br>
-						<p><b>Name:</b> Searches both first and last name for work order. Eg. First Last</p></br>
-						<p><b>Company:</b> Searches for work orders with company.</p></br>
-						<p><b>City:</b> Searches for work orders with city.</p></br>
-						<p><b>Address:</b> Searches in addresses for workorders.</p></br>
-						<p><b>Date:</b> Searches work order dates. When searching must search complete dates. Eg. YYYY/MM/DD</p></br>
+						<p><b>Name:</b> Searches for work orders by their customers first and/or last name. e.g. John Doe.</p></br>
+						<p><b>Company:</b> Searches for work orders by their customers company name.</p></br>
+						<p><b>City:</b> Searches for work orders by their city.</p></br>
+						<p><b>Address:</b> Searches for work orders by their address.</p></br>
+						<p><b>Date:</b> Searches for work orders by their date. When searching, input must search complete dates. i.e. YYYY/MM/DD</p></br>
 				</div>
 			</div>
 	    	<select id="searchType" onchange="loadSearch()">
