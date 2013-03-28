@@ -104,12 +104,12 @@ body {
 	width: 63px;
 }
 
-#notesTab {
+#notesTab, #spotsTab {
 	text-align:center;
 }
 
 
-#woNotes {
+#woNotes, #woSpots {
 	width: 90%;
 	height: 200px
 }

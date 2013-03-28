@@ -168,6 +168,7 @@
 					<li><a href="#stainGuardTab">Stain Guard</a></li>
 					<li><a href="#otherTab">Other</a></li>
 					<li><a href="#travelTab">Travel</a></li>
+					<li><a href="#spotsTab">Spots</a></li>
 					<li><a href="#notesTab">Notes</a></li>
 				</ul>
 				<div id="carpetTab">
@@ -209,7 +210,11 @@
 						</div>
 					</div>
 				</div>
-			
+				
+				<div id="spotsTab">
+					<textarea id="woSpots" placeholder="Insert Spots Here..."><?php if(isset($woSpots)) echo $woSpots; ?></textarea>
+				</div>
+				
 				<div id="notesTab">
 					<textarea id="woNotes" placeholder="Insert Notes Here..."><?php if(isset($woNotes)) echo $woNotes; ?></textarea>
 				</div>
