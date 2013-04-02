@@ -59,6 +59,7 @@
 					$data['woPCode'] = $row['wo_pcode'];
 					$data['woPhone'] = $row['wo_phone'];
 					$data['woNotes'] = $row['wo_notes'];
+					$data['woSpots'] = $row['wo_spots'];
 					if($row['wo_rx'] == 1) $data['woRX'] = "checked";
 					if($row['wo_fan'] == 1) $data['woFan'] = "checked";
 					if($row['wo_rake'] == 1) $data['woRake'] = "checked";
@@ -72,6 +73,7 @@
 					if($row['pay_cash'] == 1) $data['payCash'] = "checked";
 					if($row['pay_charge'] == 1) $data['payCharge'] = "checked";
 					if($row['pay_cc'] == 1) $data['payCC'] = "checked";
+					if($row['pay_debit'] == 1) $data['payDebit'] = "checked";
 					$data['payDiscount'] = $row['pay_discount'];
 					$data['payDiscountType'] = $row['pay_discount_type'];
 					$data['payGift'] = $row['pay_gift'];
@@ -143,6 +145,7 @@
 			$woData['wo_prov'] = $_POST['woProv'];
 			$woData['wo_pcode'] = $_POST['woPCode'];
 			$woData['wo_notes'] = $_POST['woNotes'];
+			$woData['wo_spots'] = $_POST['woSpots'];
 			$woData['wo_phone'] = $_POST['woPhone'];
 			$woData['wo_rx'] = $_POST['woRX'];
 			$woData['wo_fan'] = $_POST['woFan'];
@@ -159,6 +162,7 @@
 			$payData['pay_gift'] = $_POST['payGift'];
 			$payData['pay_charge'] = $_POST['payCharge'];
 			$payData['pay_cc'] = $_POST['payCC'];
+			$payData['pay_debit'] = $_POST['payDebit'];
 			$payData['pay_other'] = $_POST['payOther'];
 			
 			//Puts all posted travel data from the ajax call, into the $travData array, to be put into the database.
@@ -269,8 +273,8 @@
 			$serviceTable = "<table id='service-table' class='tablesorter table-striped'>
 							<thead>
 								<tr>
-									<th>Color/Type</th>
 									<th>Description</th>
+									<th>Color/Type</th>
 									<th>Length</th>
 									<th>Width</th>
 									<th>Sq Feet</th>
@@ -286,8 +290,8 @@
 			//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.				
 			$results = $this->dbm->getServiceByWOID($woID);
 			foreach($results->result_array() as $row) {
-				$serviceTable .= "<tr><td class='editable service serv_type ".$row['serv_id']." text'>".$row['serv_type']."</td>";
-				$serviceTable .= "<td class='editable service serv_description ".$row['serv_id']." text'>".$row['serv_description']."</td>";
+				$serviceTable .= "<tr><td class='editable service serv_description ".$row['serv_id']." text'>".$row['serv_description']."</td>";
+				$serviceTable .= "<td class='editable service serv_type ".$row['serv_id']." text'>".$row['serv_type']."</td>";
 				$serviceTable .= "<td class='editable service serv_length ".$row['serv_id']." num'>".$row['serv_length']."</td>";
 				$serviceTable .= "<td class='editable service serv_width ".$row['serv_id']." num'>".$row['serv_width']."</td>";
 				$serviceTable .= "<td>".$row['serv_sq_feet']."</td>";
@@ -326,11 +330,8 @@
 			$upholsteryTable = "<table id='upholstery-table' class='tablesorter table-striped'>
 							<thead>
 								<tr>
-									<th>Color/Type</th>
 									<th>Description</th>
-									<th>Length</th>
-									<th>Width</th>
-									<th>Sq Feet</th>
+									<th>Color/Type</th>
 									<th>Quantity</th>
 									<th>Unit Price($)</th>
 									<th>Extended Price($)</th>
@@ -343,11 +344,8 @@
 			//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.				
 			$results = $this->dbm->getUpholsteryByWOID($woID);
 			foreach($results->result_array() as $row) {
-				$upholsteryTable .= "<tr><td class='editable upholstery up_type ".$row['up_id']." text'>".$row['up_type']."</td>";
-				$upholsteryTable .= "<td class='editable upholstery up_description ".$row['up_id']." text'>".$row['up_description']."</td>";
-				$upholsteryTable .= "<td class='editable upholstery up_length ".$row['up_id']." num'>".$row['up_length']."</td>";
-				$upholsteryTable .= "<td class='editable upholstery up_width ".$row['up_id']." num'>".$row['up_width']."</td>";
-				$upholsteryTable .= "<td>".$row['up_sq_feet']."</td>";
+				$upholsteryTable .= "<tr><td class='editable upholstery up_description ".$row['up_id']." text'>".$row['up_description']."</td>";
+				$upholsteryTable .= "<td class='editable upholstery up_type ".$row['up_id']." text'>".$row['up_type']."</td>";
 				$upholsteryTable .= "<td class='editable upholstery up_quantity ".$row['up_id']." num'>".$row['up_quantity']."</td>";
 				$upholsteryTable .= "<td class='editable upholstery up_unit_price ".$row['up_id']." num'>".$row['up_unit_price']."</td>";
 				$upholsteryTable .= "<td class='upholstery up_ext_price ".$row['up_id']."'></td>";
@@ -381,7 +379,6 @@
 			$stainguardTable = "<table id='stainguard-table' class='tablesorter table-striped'>
 							<thead>
 								<tr>
-									<th>Color/Type</th>
 									<th>Description</th>
 									<th>Length</th>
 									<th>Width</th>
@@ -398,8 +395,7 @@
 			//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.				
 			$results = $this->dbm->getStainGuardByWOID($woID);
 			foreach($results->result_array() as $row) {
-				$stainguardTable .= "<tr><td class='editable stain_guard sg_type ".$row['sg_id']." text'>".$row['sg_type']."</td>";
-				$stainguardTable .= "<td class='editable stain_guard sg_description ".$row['sg_id']." text'>".$row['sg_description']."</td>";
+				$stainguardTable .= "<tr><td class='editable stain_guard sg_description ".$row['sg_id']." text'>".$row['sg_description']."</td>";
 				$stainguardTable .= "<td class='editable stain_guard sg_length ".$row['sg_id']." num'>".$row['sg_length']."</td>";
 				$stainguardTable .= "<td class='editable stain_guard sg_width ".$row['sg_id']." num'>".$row['sg_width']."</td>";
 				$stainguardTable .= "<td>".$row['sg_sq_feet']."</td>";
@@ -432,8 +428,8 @@
 		 * 
 		 * @param $woID The work order ID to be used to get the other records.
 		 */
-		function getOtherTableForWO($woID) {
-			$otherTable = "<table id='other-table' class='tablesorter table-striped'>
+			function getOtherTableForWO($woID) {
+				$otherTable = "<table id='other-table' class='tablesorter table-striped'>
 							<thead>
 								<tr>
 									<th>Color/Type</th>
@@ -448,38 +444,38 @@
 								</tr>
 							</thead>
 							<tbody>";
-			
-			//Gets each row from other that is tied to the open work order.
-			//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.				
-			$results = $this->dbm->getOtherByWOID($woID);
-			foreach($results->result_array() as $row) {
-				$otherTable .= "<tr><td class='editable other other_type ".$row['other_id']." text'>".$row['other_type']."</td>";
-				$otherTable .= "<td class='editable other other_description ".$row['other_id']." text'>".$row['other_description']."</td>";
-				$otherTable .= "<td class='editable other other_length ".$row['other_id']." num'>".$row['other_length']."</td>";
-				$otherTable .= "<td class='editable other other_width ".$row['other_id']." num'>".$row['other_width']."</td>";
-				$otherTable .= "<td>".$row['other_sq_feet']."</td>";
-				$otherTable .= "<td class='editable other other_quantity ".$row['other_id']." num'>".$row['other_quantity']."</td>";
-				$otherTable .= "<td class='editable other other_unit_price ".$row['other_id']." num'>".$row['other_unit_price']."</td>";
-				$otherTable .= "<td class='other other_ext_price ".$row['other_id']."'></td>";
-				$otherTable .= "<td class='other-delete-row'><button class='btn btn-danger btn-deleterow' onclick='deleteTableRow(".$row['other_id'].", ".$row['wo_id'].", \"other\", \"other_id\", \"#otherTab\")'>Delete</button></td></tr>";
-			}
-			
-			$otherTable .= "</tbody></table>";
-			$otherTable .= "<div>";
-			$otherTable .= '<div class="totals-div"><label>Total Other Sq Ft: </label>
+				
+				//Gets each row from other that is tied to the open work order.
+				//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.
+				$results = $this->dbm->getOtherByWOID($woID);
+				foreach($results->result_array() as $row) {
+					$otherTable .= "<tr><td class='editable other other_type ".$row['other_id']." text'>".$row['other_type']."</td>";
+					$otherTable .= "<td class='editable other other_description ".$row['other_id']." text'>".$row['other_description']."</td>";
+					$otherTable .= "<td class='editable other other_length ".$row['other_id']." num'>".$row['other_length']."</td>";
+					$otherTable .= "<td class='editable other other_width ".$row['other_id']." num'>".$row['other_width']."</td>";
+					$otherTable .= "<td>".$row['other_sq_feet']."</td>";
+					$otherTable .= "<td class='editable other other_quantity ".$row['other_id']." num'>".$row['other_quantity']."</td>";
+					$otherTable .= "<td class='editable other other_unit_price ".$row['other_id']." num'>".$row['other_unit_price']."</td>";
+					$otherTable .= "<td class='other other_ext_price ".$row['other_id']."'></td>";
+					$otherTable .= "<td class='other-delete-row'><button class='btn btn-danger btn-deleterow' onclick='deleteTableRow(".$row['other_id'].", ".$row['wo_id'].", \"other\", \"other_id\", \"#otherTab\")'>Delete</button></td></tr>";
+				}
+				
+				$otherTable .= "</tbody></table>";
+				$otherTable .= "<div>";
+				$otherTable .= '<div class="totals-div"><label>Total Other Sq Ft: </label>
 								<div class="input-prepend">
 									<span class="add-on">$</span>
-								  	<input id="total-other-sqft" class="input-small span2" type="text" value="0.00" readonly>
+									<input id="total-other-sqft" class="input-small span2" type="text" value="0.00" readonly>
 								</div>
 								<label>Total Other Price: </label>
 								<div class="input-prepend">
 									<span class="add-on">$</span>
-								  	<input id="total-other-price" class="input-small span2" type="text" value="0.00" readonly>
+									<input id="total-other-price" class="input-small span2" type="text" value="0.00" readonly>
 								</div></div>';
-			$otherTable .= '<button id="newrow-other-btn" class="btn btn-large btn-success newrow-button pull-right" onclick="addTableRow('.$woID.', \'other\', \'#otherTab\')">+ New Row</button>';
-			$otherTable .= "</div>";
-			return $otherTable;
-		}
+				$otherTable .= '<button id="newrow-other-btn" class="btn btn-large btn-success newrow-button pull-right" onclick="addTableRow('.$woID.', \'other\', \'#otherTab\')">+ New Row</button>';
+				$otherTable .= "</div>";
+				return $otherTable;
+			}
 		
 		
 		/**

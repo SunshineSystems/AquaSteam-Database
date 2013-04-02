@@ -53,6 +53,7 @@
     	var woPCode = $('#woPCode').val();
     	var woPhone = $('#woPhone').val();
     	var woNotes = $('#woNotes').val();
+    	var woSpots = $('#woSpots').val();
     	var payGift = $('#workOrderGift').val();
     	var woDate = $('#datepicker').val();
     	var payDiscount = $('#workOrderDiscount').val();
@@ -85,6 +86,8 @@
     	else var payCC = 0;
     	if($('#payCharge').is(':checked')) var payCharge = 1;
     	else var payCharge = 0;
+    	if($('#payDebit').is(':checked')) var payDebit = 1;
+    	else var payDebit = 0;
     	var payOther = $('#payOther').val();
     	
     	
@@ -99,7 +102,7 @@
 					"woForm" : woForm, 					   "payCash" : payCash, 		"payCheque" : payCheque,
 					"payCC" : payCC, 					   "payCharge" : payCharge, 	"payOther" : payOther,
 					"custID" : custID, 					   "woNotes" : woNotes,			"travelDistance" : travelDistance,
-					"travelPrice" : travelPrice
+					"travelPrice" : travelPrice,		   "woSpots" : woSpots,			"payDebit" : payDebit
 			},
 			success: function(data) {
 				$("#alert-div").html(data);
@@ -137,6 +140,7 @@
     	$('#payCheque').attr('checked', false);
     	$('#payCC').attr('checked', false);
     	$('#payCharge').attr('checked', false);
+    	$('#payDebit').attr('checked', false);
     	$('#payOther').val("");
     	$('#woRX').attr('checked', false);
     	$('#woFan').attr('checked', false);
@@ -144,9 +148,6 @@
     	$('#woPad').attr('checked', false);
     	$('#woEncapsulate').attr('checked', false);
     	$('#woForm').attr('checked', false);
-    	$('#woNotes').val("");
-    	$('#travelDist').val(0);
-    	$('#travelPrice').val(0);
     	$('tbody').html("");
     	saveWorkOrder();
     }

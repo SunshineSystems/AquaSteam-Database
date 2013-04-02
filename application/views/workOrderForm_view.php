@@ -127,6 +127,9 @@
 					    		<input id="payCharge" type="checkbox" <?php if(isset($payCharge)) echo $payCharge; ?>> Charge
 					    	</label>
 					    	<label>
+					    		<input id="payDebit" type="checkbox" <?php if(isset($payDebit)) echo $payDebit; ?>> Debit
+					    	</label>
+					    	<label>
 					    		<input type="checkbox"> Other:
 					    		<input type="text" class="input-small" id="payOther" value="<?php if(isset($payOther)) echo $payOther; ?>">
 					    	</label>
@@ -240,7 +243,7 @@
 							<a href="<?php echo $home?>documents/Work Order.pdf">Work Order</a>
 						</li>
 						<li>
-							<a href="<?php echo $home?>documents/Customer Work Order.pdf">Cust Work Order</a>
+							<a href="<?php echo $home?>documents/Customer Summary.pdf">Customer Summary</a>
 						</li>
 					</ul>
 				</div>
