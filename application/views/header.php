@@ -2,6 +2,7 @@
     $this->load->helper('url'); 
     $home = base_url();
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,6 +12,7 @@
         <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/bootstrap.css">
 	    <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/jquery-ui-1.10.0.custom.css">
 	    <link rel="stylesheet" type="text/css" href="<?php echo $home?>css/header.css">
+	    <link rel="apple-touch-icon" href="<?php echo $home?>images/aquasteam icon.png" />  
 	    
 	    <script src="<?php echo $home?>js/jquery-1.9.1.js"></script>
 	    <script src="<?php echo $home?>js/bootstrap.js"></script>
