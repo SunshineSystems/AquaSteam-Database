@@ -6,7 +6,7 @@
 	
 	var tagArray = new Array();
 	var searchField = "cust_fname";
-	var sorter = [[2,0]]; //Sets which column will be sorted by default
+	var sorter = [[1,0]]; //Sets which column will be sorted by default
 	
 	//Gets the data that we got from the database, and puts the first/last name of each customer
 	//Into a string which is used for the autocomplete. Also replaces null values with empty strings
@@ -41,10 +41,13 @@
 	
 	//Initializes table sort if a result table exists when the page first loads
 	//(like when we load work orders from the customers pages).
-	$("#result-table").tablesorter({
-		sortList: sorter,
-		headers: { 0 : { sorter: "shortDate" } } // Makes the first column sort dates properly
+	$(document).ready(function() {
+		$("#result-table").tablesorter({
+			sortList: [[0,0]],
+			headers: { 0 : { sorter: "shortDate", sortInitialOrder: 'desc' } } // Makes the first column sort dates properly
+		});
 	});
+	
 	
 	//If the search tips are hidden, it removes the hidden class to display them.
 	//If they are not hidden, it hides them.
