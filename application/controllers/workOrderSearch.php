@@ -195,7 +195,17 @@
 					foreach($workOrders->result_array() as $row) {
 						
 						$tableData .= "<tr onclick='openWorkOrder(".$row['wo_id'].")'>";
-						$tableData .= '<td>'.$row["wo_date"].'</td>';
+						
+						//Formats date to MM/DD/YYYY, before being output to the table, if it's 0's output no date.
+						if($row['wo_date'] == "0000-00-00" || $row['wo_date'] == "1970-01-01" ||  $row['wo_date'] == "1969-12-31") {
+							$tableData .= '<td></td>';
+						}
+						else {
+							$unix = strtotime($row["wo_date"]);
+							$formattedDate = date("m/d/Y", $unix);
+							$tableData .= '<td>'.$formattedDate.'</td>';
+						}
+				
 						$tableData .= '<td>'.$row["cust_fname"]. ' ' .$row["cust_lname"].'</td>';
 						$tableData .= '<td>'.$row["cust_company"].'</td>';
 						$tableData .= '<td>'.$row["wo_city"].'</td>';

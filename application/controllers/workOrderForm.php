@@ -236,6 +236,98 @@
 		}
 		
 		/**
+		 * This function is passed values for all of the inputs in a work order form, and compares them to the values
+		 * saved in the database for those inputs. If one of the values don't match then we kill the function, returning
+		 * a warning that there are unsaved changes to the page... This is a mess.
+		 */
+		function checkChanges() {
+			$woID = $_POST['woID'];
+			$results = $this->dbm->getWorkOrderById($woID);
+			
+			foreach($results->result_array() as $row) {
+				if($row['wo_address'] != $_POST['woAddress']) {
+					die("unsaved");
+				}
+				if($row['wo_city'] != $_POST['woCity']) {
+					die("unsaved");
+				}
+				if($row['wo_prov'] != $_POST['woProv']) {
+					die("unsaved");
+				}
+				if($row['wo_pcode'] != $_POST['woPCode']) {
+					die("unsaved");
+				}
+				if($row['wo_phone'] != $_POST['woPhone']) {
+					die("unsaved");
+				}
+				if($row['wo_notes'] != $_POST['woNotes']) {
+					die("unsaved");
+				}
+				if($row['wo_spots'] != $_POST['woSpots']) {
+					die("unsaved");
+				}
+				if($row['pay_gift'] != $_POST['payGift']) {
+					die("unsaved");
+				}
+				if($row['pay_discount_type'] != $_POST['payDiscountType']) {
+					die("unsaved");
+				}
+				if($row['pay_discount'] != $_POST['payDiscount']) {
+					die("unsaved");
+				}
+				if($row['wo_rx'] != $_POST['woRX']) {
+					die("unsaved");
+				}
+				if($row['wo_fan'] != $_POST['woFan']) {
+					die("unsaved");
+				}
+				if($row['wo_rake'] != $_POST['woRake']) {
+					die("unsaved");
+				}
+				if($row['wo_pad'] != $_POST['woPad']) {
+					die("unsaved");
+				}
+				if($row['wo_encapsulate'] != $_POST['woEncap']) {
+					die("unsaved");
+				}
+				if($row['wo_form'] != $_POST['woForm']) {
+					die("unsaved");
+				}
+				if($row['pay_cash'] != $_POST['payCash']) {
+					die("unsaved");
+				}
+				if($row['pay_cheque'] != $_POST['payCheque']) {
+					die("unsaved");
+				}
+				if($row['pay_cc'] != $_POST['payCC']) {
+					die("unsaved");
+				}
+				if($row['pay_charge'] != $_POST['payCharge']) {
+					die("unsaved");
+				}
+				if($row['pay_other'] != $_POST['payOther']) {
+					die("unsaved");
+				}
+				if($row['travel_distance'] != $_POST['travelDistance']) {
+					die("unsaved");
+				}
+				if($row['travel_price'] != $_POST['travelPrice']) {
+					die("unsaved");
+				}
+				if($row['pay_debit'] != $_POST['payDebit']) {
+					die("unsaved");
+				}
+				
+				$unix = strtotime($_POST['woDate']); //Creates Unix Timestamp based on input date.
+				$formattedDate = date("Y-m-d", $unix); //Formats Unix Timestamp to work with SQL DateTime.
+				if($row['wo_date'] != $formattedDate) {
+					die("unsaved");
+				}
+			}
+			return "up to date";
+		}
+		
+		/**
 		 * Recieves post variables containing a work order id, and a gst value. Saves the gst value to the database
 		 * where the work order id == the posted id.
 		 */

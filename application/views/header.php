@@ -39,7 +39,7 @@
 						  <li id="account-dropdown" class="dropdown">
 						  	  <?php if(!isset($_SESSION['username'])) {echo '<a href="'.$home.'index.php/login">Log In</a>';} 
 						  	  		else { echo '<a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-						  	  						Logged in: <b>'.$_SESSION['username'].'</b> <span class="caret"></span>
+						  	  						<i class="icon-user"></i> <b>'.$_SESSION['username'].'</b> <span class="caret"></span>
 						  	  						<ul class="dropdown-menu">';
 														if($_SESSION['usertype'] == 1) {
 															echo '<li id="accountLink"><a href="'.$home.'index.php/manageAccount">Manage Accounts</a></li>';

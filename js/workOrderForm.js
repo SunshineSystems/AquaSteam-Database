@@ -39,7 +39,18 @@
 		runAllCalcs();
 	});
     /**************************************************************************************/
-   
+   	
+   	//When the user closes the window, we first call the checkUnsavedChanges function to make sure that
+   	//there's no unsaved values that they've set.
+   	$(window).bind('beforeunload', function() {
+   		if(checkUnsavedChanges() == "unsaved") {
+   			return 'There are unsaved changes, are you sure you want to close?';
+   		}
+   		else {
+   			return null;
+   		}
+   	});
+   	
    /**
     * Gets the values of all of the fields in the work order form, and passes them to the saveWorkOrder function in the controller.
     * It outputs the recieved success/error message to the #alert-div div. 
@@ -207,6 +218,83 @@
 			});
 		}
     }
+    
+    
+    /**
+     * Gets the values of the work order id, as well as all of the editable inputs that the user can save
+     * and passes the values to the checkChanges function in the controller. That function compares the values in the form
+     * to the values in the database and returns an appropriate message. This function returns that message. 
+     */
+    function checkUnsavedChanges() {
+    	var woID = $('#workOrderID').val();
+    	var woAddress = $('#woAddress').val();
+    	var woCity = $('#woCity').val();
+    	var woProv = $('#woProvince').val();
+    	var woPCode = $('#woPCode').val();
+    	var woPhone = $('#woPhone').val();
+    	var woNotes = $('#woNotes').val();
+    	var woSpots = $('#woSpots').val();
+    	var payGift = $('#workOrderGift').val();
+    	var woDate = $('#datepicker').val();
+    	var payDiscount = $('#workOrderDiscount').val();
+    	if (payDiscount == "") payDiscount = 0;
+    	var payDiscountType = $('#workOrderDiscountType').val();
+    	var travelDistance = $('#travelDist').val();
+    	if(!isValidNum(travelDistance)) travelDistance = 0;
+    	var travelPrice = $('#travelPrice').val();
+    	if(!isValidNum(travelPrice)) travelPrice = 0;
+    	
+    	//Checks to see which checkboxes are checked, and assigns it's variable as either 1 or 0 based on that, to be
+    	//entered into the database.
+    	if($('#woRX').is(':checked')) var woRX = 1;
+    	else var woRX = 0;
+    	if($('#woFan').is(':checked')) var woFan = 1;
+    	else var woFan = 0;
+    	if($('#woRake').is(':checked')) var woRake = 1;
+    	else var woRake = 0;
+    	if($('#woPad').is(':checked')) var woPad = 1;
+    	else var woPad = 0;
+    	if($('#woEncapsulate').is(':checked')) var woEncap = 1;
+    	else var woEncap = 0;
+    	if($('#woForm').is(':checked')) var woForm = 1;
+    	else var woForm = 0;
+    	
+    	if($('#payCash').is(':checked')) var payCash = 1;
+    	else var payCash = 0;
+    	if($('#payCheque').is(':checked')) var payCheque = 1;
+    	else var payCheque = 0;
+    	if($('#payCC').is(':checked')) var payCC = 1;
+    	else var payCC = 0;
+    	if($('#payCharge').is(':checked')) var payCharge = 1;
+    	else var payCharge = 0;
+    	if($('#payDebit').is(':checked')) var payDebit = 1;
+    	else var payDebit = 0;
+    	var payOther = $('#payOther').val();
+    	
+    	var result = "";
+    	$.ajax({
+			type: "POST",
+			async: false,
+			url: home + "index.php/workOrderForm/checkChanges",
+			data: { "woID" : woID,     					   "payGift" : payGift, 		"woDate" : woDate,
+					"payDiscountType" : payDiscountType,   "woAddress" : woAddress, 	"woCity" : woCity,
+					"woProv" : woProv,     				   "woPCode" : woPCode,     	"woPhone" : woPhone,
+					"payDiscount" : payDiscount, 		   "woRX" : woRX,   			"woFan" : woFan,
+					"woRake" : woRake,					   "woPad" : woPad, 			"woEncap" : woEncap,
+					"woForm" : woForm, 					   "payCash" : payCash, 		"payCheque" : payCheque,
+					"payCC" : payCC, 					   "payCharge" : payCharge, 	"payOther" : payOther,
+					"woNotes" : woNotes,			       "travelDistance" : travelDistance,
+					"travelPrice" : travelPrice,		   "woSpots" : woSpots,			"payDebit" : payDebit
+			},
+			success: function(data) {
+				result = data; //If there's an unsaved change, data == "unsaved";
+			},
+			error: function(xhr) {
+				alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			}
+		});
+		return result;
+  	}
     
     /**
      * Calculates the total travel price based on the value in the distance traveled field, and the travel rate field
