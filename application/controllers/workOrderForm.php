@@ -458,11 +458,7 @@
 			
 			$upholsteryTable .= "</tbody></table>";
 			$upholsteryTable .= "<div>";
-			$upholsteryTable .= '<div class="totals-div"><label>Total Upholstery Sq Ft: </label>
-								<div class="input-prepend">
-									<span class="add-on">$</span>
-								  	<input id="total-upholstery-sqft" class="input-small span2" type="text" value="0.00" readonly>
-								</div>
+			$upholsteryTable .= '<div class="totals-div">
 								<label>Total Upholstery Price: </label>
 								<div class="input-prepend">
 									<span class="add-on">$</span>
@@ -536,8 +532,8 @@
 				$otherTable = "<table id='other-table' class='tablesorter table-striped'>
 							<thead>
 								<tr>
-									<th>Color/Type</th>
 									<th>Description</th>
+									<th>Color/Type</th>
 									<th>Length</th>
 									<th>Width</th>
 									<th>Sq Feet</th>
@@ -553,8 +549,8 @@
 				//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.
 				$results = $this->dbm->getOtherByWOID($woID);
 				foreach($results->result_array() as $row) {
-					$otherTable .= "<tr><td class='editable other other_type ".$row['other_id']." text'>".$row['other_type']."</td>";
-					$otherTable .= "<td class='editable other other_description ".$row['other_id']." text'>".$row['other_description']."</td>";
+					$otherTable .= "<tr><td class='editable other other_description ".$row['other_id']." text'>".$row['other_description']."</td>";	
+					$otherTable .= "<td class='editable other other_type ".$row['other_id']." text'>".$row['other_type']."</td>";
 					$otherTable .= "<td class='editable other other_length ".$row['other_id']." num'>".$row['other_length']."</td>";
 					$otherTable .= "<td class='editable other other_width ".$row['other_id']." num'>".$row['other_width']."</td>";
 					$otherTable .= "<td>".$row['other_sq_feet']."</td>";

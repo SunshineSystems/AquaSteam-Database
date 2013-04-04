@@ -402,31 +402,17 @@
     		}
     	});
     	
-    	$("#upholstery-table tbody tr").each(function(i) {
-    		var length = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
-    		var width = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(4)').text();
-    		
-    		if(isValidNum(length) && isValidNum(width)) {
-    			var total = length * width;
-    			var roundedTotal = total.toFixed(2);
-    			$('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text(roundedTotal);
-    		}
-    		else {
-    			$('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
-    		}
-    	});
-    	
     	$("#stainguard-table tbody tr").each(function(i) {
-    		var length = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
-    		var width = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(4)').text();
+    		var length = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(2)').text();
+    		var width = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
     		
     		if(isValidNum(length) && isValidNum(width)) {
     			var total = length * width;
     			var roundedTotal = total.toFixed(2);
-    			$('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text(roundedTotal);
+    			$('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(4)').text(roundedTotal);
     		}
     		else {
-    			$('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
+    			$('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(4)').text("0.00");
     		}
     	});
     	
@@ -467,29 +453,28 @@
     	});
     	
     	$("#upholstery-table tbody tr").each(function(i) {
-    		var sqft = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
-    		var quantity = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(6)').text();
-    		var price = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
+    		var quantity = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(3)').text();
+    		var price = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(4)').text();
     		
-    		if(isValidNum(quantity) && isValidNum(price) && isValidNum(sqft)) {
-    			var total = sqft * quantity * price;
+    		if(isValidNum(quantity) && isValidNum(price)) {
+    			var total = quantity * price;
     			var roundedTotal = total.toFixed(2);
-    			$('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
+    			$('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text(roundedTotal);
     		}
     		else {
-    			$('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
+    			$('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
     		}
     	});
     	
     	$("#stainguard-table tbody tr").each(function(i) {
-    		var sqft = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
-    		var quantity = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(6)').text();
-    		var price = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
+    		var sqft = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(4)').text();
+    		var quantity = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
+    		var price = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(6)').text();
     		
     		if(isValidNum(quantity) && isValidNum(price) && isValidNum(sqft)) {
     			var total = sqft * quantity * price;
     			var roundedTotal = total.toFixed(2);
-    			$('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text(roundedTotal);
+    			$('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(7)').text(roundedTotal);
     		}
     		else {
     			$('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
@@ -532,7 +517,7 @@
 		});
 		
 		$("#upholstery-table tbody tr").each(function(i) {
-			var rowPrice = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text();
+			var rowPrice = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
 			if(isValidNum(rowPrice)) {
 				upholsteryTotal += parseFloat(rowPrice);
 				var roundedTotal = upholsteryTotal.toFixed(2);
@@ -541,7 +526,7 @@
 		});
 		
 		$("#stainguard-table tbody tr").each(function(i) {
-			var rowPrice = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text();
+			var rowPrice = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(7)').text();
 			if(isValidNum(rowPrice)) {
 				stainguardTotal += parseFloat(rowPrice);
 				var roundedTotal = stainguardTotal.toFixed(2);
@@ -565,7 +550,6 @@
      */
 	function calcTotalTableSqFt() {
 		var serviceTotal = 0;
-		var upholsteryTotal = 0;
 		var stainguardTotal = 0;
 		var otherTotal = 0;
 		
@@ -578,17 +562,8 @@
 			}	
 		});
 		
-		$("#upholstery-table tbody tr").each(function(i) {
-			var rowPrice = $('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
-			if(isValidNum(rowPrice)) {
-				upholsteryTotal += parseFloat(rowPrice);
-				var roundedTotal = upholsteryTotal.toFixed(2);
-				$("#total-upholstery-sqft").val(roundedTotal);
-			}	
-		});
-		
 		$("#stainguard-table tbody tr").each(function(i) {
-			var rowPrice = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text();
+			var rowPrice = $('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(4)').text();
 			if(isValidNum(rowPrice)) {
 				stainguardTotal += parseFloat(rowPrice);
 				var roundedTotal = stainguardTotal.toFixed(2);
@@ -645,7 +620,7 @@
 	}
 	
 	/**
-	 * Calculates 
+	 * Calculates the total tax price based on the current subtotal plus the tax rate.
 	 */
 	function calcTotalTax(subTotal) {
 		var percString = $('#current-tax-perc').html();
