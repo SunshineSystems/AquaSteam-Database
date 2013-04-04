@@ -222,9 +222,29 @@
 					<textarea id="woNotes" placeholder="Insert Notes Here..."><?php if(isset($woNotes)) echo $woNotes; ?></textarea>
 				</div>
 			</div>
-			<br>
+			<hr>
+			<div id="tax-container">
+				<label>Total GST: </label>
+				<div id="tax-input" class="input-prepend input-append">
+					<span class="add-on">$</span>
+				  	<input id="total-wo-tax" class="input-small span2" type="text" value="0.00" readonly>
+				  	<span id="current-tax-perc" class="add-on">&nbsp;&nbsp;<?php if(isset($payTax)) echo $payTax; ?>%</span>
+				</div>
+				<button id="tax-btn" class="btn" type="button" onclick="openTaxRateForm()">Change %</button>
+				
+				<div id="new-tax-container" class="input-append well hidden">
+					<a class="close" href="javascript:void(0)" onclick="closeTaxRateForm()">&times;</a>
+					<label>Insert New % Here: </label>
+				  	<input id="new-tax-input" class="input-small span2" type="text" placeholder="0-100">
+				  	<span class="add-on">%</span>
+				  	<button class="btn btn-success" type="button" onclick="saveTaxRate()">Save</button>
+				</div>
+				
+				<div id="tax-alert-container"></div>
+				
+			</div>	
 			<div>
-			<label>Total Price: </label>
+				<label>Total Price: </label>
 				<div class="input-prepend">
 					<span class="add-on">$</span>
 				  	<input id="total-wo-price" class="input-small span2" type="text" value="0.00" readonly>

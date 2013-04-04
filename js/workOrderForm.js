@@ -227,6 +227,62 @@
     	}
     }
     
+    function openTaxRateForm() {
+    	$('#new-tax-container').removeClass('hidden');
+    	$('#tax-alert-container').html("");
+    	$('#tax-alert-container').removeClass('success-alert');
+    }
+    
+    function closeTaxRateForm() {
+    	$('#new-tax-container').addClass('hidden');
+    	$('#tax-alert-container').html("");
+    	$('#tax-alert-container').removeClass('success-alert');
+    }
+    
+    /**
+     * Gets the value of the work order id and the new gst rate set by the user, from the form and passes
+     * them to the controller function saveNewTax(). If the controller function successfully saves, we close
+     * the tax rate form and display a success message.
+     */
+    function saveTaxRate() {
+    	var id = $("#workOrderID").val();
+    	var newRate = parseInt($("#new-tax-input").val());
+    	
+    	if(isValidNum(newRate) && newRate <= 100) {
+			$.ajax({
+				type: "POST",
+				url: home + "index.php/workOrderForm/saveNewTax",
+				data: { "id" : id, "newRate" : newRate},
+				success: function(data) {
+					//Creates the success alert to be displayed to the user.
+					var successMessage = '<div class="alert alert-success">' +
+											'<a class="close" data-dismiss="alert" href="#">&times;</a>' +
+											'<p><strong>Success! </strong>The new tax rate has been saved for this work order(i.e. 0-100)</p>' +
+										'</div>';
+					closeTaxRateForm();
+					$('#tax-alert-container').addClass('success-alert');			
+					$('#tax-alert-container').html(successMessage);
+					
+					//Updates the displayed tax rate to the value that was just saved.
+					$('#current-tax-perc').html('&nbsp;&nbsp;' +newRate+ '%');
+					$("#new-tax-input").val(""); //Clears the new tax input.
+					runAllCalcs();
+				}, 
+				error: function(xhr) {
+					alert("An error occured: " + xhr.status + " " + xhr.statusText);
+				}
+			});
+    	}
+    	else {
+    		var errorMessage = '<div class="alert alert-error">' +
+							'<a class="close" data-dismiss="alert" href="#">&times;</a>' +
+							'<p><strong>Error! </strong>Please enter a valid percentage(i.e. 0-100)</p>' +
+						'</div>';
+						
+			$('#tax-alert-container').html(errorMessage);
+    	}
+    }
+    
     //Returns true if the passed variable contains nothing but number characters.
     function isValidNum(value) {
     	
@@ -464,7 +520,8 @@
 	
 	/**
 	 * Calculates the total price of the work order by adding all the total price fields in the work orders, and subtracting
-	 * the discount. It displays the results in the Total Work Order Price field. 
+	 * the discount. It displays the results in the Total Work Order Price field. Also calls the calcTotalTax function, which
+	 * returns the total price of taxes that's added on to the total work order price.
 	 */
 	function calcTotalWOPrice() {
 		var carpetTotal = $("#total-service-price").val();
@@ -474,7 +531,7 @@
 		var travelTotal = $("#travelTotal").val();
 		var discount = $("#workOrderDiscount").val();
 		var discountType = $("#workOrderDiscountType").val();
-		
+
 		var totalPrice = parseFloat(carpetTotal) 
 						   + parseFloat(upholsteryTotal) 
 						   + parseFloat(stainGuardTotal) 
@@ -491,7 +548,28 @@
 			totalPrice -= percentOff;
 		}
 		
+		//Passes the current total price to the CalcTotalTax function, to get the value of the tax.
+		//The value of the tax is then added on to the total price.
+		var taxTotal = calcTotalTax(totalPrice.toFixed(2));
+		totalPrice += parseFloat(taxTotal);
+		
 		$("#total-wo-price").val(totalPrice.toFixed(2));
+	}
+	
+	/**
+	 * Calculates 
+	 */
+	function calcTotalTax(subTotal) {
+		var percString = $('#current-tax-perc').html();
+		
+		//removes everything except for the digets from the percentage string.
+		var diget = percString.match(/\d/g);
+		diget = diget.join("");
+		
+		var totalTax = subTotal * diget/100;
+		
+		$("#total-wo-tax").val(totalTax.toFixed(2));
+		return totalTax.toFixed(2);
 	}
 	
     /**

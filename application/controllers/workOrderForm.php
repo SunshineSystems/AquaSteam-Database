@@ -80,6 +80,7 @@
 					$data['payOther'] = $row['pay_other'];
 					$data['travDistance'] = $row['travel_distance'];
 					$data['travPrice'] = $row['travel_price'];
+					$data['payTax'] = $row['pay_tax_rate'];
 					$data['serviceTable'] = $this->getServiceTableForWO($id);
 					$data['upholsteryTable'] = $this->getUpholsteryTableForWO($id);
 					$data['stainguardTable'] = $this->getStainGuardTableForWO($id);
@@ -232,6 +233,17 @@
 			$feedback = "<div class='alert alert-success'><h4>Success!</h4>
 								The Work Order Has Been Deleted</div>";
 			echo $feedback;					
+		}
+		
+		/**
+		 * Recieves post variables containing a work order id, and a gst value. Saves the gst value to the database
+		 * where the work order id == the posted id.
+		 */
+		function saveNewTax() {
+			$woID = $_POST['id'];
+			$payData['pay_tax_rate'] = $_POST['newRate'];
+			
+			$this->dbm->updatePayment($woID, $payData);
 		}
 
 		/**

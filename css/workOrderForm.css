@@ -87,6 +87,14 @@ body {
 	margin-bottom: 25px;
 }
 
+.ui-tabs .ui-tabs-nav li {
+	padding: 0;
+}
+
+.ui-tabs .ui-tabs-nav li:hover, .ui-tabs .ui-tabs-nav li a:hover {
+	border-bottom: 0;
+}
+
 .travelField-div {
 	display: inline-block;
 	margin-right: 30px;
@@ -192,4 +200,59 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 .input-small {
 	text-align: right;
 	width: 100px !important;
+}
+
+#tax-container {
+	position: relative;
+}
+
+#tax-input {
+	display: inline-block;
+}
+
+#tax-btn {
+	position: absolute;
+	padding: 5px 12px;
+	top: 23px;
+}
+
+#new-tax-container {
+	position: absolute;
+	top: 0px;
+	left: 350px;
+}
+
+#new-tax-container > .btn {
+	margin: 0 0 0 -1px;
+	padding: 4px 12px;
+}
+
+#new-tax-container .close {
+	position: absolute;
+	top: 7px;
+	left: 208px;
+}
+
+#tax-alert-container{
+	width: 400px;
+	position: absolute;
+	top: 23px;
+	left: 600px;
+}
+
+#tax-alert-container.success-alert{
+	width: 550px;
+	left: 300px;
+}
+
+.hidden{
+	display: none;
+}
+
+.input-prepend .add-on {
+	background-color: #ACD8AC;
+}
+
+#current-tax-perc {
+	background-color: #DAE8F0;
 }
