@@ -374,7 +374,18 @@
 		 * @param $woID The work order ID to be used to get the service records.
 		 */
 		function getServiceTableForWO($woID) {
-			$serviceTable = "<table id='service-table' class='tablesorter table-striped'>
+			$tableStatus = "full";
+			
+			//Gets each row from service that is tied to the open work order.
+			//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.				
+			$results = $this->dbm->getServiceByWOID($woID);
+					
+			//If there's no results passed back from the query, set $tableStatus to empty
+			if(!$results->result()) {
+				$tableStatus = "empty";
+			}
+				
+			$serviceTable = "<table id='service-table' class='tablesorter table-striped ".$tableStatus."'>
 							<thead>
 								<tr>
 									<th>Description</th>
@@ -390,9 +401,6 @@
 							</thead>
 							<tbody>";
 			
-			//Gets each row from service that is tied to the open work order.
-			//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.				
-			$results = $this->dbm->getServiceByWOID($woID);
 			foreach($results->result_array() as $row) {
 				$serviceTable .= "<tr><td class='editable service serv_description ".$row['serv_id']." text'>".$row['serv_description']."</td>";
 				$serviceTable .= "<td class='editable service serv_type ".$row['serv_id']." text'>".$row['serv_type']."</td>";
@@ -431,7 +439,18 @@
 		 * @param $woID The work order ID to be used to get the upholstery records.
 		 */
 		function getUpholsteryTableForWO($woID) {
-			$upholsteryTable = "<table id='upholstery-table' class='tablesorter table-striped'>
+			$tableStatus = "full";	
+				
+			//Gets each row from upholstery that is tied to the open work order.
+			//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.				
+			$results = $this->dbm->getUpholsteryByWOID($woID);	
+			
+			//If there's no results passed back from the query, set $tableStatus to empty
+			if(!$results->result()) {
+				$tableStatus = "empty";
+			}
+				
+			$upholsteryTable = "<table id='upholstery-table' class='tablesorter table-striped ".$tableStatus."'>
 							<thead>
 								<tr>
 									<th>Description</th>
@@ -443,10 +462,7 @@
 								</tr>
 							</thead>
 							<tbody>";
-			
-			//Gets each row from upholstery that is tied to the open work order.
-			//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.				
-			$results = $this->dbm->getUpholsteryByWOID($woID);
+							
 			foreach($results->result_array() as $row) {
 				$upholsteryTable .= "<tr><td class='editable upholstery up_description ".$row['up_id']." text'>".$row['up_description']."</td>";
 				$upholsteryTable .= "<td class='editable upholstery up_type ".$row['up_id']." text'>".$row['up_type']."</td>";
@@ -476,7 +492,18 @@
 		 * @param $woID The work order ID to be used to get the stain_guard records.
 		 */
 		function getStainGuardTableForWO($woID) {
-			$stainguardTable = "<table id='stainguard-table' class='tablesorter table-striped'>
+			$tableStatus = "full";
+			
+			//Gets each row from stain_guard that is tied to the open work order.
+			//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.				
+			$results = $this->dbm->getStainGuardByWOID($woID);
+			
+			//If there's no results passed back from the query, set $tableStatus to empty
+			if(!$results->result()) {
+				$tableStatus = "empty";
+			}
+			
+			$stainguardTable = "<table id='stainguard-table' class='tablesorter table-striped ".$tableStatus."'>
 							<thead>
 								<tr>
 									<th>Description</th>
@@ -491,9 +518,6 @@
 							</thead>
 							<tbody>";
 			
-			//Gets each row from stain_guard that is tied to the open work order.
-			//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.				
-			$results = $this->dbm->getStainGuardByWOID($woID);
 			foreach($results->result_array() as $row) {
 				$stainguardTable .= "<tr><td class='editable stain_guard sg_description ".$row['sg_id']." text'>".$row['sg_description']."</td>";
 				$stainguardTable .= "<td class='editable stain_guard sg_length ".$row['sg_id']." num'>".$row['sg_length']."</td>";
@@ -529,7 +553,18 @@
 		 * @param $woID The work order ID to be used to get the other records.
 		 */
 			function getOtherTableForWO($woID) {
-				$otherTable = "<table id='other-table' class='tablesorter table-striped'>
+				$tableStatus = "full";
+				
+				//Gets each row from other that is tied to the open work order.
+				//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.
+				$results = $this->dbm->getOtherByWOID($woID);
+				
+				//If there's no results passed back from the query, set $tableStatus to empty
+				if(!$results->result()) {
+					$tableStatus = "empty";
+				}
+				
+				$otherTable = "<table id='other-table' class='tablesorter table-striped ".$tableStatus."'>
 							<thead>
 								<tr>
 									<th>Description</th>
@@ -545,9 +580,6 @@
 							</thead>
 							<tbody>";
 				
-				//Gets each row from other that is tied to the open work order.
-				//Puts the content into a table to be displayed. Each cell has classes that will make them editable/savable.
-				$results = $this->dbm->getOtherByWOID($woID);
 				foreach($results->result_array() as $row) {
 					$otherTable .= "<tr><td class='editable other other_description ".$row['other_id']." text'>".$row['other_description']."</td>";	
 					$otherTable .= "<td class='editable other other_type ".$row['other_id']." text'>".$row['other_type']."</td>";

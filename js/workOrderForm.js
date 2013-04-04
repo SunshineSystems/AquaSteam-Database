@@ -18,17 +18,30 @@
 		$( "#tabs" ).tabs();
 	});
 	
+	//Styles the tabs based on if they're empty or not.
+	setTabStatus();
+	
 	//Runs all of the data calculations on page load
 	runAllCalcs();
 	
-	//Calculates totals when the values have changed, and the changed input has lost focus.
+	//Calculates totals/tab statuses when the values have changed, and the changed input has lost focus.
 	/**************************************************************************************/
 	$('#travelDist').change(function() {
 		runAllCalcs();
+		setTabStatus();
 	});
 	
 	$('#travelPrice').change(function() {
 		runAllCalcs();
+		setTabStatus();
+	});
+	
+	$('#woSpots').change(function() {
+		setTabStatus();
+	});
+	
+	$('#woNotes').change(function() {
+		setTabStatus();
 	});
 	
 	$('#workOrderDiscount').change(function() {
@@ -647,6 +660,69 @@
 		calcTotalWOPrice();
     }
     
+    /**
+     * Adds or removes empty-tab class each tab link, based on if the contents of that tab are empty or not.
+     * The class styles the tabs to be washed out when they are empty.
+     */
+    function setTabStatus() {
+    	
+    	//Checks if carpet tab is empty
+    	if($('#carpetTab > table').hasClass('empty')) {
+    		$('#carpet-tab-link').addClass('empty-tab');
+    	}
+    	else {
+    		$('#carpet-tab-link').removeClass('empty-tab');
+    	}
+    	
+    	//Checks if upholstery tab is empty
+    	if($('#upholsteryTab > table').hasClass('empty')) {
+    		$('#upholstery-tab-link').addClass('empty-tab');
+    	}
+    	else {
+    		$('#upholstery-tab-link').removeClass('empty-tab');
+    	}
+    	
+    	//Checks if stain guard tab is empty
+    	if($('#stainGuardTab > table').hasClass('empty')) {
+    		$('#stainguard-tab-link').addClass('empty-tab');
+    	}
+    	else {
+    		$('#stainguard-tab-link').removeClass('empty-tab');
+    	}
+    	
+    	//Checks if other tab is empty
+    	if($('#otherTab > table').hasClass('empty')) {
+    		$('#other-tab-link').addClass('empty-tab');
+    	}
+    	else {
+    		$('#other-tab-link').removeClass('empty-tab');
+    	}
+    	
+    	//Checks if travel tab is empty
+    	if($('#travelDist').val() == 0 && $('#travelPrice').val() == 0) {
+    		$('#travel-tab-link').addClass('empty-tab');
+    	}
+    	else {
+    		$('#travel-tab-link').removeClass('empty-tab');
+    	}
+    	
+    	//Checks if spots tab is empty
+    	if($('#woSpots').val() == 0) {
+    		$('#spots-tab-link').addClass('empty-tab');
+    	}
+    	else {
+    		$('#spots-tab-link').removeClass('empty-tab');
+    	}
+    	
+    	//Checks if notes tab is empty
+    	if($('#woNotes').val() == 0) {
+    		$('#notes-tab-link').addClass('empty-tab');
+    	}
+    	else {
+    		$('#notes-tab-link').removeClass('empty-tab');
+    	}
+    }
+    
     /************************************************************************************************/
     /*		     	 *This section of code will handle all of the table editing stuff*              */
     /*                                                                                              */
@@ -745,6 +821,7 @@
 			success: function(data){ 
 				$(tableTab).html(data);
 				runAllCalcs();
+				setTabStatus();
 				
 		  	},
 		  	error: function(xhr) {
@@ -769,6 +846,7 @@
 				success: function(data){ 
 					$(tableTab).html(data);
 					runAllCalcs();
+					setTabStatus();
 			  	},
 			  	error: function(xhr) {
 					alert("An error occured: " + xhr.status + " " + xhr.statusText);

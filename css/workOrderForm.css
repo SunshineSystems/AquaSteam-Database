@@ -95,6 +95,15 @@ body {
 	border-bottom: 0;
 }
 
+.tab-link {
+	font-weight: bold !important;
+}
+
+.empty-tab {
+	font-weight: normal !important;
+	color: grey !important;
+}
+
 .travelField-div {
 	display: inline-block;
 	margin-right: 30px;

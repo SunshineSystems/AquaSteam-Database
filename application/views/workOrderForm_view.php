@@ -166,13 +166,13 @@
 			
 			<div id="tabs">
 				<ul>
-					<li><a href="#carpetTab">Carpet</a></li>
-					<li><a href="#upholsteryTab">Upholstery</a></li>
-					<li><a href="#stainGuardTab">Stain Guard</a></li>
-					<li><a href="#otherTab">Other</a></li>
-					<li><a href="#travelTab">Travel</a></li>
-					<li><a href="#spotsTab">Spots</a></li>
-					<li><a href="#notesTab">Notes</a></li>
+					<li><a id="carpet-tab-link" class="tab-link" href="#carpetTab">Carpet</a></li>
+					<li><a id="upholstery-tab-link" class="tab-link"  href="#upholsteryTab">Upholstery</a></li>
+					<li><a id="stainguard-tab-link" class="tab-link" href="#stainGuardTab">Stain Guard</a></li>
+					<li><a id="other-tab-link" class="tab-link" href="#otherTab">Other</a></li>
+					<li><a id="travel-tab-link" class="tab-link" href="#travelTab">Travel</a></li>
+					<li><a id="spots-tab-link" class="tab-link" href="#spotsTab">Spots</a></li>
+					<li><a id="notes-tab-link" class="tab-link" href="#notesTab">Notes</a></li>
 				</ul>
 				<div id="carpetTab">
 					<?php if(isset($serviceTable)) echo $serviceTable; ?>
