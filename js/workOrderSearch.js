@@ -39,6 +39,13 @@
 		}
 	});
 	
+	//Initializes table sort if a result table exists when the page first loads
+	//(like when we load work orders from the customers pages).
+	$("#result-table").tablesorter({
+		sortList: sorter,
+		headers: { 0 : { sorter: "shortDate" } } // Makes the first column sort dates properly
+	});
+	
 	//If the search tips are hidden, it removes the hidden class to display them.
 	//If they are not hidden, it hides them.
 	function showTips() {

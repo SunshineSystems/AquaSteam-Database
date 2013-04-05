@@ -57,7 +57,7 @@
    	//there's no unsaved values that they've set.
    	$(window).bind('beforeunload', function() {
    		if(checkUnsavedChanges() == "unsaved") {
-   			return 'There are unsaved changes, are you sure you want to close?';
+   			return 'There are unsaved changes.';
    		}
    		else {
    			return null;
