@@ -490,7 +490,7 @@
     			$('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(7)').text(roundedTotal);
     		}
     		else {
-    			$('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
+    			$('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(7)').text("0.00");
     		}
     	});
     	
@@ -762,7 +762,7 @@
 	$(function() {
 		$(document).on("keydown", 'td.editable', function(event){
 		    if(event.keyCode == 13) {
-		    	console.log(this);  
+		    	//console.log(this);  
 		   		updateTabTable(this);
 		    } 
 		});
