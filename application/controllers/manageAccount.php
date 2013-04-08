@@ -44,19 +44,20 @@
 								<tbody>";
 							
 				foreach($results->result_array() as $row) {
-					if($row['user_admin'] == 1) {
-						$type = "Admin";
+					if($row['user_username'] != "MasterAccount") {	//Table will not display the Master Account.
+						if($row['user_admin'] == 1) {
+							$type = "Admin";
+						}
+						else {
+							$type = "Employee";
+						}
+						$tableData .= "<tr onclick='openUser(".$row['user_id'].")'>";
+						$tableData .= '<td>'.$row["user_username"].'</td>';
+						$tableData .= '<td>'.$row["user_fname"].'</td>';
+						$tableData .= '<td>'.$row["user_lname"].'</td>';
+						$tableData .= '<td>'.$type.'</td></tr>';
 					}
-					else {
-						$type = "Employee";
-					}
-					$tableData .= "<tr onclick='openUser(".$row['user_id'].")'>";
-					$tableData .= '<td>'.$row["user_username"].'</td>';
-					$tableData .= '<td>'.$row["user_fname"].'</td>';
-					$tableData .= '<td>'.$row["user_lname"].'</td>';
-					$tableData .= '<td>'.$type.'</td></tr>';
 				}
-				
 				$tableData .= "</tbody></table>";
 				
 				$data['table'] = $tableData;

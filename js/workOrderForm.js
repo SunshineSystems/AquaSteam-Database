@@ -765,10 +765,10 @@
 	    	}  
 	  		
 	  		//Puts the cursor at the end of the input value, instead of highlighting it all
-			$('#editbox').focus(function() {
+			/*$('#editbox').focus(function() {
 				this.selectionStart = this.selectionEnd = this.value.length;
 			});
-			
+			*/
 			$('#editbox').focus();
 		});
 	});
@@ -779,7 +779,16 @@
 		    if(event.keyCode == 13) {
 		    	//console.log(this);  
 		   		updateTabTable(this);
-		    } 
+		    }
+		    
+		    // To be used to open next cell when tab is hit, isn't working because it blurs the input box as soon as
+		    // it opens.
+		   /* else if(event.keyCode == 9) {
+		    	//event.preventDefault();
+		    	$('#editbox').blur();
+		    	$(this).next("td.editable").click();
+		    	return false;
+		    } */
 		});
 	}); 
 	
