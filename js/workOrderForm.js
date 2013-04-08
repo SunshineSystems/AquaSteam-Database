@@ -4,6 +4,9 @@
 	 * @brief Contains the javascript functions that are used by the workOrderForm_view.php file.
 	 */
 	
+	//Creates a global variable with the currenlty opened work order's id
+	var currentID = $('#workOrderID').val();
+	
 	//Sets the current page as active on the header menu
 	$(".active").removeClass("active");
 	$("#workOrderLink").addClass("active");
@@ -130,14 +133,26 @@
 			},
 			success: function(data) {
 				$("#alert-div").html(data);
-				
+				var alertdata = data;
 				//If It saves a new customer, then load that work order's page', and display the success feedback.
 				//Checks for hidden input, that is only output when a new workorder is saved.
 				if($("#new-woID-val").length) {
-					var url = home + "index.php/workorderform/openWorkOrder/" + $("#new-woID-val").val();
-					$("#alert-data").val(data);
-					$("#alert-form").attr({'action': url}); //Sets the action of the form, to the new work order's url.
-					document.getElementById("alert-form").submit();
+					var oldID = currentID;
+					var newID = $("#new-woID-val").val();
+					$.ajax({ //Saves copy's current work order's data tables over to the newly created work order.
+						type: "POST",
+						url: home + "index.php/workOrderForm/copyDataTables",
+						data: { "oldID" : oldID, "newID" : newID},
+						complete: function(data) {
+							var url = home + "index.php/workorderform/openWorkOrder/" + newID;
+							$("#alert-data").val(alertdata);
+							$("#alert-form").attr({'action': url}); //Sets the action of the form, to the new work order's url.
+							document.getElementById("alert-form").submit();
+						}, 
+						error: function(xhr) {
+							alert("An error occured: " + xhr.status + " " + xhr.statusText);
+						}
+					});
 				}
 				else {
 					window.scrollTo(0,0);

@@ -701,6 +701,73 @@
 			echo $updatedTable;
 		}
 		
+		/**
+		 * Is posted two work order id's and copy's all of the table rows from the old work order
+		 * to a new one.
+		 */
+		function copyDataTables() {
+			$oldID = $_POST['oldID'];
+			$newID = $_POST['newID'];
+			
+			//Copies values from each service record
+			$oldServiceTable = $this->dbm->getServiceByWOID($oldID);
+			foreach($oldServiceTable->result_array() as $row) {
+				$servData['wo_id'] = $newID;	
+				$servData['serv_description'] = $row['serv_description'];
+				$servData['serv_unit_price'] = $row['serv_unit_price'];
+				$servData['serv_quantity'] = $row['serv_quantity'];
+				$servData['serv_length'] = $row['serv_length'];
+				$servData['serv_width'] = $row['serv_width'];
+				$servData['serv_sq_feet'] = $row['serv_sq_feet'];
+				$servData['serv_type'] = $row['serv_type'];
+				$servData['serv_ext_price'] = $row['serv_ext_price'];
+				$this->dbm->insertNewWOdata('service', $servData);
+			}
+			
+			//Copies values from each upholstery record
+			$oldUpholsteryTable = $this->dbm->getUpholsteryByWOID($oldID);
+			foreach($oldUpholsteryTable->result_array() as $row) {
+				$upData['wo_id'] = $newID;	
+				$upData['up_description'] = $row['up_description'];
+				$upData['up_unit_price'] = $row['up_unit_price'];
+				$upData['up_quantity'] = $row['up_quantity'];
+				$upData['up_type'] = $row['up_type'];
+				$upData['up_ext_price'] = $row['up_ext_price'];
+				$this->dbm->insertNewWOdata('upholstery', $upData);
+			}
+			
+			//Copies values from each stain guard record
+			$oldSGTable = $this->dbm->getStainGuardByWOID($oldID);
+			foreach($oldSGTable->result_array() as $row) {
+				$sgData['wo_id'] = $newID;	
+				$sgData['sg_description'] = $row['sg_description'];
+				$sgData['sg_unit_price'] = $row['sg_unit_price'];
+				$sgData['sg_quantity'] = $row['sg_quantity'];
+				$sgData['sg_length'] = $row['sg_length'];
+				$sgData['sg_width'] = $row['sg_width'];
+				$sgData['sg_sq_feet'] = $row['sg_sq_feet'];
+				$sgData['sg_type'] = $row['sg_type'];
+				$sgData['sg_ext_price'] = $row['sg_ext_price'];
+				$this->dbm->insertNewWOdata('stain_guard', $sgData);
+			}
+			
+			//Copies values from each other record
+			$oldOtherTable = $this->dbm->getOtherByWOID($oldID);
+			foreach($oldOtherTable->result_array() as $row) {
+				$otherData['wo_id'] = $newID;	
+				$otherData['other_description'] = $row['other_description'];
+				$otherData['other_unit_price'] = $row['other_unit_price'];
+				$otherData['other_quantity'] = $row['other_quantity'];
+				$otherData['other_length'] = $row['other_length'];
+				$otherData['other_width'] = $row['other_width'];
+				$otherData['other_sq_feet'] = $row['other_sq_feet'];
+				$otherData['other_type'] = $row['other_type'];
+				$otherData['other_ext_price'] = $row['other_ext_price'];
+				$this->dbm->insertNewWOdata('other', $otherData);
+			}
+			
+		}
+		
 		//Not currently used. To be used for creating pdf document for work orders.
 		function createPDF($html) {
 			$dompdf = new DOMPDF();

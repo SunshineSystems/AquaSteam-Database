@@ -275,6 +275,10 @@ class Dbmodel extends CI_Model {
 		$this->db->where($idName, $id);
 		$this->db->delete($table);	
 	}
+	
+	function insertNewWOData($table, $data) {
+		$this->db->insert($table, $data);
+	}
 }
 
 ?>
