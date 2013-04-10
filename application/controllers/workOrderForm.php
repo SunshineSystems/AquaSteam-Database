@@ -418,10 +418,7 @@
 								
 							  //Formats the two total price outputs properly, in order to use bootstrap.	
 			$serviceTable .= '<div class="totals-div"><label>Total Carpet Sq Ft: </label>
-								<div class="input-prepend">
-									<span class="add-on">$</span>
 								  	<input id="total-service-sqft" class="input-small span2" type="text" value="0.00" readonly>
-								</div>
 								<label>Total Carpet Price: </label>
 								<div class="input-prepend">
 									<span class="add-on">$</span>
@@ -532,10 +529,7 @@
 			$stainguardTable .= "</tbody></table>";
 			$stainguardTable .= "<div>";
 			$stainguardTable .= '<div class="totals-div"><label>Total Stain Guard Sq Ft: </label>
-								<div class="input-prepend">
-									<span class="add-on">$</span>
 								  	<input id="total-stainguard-sqft" class="input-small span2" type="text" value="0.00" readonly>
-								</div>
 								<label>Total Stain Guard Price: </label>
 								<div class="input-prepend">
 									<span class="add-on">$</span>
@@ -595,10 +589,7 @@
 				$otherTable .= "</tbody></table>";
 				$otherTable .= "<div>";
 				$otherTable .= '<div class="totals-div"><label>Total Other Sq Ft: </label>
-								<div class="input-prepend">
-									<span class="add-on">$</span>
 									<input id="total-other-sqft" class="input-small span2" type="text" value="0.00" readonly>
-								</div>
 								<label>Total Other Price: </label>
 								<div class="input-prepend">
 									<span class="add-on">$</span>
