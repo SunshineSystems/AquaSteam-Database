@@ -35,8 +35,12 @@
 				//to be used for our auto complete.
 				$custs = $this->dbm->getAllCustomers();
 				foreach($custs->result_array() as $row) {
-					$tags[$i]['cust_fname'] = $row['cust_fname'];
-					$tags[$i]['cust_lname'] = $row['cust_lname'];
+					//Replaces spaces with _ characters from first and last names, for the autocomplete.
+					//Then will replace _ characters with spaces on the search query.
+					//It's not ideal, but it prevents issues with customers from the old database that could have spaces in the
+					//first and last names.
+					$tags[$i]['cust_fname'] = str_replace(" ", "_", $row['cust_fname']); 
+					$tags[$i]['cust_lname'] =str_replace(" ", "_", $row['cust_lname']);
 					$tags[$i]['cust_company'] = $row['cust_company'];
 					$tags[$i]['cust_address'] = $row['cust_address'];
 					$tags[$i]['cust_city'] = $row['cust_city'];
@@ -74,7 +78,8 @@
 				// In order to search first and last names.
 				if ( preg_match('/\s/', $searchQuery) ) {
 					$names = explode(" ", $searchQuery);
-					$results = $this->dbm->getCustomersByNameSearch($names[0], $names[1]);
+					//Replaces the underscores that were entered in the autocomplete array with spaces
+					$results = $this->dbm->getCustomersByNameSearch(str_replace("_", " ", $names[0]), str_replace("_", " ", $names[1]));
 				}
 				else {
 					$field2 = "cust_lname";
@@ -167,6 +172,12 @@
 			$id = $_POST['id']; //The id posted from the ajax call.
 			$sanitizedFName = str_replace(" ", "", $_POST['fname']); //removes spaces from first name.
 			$sanitizedLName = str_replace(" ", "", $_POST['lname']); //removes spaces from last name.
+			
+			//Need to remove underscores from first/last name to prevent future errors with our super hacky autocomplete workaround
+			//on the search pages. You can find said fix in the index() functions in the customer/workordersearch controllers.
+			$sanitizedFName = str_replace("_", "", $sanitizedFName); //removes underscores from first name.
+			$sanitizedLName = str_replace("_", "", $sanitizedLName); //removes underscores from last name.
+			
 			
 			$data['cust_fname'] = $sanitizedFName;
 			$data['cust_lname'] = $sanitizedLName;
