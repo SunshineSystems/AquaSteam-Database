@@ -260,10 +260,10 @@
 					<button id="print-button" class="btn btn-large btn-info dropdown-toggle" data-toggle="dropdown">Print Work Order</button>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 						<li>
-							<a href="<?php echo $home?>documents/Work Order.pdf">Work Order</a>
+							<a href="javascript:void(0)" onclick="printWorkOrder()">Work Order</a>
 						</li>
 						<li>
-							<a href="<?php echo $home?>documents/Customer Summary.pdf">Customer Summary</a>
+							<a href="javascript:void(0)" onclick="printCustSummary)">Customer Summary</a>
 						</li>
 					</ul>
 				</div>

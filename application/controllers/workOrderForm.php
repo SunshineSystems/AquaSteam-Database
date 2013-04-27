@@ -346,7 +346,7 @@
 		 * @param $id the work order id that will be used to generate a printable report.
 		 */
 		function printWorkOrder($id) {
-			$this->load->helper('url'); 
+			/*$this->load->helper('url'); 
     		$home = base_url();
 	
 			$html = "<html>
@@ -364,7 +364,62 @@
 					</html>";
 					
 			$this->createPDF($html);
-			echo $html;
+			echo $html;*/
+			$this->load->library('PDF');
+			
+			$pdf = new PDF('P', 'mm', 'A4', true, 'UTF-8', false);
+			$pdf->SetTitle('My Title');
+			$pdf->SetHeaderMargin(30);
+			$pdf->SetTopMargin(20);
+			$pdf->setFooterMargin(20);
+			$pdf->SetAutoPageBreak(true);
+			$pdf->SetAuthor('Author');
+			$pdf->SetDisplayMode('real', 'default');
+			
+			$pdf->Write(5, 'Some sample text');
+			$pdf->Output('My-File-Name.pdf', 'I');
+		}
+		
+		/**
+		 * Printable work orders aren't going to happen, because I don't have enough time to do it by the deadline.
+		 * It takes a huge amount of time to get it to format properly, and is a giant time sink.
+		 * When I work on implementing it for the final system/later it will be done here.
+		 * 
+		 * @param $id the work order id that will be used to generate a printable report.
+		 */
+		function printCustSummary($id) {
+			/*$this->load->helper('url'); 
+    		$home = base_url();
+	
+			$html = "<html>
+						<head>
+							<link rel='stylesheet' type='text/css' href=".$home."css/printableWO.css>
+						</head>
+						<body>
+							<div id='container'>
+								<img src='".$home."images/New Aqua Logo Web.png' alt='Aqua Steam Logo'>
+								<h1 id='workOrderHeader'>Work Order</h1>
+								<p id='date'>Date: 09/11/2013</p>
+								<hr>
+							</div>
+						</body>
+					</html>";
+					
+			$this->createPDF($html);
+			echo $html;*/
+			$this->load->library('PDF');
+			
+			$pdf = new PDF('P', 'mm', 'A4', true, 'UTF-8', false);
+			$pdf->SetTitle('My Title');
+			$pdf->SetHeaderMargin(30);
+			$pdf->SetTopMargin(20);
+			$pdf->setFooterMargin(20);
+			$pdf->SetAutoPageBreak(true);
+			$pdf->SetAuthor('Author');
+			$pdf->SetDisplayMode('real', 'default');
+			
+			$pdf->Write(5, 'Some sample text');
+			$pdf->Output('My-File-Name.pdf', 'I');
 		}
 		
 		/**

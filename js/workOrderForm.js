@@ -196,13 +196,18 @@
      * PDF, and then opens the returned pdf in a new window.
      * 
      * CURRENTLY NOT IN USE 
-
+	 */
     function printWorkOrder() {
     	var id = $("#workOrderID").val();
     	var url = home + "index.php/workorderform/printWorkOrder/" + id;
 		var page = window.open(url, '_blank');
     }
-    */
+    
+    function printCustSummary() {
+    	var id = $("#workOrderID").val();
+    	var url = home + "index.php/workorderform/printCustSummary/" + id;
+		var page = window.open(url, '_blank');
+    }
    
    /**
     * Gets the value of the customerID field, and passes it to the gotoCustomer() function in the controller,
