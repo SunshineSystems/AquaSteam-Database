@@ -4,7 +4,6 @@
 	 * @file workOrderForm.php
 	 * @brief Contains the WorkOrderForm class that handles all the functionality of the work order form page.
 	 */
-	require_once APPPATH.'third_party/dompdf/dompdf_config.inc.php';
 	class WorkOrderForm extends CI_Controller {
 		/**
 		 * Default Constructor
@@ -339,44 +338,62 @@
 		}
 
 		/**
-		 * Printable work orders aren't going to happen, because I don't have enough time to do it by the deadline.
-		 * It takes a huge amount of time to get it to format properly, and is a giant time sink.
-		 * When I work on implementing it for the final system/later it will be done here.
+		 * Creates a page layout using html/css inside a string, and passes the string to the TCPDF class, which will
+		 * output it to a PDF. TCPDF is very strict with how it can render html to a pdf, so the html code is really ugly.
+		 * My condolences to whoever has to work on this in the future.
 		 * 
 		 * @param $id the work order id that will be used to generate a printable report.
 		 */
 		function printWorkOrder($id) {
-			/*$this->load->helper('url'); 
-    		$home = base_url();
-	
-			$html = "<html>
-						<head>
-							<link rel='stylesheet' type='text/css' href=".$home."css/printableWO.css>
-						</head>
-						<body>
-							<div id='container'>
-								<img src='".$home."images/New Aqua Logo Web.png' alt='Aqua Steam Logo'>
-								<h1 id='workOrderHeader'>Work Order</h1>
-								<p id='date'>Date: 09/11/2013</p>
-								<hr>
-							</div>
-						</body>
-					</html>";
-					
-			$this->createPDF($html);
-			echo $html;*/
-			$this->load->library('PDF');
 			
+			//Gets the information that we will use
+			$results = $this->dbm->getWorkOrderById($id);
+			$workOrder = $results->row_array();
+			//Format the work order date properly
+			if($workOrder['wo_date'] == "0000-00-00" || $workOrder['wo_date'] == "1970-01-01" || $workOrder['wo_date'] == "1969-12-31") {
+				$date = "";
+			}
+			else {
+				$unix = strtotime($workOrder["wo_date"]);
+				$formattedDate = date("m/d/Y", $unix);
+				$date = $formattedDate;
+			}
+			
+			$results = $this->dbm->getCustomerById($workOrder['cust_id']);
+			$customer = $results->row_array();
+		
+			$html ='<table style="width: 100%; "><tr><td style="border-bottom: 1px solid black;"></td><td colspan="2" style="text-align: center; border-bottom: 1px solid black;"><h1>Work Order</h1></td>
+						<td style="text-align:center; line-height: 3px; border-bottom: 1px solid black;"><b>Date: '.$date.'</b></td></tr>';
+			
+			$html .= '<tr><td><br></td></tr>'; //The only way TCPDF will seem to space out table cells, css doesn't work.
+			$html .= '<tr><td><u>Customer Information:</u></td>
+					 	 <td colspan="2" align="center"><u>Cleaning To Be Done At:</u></td><td align="center">ID:'.$id.'</td></tr>';
+			
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td width="200px"><b>Company:</b> '.$customer['cust_company'].'</td><td colspan="2"><b>Address:</b> '.$workOrder['wo_address'].'</td></tr>';
+			//$html .= '<tr height="1px"><td></td></tr>';
+			$html .= '<tr><td width="256px"><b>Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> '.$customer['cust_fname'].' '.$customer['cust_lname'].'
+						  </td><td colspan="2">'.$workOrder['wo_city'].', '.$workOrder['wo_prov'].'</td></tr>';
+			$html .= '<tr><td width="256px"><b>Address:&nbsp;&nbsp;</b> '.$customer['cust_address'].'
+						  </td><td colspan="2">'.$workOrder['wo_pcode'].'</td></tr>';
+						  
+			$html .= '<tr><td width="200px"><b>Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> '.$customer['cust_email'].'
+						  </td><td colspan="2"><b>Phone: &nbsp;&nbsp;&nbsp;</b>'.$workOrder['wo_phone'].'</td></tr>';
+			
+			$html .= '<tr><td><br></td></tr>';			  		
+			$html .= '<tr><td><b>Home Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> '.$customer['cust_hphone'].'</td>
+						  	  <td rowspan="4" style="border: 1px solid black;">Equipment: </td></tr>';
+			$html .= '<tr><td><b>Business Phone:</b> '.$customer['cust_bphone'].'</td></tr>';
+			$html .= '<tr><td><b>Cell Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> '.$customer['cust_cphone'].'</td></tr>';
+			$html .= "</table>";
+			
+			$this->load->library('PDF');
 			$pdf = new PDF('P', 'mm', 'A4', true, 'UTF-8', false);
-			$pdf->SetTitle('My Title');
 			$pdf->SetHeaderMargin(30);
 			$pdf->SetTopMargin(20);
 			$pdf->setFooterMargin(20);
-			$pdf->SetAutoPageBreak(true);
-			$pdf->SetAuthor('Author');
-			$pdf->SetDisplayMode('real', 'default');
-			
-			$pdf->Write(5, 'Some sample text');
+			$pdf->AddPage();
+			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->Output('My-File-Name.pdf', 'I');
 		}
 		
@@ -812,14 +829,6 @@
 				$this->dbm->insertNewWOdata('other', $otherData);
 			}
 			
-		}
-		
-		//Not currently used. To be used for creating pdf document for work orders.
-		function createPDF($html) {
-			$dompdf = new DOMPDF();
-			$dompdf->load_html($html);
-			$dompdf->render();
-			$dompdf->stream("testing.pdf", array('Attatchement'=>0));
 		}
 	}
 	

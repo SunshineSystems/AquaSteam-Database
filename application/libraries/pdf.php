@@ -17,12 +17,7 @@
 	        $image_file = K_PATH_IMAGES.'logo.png';
 	        $this->Image($image_file, 10, 10, 60, '', 'PNG', '', 'M', false, 300, '', false, false, 0, false, false, false);
 	        // Set font
-	        $this->SetFont('helvetica', 'B', 20);
-	        // Title
-	        $date = date("m/d/Y");
-	        $this->Cell(10, 15, "               Work Order", 0, false, 'L', 0, '', 0, false, 'M', 'B');
-			$this->SetFont('helvetica', 'B', 10);
-			$this->Cell(0, 15, "Date: $date", 0, false, 'R', 0, '', 0, false, 'M', 'B');
+
 	    }
 	
 	    // Page footer

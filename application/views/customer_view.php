@@ -60,7 +60,7 @@
 					<input id="custLName" type="text" maxlength="50"/>
 				</div>
 				<div class="field-row">
-					<label>Personal Address:</label>
+					<label>Address:</label>
 					<input id="custAddress" type="text" maxlength="150"/>
 				</div>
 				<div class="field-row">		
