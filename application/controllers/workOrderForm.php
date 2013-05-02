@@ -345,10 +345,24 @@
 		 * @param $id the work order id that will be used to generate a printable report.
 		 */
 		function printWorkOrder($id) {
+			$this->load->helper('url'); 
+    		$home = base_url();
 			
 			//Gets the information that we will use
 			$results = $this->dbm->getWorkOrderById($id);
 			$workOrder = $results->row_array();
+			
+			$results = $this->dbm->getCustomerById($workOrder['cust_id']);
+			$customer = $results->row_array();
+			
+			$results = $this->dbm->getPaymentByWOID($id);
+			$payment = $results->row_array();
+		
+			$carpet = $this->dbm->getServiceByWOID($id);
+			$upholstery = $this->dbm->getUpholsteryByWOID($id);
+			$stainguard = $this->dbm->getStainGuardByWOID($id);
+			$other = $this->dbm->getOtherByWOID($id);
+			//die(var_dump($payment));
 			//Format the work order date properly
 			if($workOrder['wo_date'] == "0000-00-00" || $workOrder['wo_date'] == "1970-01-01" || $workOrder['wo_date'] == "1969-12-31") {
 				$date = "";
@@ -359,40 +373,136 @@
 				$date = $formattedDate;
 			}
 			
-			$results = $this->dbm->getCustomerById($workOrder['cust_id']);
-			$customer = $results->row_array();
-		
+			//Image tags for checkboxes, to be used for equipment/payment options.
+			$checked='<img src="'.$home.'images/checked.png"  height="10"/>';
+			$unchecked='<img src="'.$home.'images/unchecked.png"  height="10"/>';
+			
 			$html ='<table style="width: 100%; "><tr><td style="border-bottom: 1px solid black;"></td><td colspan="2" style="text-align: center; border-bottom: 1px solid black;"><h1>Work Order</h1></td>
 						<td style="text-align:center; line-height: 3px; border-bottom: 1px solid black;"><b>Date: '.$date.'</b></td></tr>';
 			
 			$html .= '<tr><td><br></td></tr>'; //The only way TCPDF will seem to space out table cells, css doesn't work.
 			$html .= '<tr><td><u>Customer Information:</u></td>
-					 	 <td colspan="2" align="center"><u>Cleaning To Be Done At:</u></td><td align="center">ID:'.$id.'</td></tr>';
+					 	 <td colspan="2" align="center"><u>Cleaning To Be Done At:</u></td><td align="center"><b>ID: </b>'.$id.'</td></tr>';
 			
 			$html .= '<tr><td><br></td></tr>';
 			$html .= '<tr><td width="200px"><b>Company:</b> '.$customer['cust_company'].'</td><td colspan="2"><b>Address:</b> '.$workOrder['wo_address'].'</td></tr>';
-			//$html .= '<tr height="1px"><td></td></tr>';
 			$html .= '<tr><td width="256px"><b>Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> '.$customer['cust_fname'].' '.$customer['cust_lname'].'
 						  </td><td colspan="2">'.$workOrder['wo_city'].', '.$workOrder['wo_prov'].'</td></tr>';
-			$html .= '<tr><td width="256px"><b>Address:&nbsp;&nbsp;</b> '.$customer['cust_address'].'
+			$html .= '<tr><td width="256px"><b>Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> '.$customer['cust_email'].'
 						  </td><td colspan="2">'.$workOrder['wo_pcode'].'</td></tr>';
 						  
-			$html .= '<tr><td width="200px"><b>Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> '.$customer['cust_email'].'
-						  </td><td colspan="2"><b>Phone: &nbsp;&nbsp;&nbsp;</b>'.$workOrder['wo_phone'].'</td></tr>';
-			
+			$html .= '<tr><td width="200px"><b>Address:&nbsp;&nbsp;</b> '.$customer['cust_address'].'
+						  </td><td width="150"><b>Phone: &nbsp;&nbsp;&nbsp;</b>'.$workOrder['wo_phone'].'</td>
+						  <td width="188"><b>Gift: </b>'.$payment['pay_gift'].'</td></tr>';
+			$html .= '<tr><td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							'.$customer['cust_city'].', '.$customer['cust_prov'].'</td></tr>';
+			$html .= '<tr><td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							'.$customer['cust_pcode'].'</td></tr>';
 			$html .= '<tr><td><br></td></tr>';			  		
 			$html .= '<tr><td><b>Home Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> '.$customer['cust_hphone'].'</td>
-						  	  <td rowspan="4" style="border: 1px solid black;">Equipment: </td></tr>';
+						  	  <td rowspan="4" width="320" style="border: 1px solid black;">Equipment: <br>';
+			//renders the equipment options with either an image of a checked box or unchecked box, based on the saved values.
+			if($workOrder['wo_rx'] == 1)
+				$html .= $checked.' RX &nbsp;&nbsp;&nbsp;';
+			else 
+				$html .= $unchecked.' RX &nbsp;&nbsp;&nbsp;';
+			if($workOrder['wo_fan'] == 1)
+				$html .= $checked.' Fan &nbsp;&nbsp;&nbsp;';
+			else 
+				$html .= $unchecked.' Fan &nbsp;&nbsp;&nbsp;';
+			if($workOrder['wo_rake'] == 1)
+				$html .= $checked.' Rake &nbsp;&nbsp;&nbsp;';
+			else 
+				$html .= $unchecked.' Rake &nbsp;&nbsp;&nbsp;';
+			if($workOrder['wo_pad'] == 1)
+				$html .= $checked.' Pad &nbsp;&nbsp;&nbsp;';
+			else 
+				$html .= $unchecked.' Pad &nbsp;&nbsp;&nbsp;';
+			if($workOrder['wo_encapsulate'] == 1)
+				$html .= $checked.' Encapsulate<br>';
+			else 
+				$html .= $unchecked.' Encapsulate<br>';
+			if($workOrder['wo_form'] == 1)
+				$html .= $checked.' Info Form</td></tr>';
+			else 
+				$html .= $unchecked.' Info Form</td></tr>';
+			
 			$html .= '<tr><td><b>Business Phone:</b> '.$customer['cust_bphone'].'</td></tr>';
 			$html .= '<tr><td><b>Cell Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> '.$customer['cust_cphone'].'</td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
 			$html .= "</table>";
 			
+			//Outputs the work order table data
+			$html .='<table style="width: 100%;" align="center"><tr>
+							<td style="border-bottom: 1px solid black; width: 12%;"><b>Category</b></td>
+							<td style="border-bottom: 1px solid black; width: 18%;"><b>Description</b></td>
+							<td style="border-bottom: 1px solid black; width: 12%;"><b>Color / Type</b></td>
+							<td style="border-bottom: 1px solid black; width:  8%;"><b>L</b></td>
+							<td style="border-bottom: 1px solid black; width:  8%;"><b>W</b></td>
+							<td style="border-bottom: 1px solid black; width: 12%;"><b>Sq Feet</b></td>
+							<td style="border-bottom: 1px solid black; width:  6%;"><b>Qty</b></td>
+							<td style="border-bottom: 1px solid black; width: 12%;"><b>Unit Price</b></td>
+							<td style="border-bottom: 1px solid black; width: 12%;"><b>Ext. Price</b></td></tr>';
+			
+			foreach($carpet->result_array() as $row) {
+				$html .= '<tr><td>Carpet<br></td>';
+				$html .= '<td>'.$row['serv_description'].'</td>';
+				$html .= '<td>'.$row['serv_type'].'</td>';
+				$html .= '<td>'.$row['serv_length'].'</td>';
+				$html .= '<td>'.$row['serv_width'].'</td>';
+				$html .= '<td>'.$row['serv_sq_feet'].'</td>';
+				$html .= '<td>'.$row['serv_quantity'].'</td>';
+				$html .= '<td> $'.$row['serv_unit_price'].'</td>';
+				$html .= '<td> $'.$row['serv_ext_price'].'</td></tr>';
+			}
+			
+			foreach($upholstery->result_array() as $row) {
+				$html .= '<tr><td>Upholstery<br></td>';
+				$html .= '<td>'.$row['up_description'].'</td>';
+				$html .= '<td>'.$row['up_type'].'</td>';
+				$html .= '<td>N/A</td>';
+				$html .= '<td>N/A</td>';
+				$html .= '<td>N/A</td>';
+				$html .= '<td>'.$row['up_quantity'].'</td>';
+				$html .= '<td> $'.$row['up_unit_price'].'</td>';
+				$html .= '<td> $'.$row['up_ext_price'].'</td></tr>';
+			}
+			
+			foreach($stainguard->result_array() as $row) {
+				$html .= '<tr><td>Stain Guard<br></td>';
+				$html .= '<td>'.$row['sg_description'].'</td>';
+				$html .= '<td>N/A</td>';
+				$html .= '<td>'.$row['sg_length'].'</td>';
+				$html .= '<td>'.$row['sg_width'].'</td>';
+				$html .= '<td>'.$row['sg_sq_feet'].'</td>';
+				$html .= '<td>'.$row['sg_quantity'].'</td>';
+				$html .= '<td> $'.$row['sg_unit_price'].'</td>';
+				$html .= '<td> $'.$row['sg_ext_price'].'</td></tr>';
+			}
+			
+			foreach($other->result_array() as $row) {
+				$html .= '<tr><td>Other<br></td>';
+				$html .= '<td>'.$row['other_description'].'</td>';
+				$html .= '<td>'.$row['other_type'].'</td>';
+				$html .= '<td>'.$row['other_length'].'</td>';
+				$html .= '<td>'.$row['other_width'].'</td>';
+				$html .= '<td>'.$row['other_sq_feet'].'</td>';
+				$html .= '<td>'.$row['other_quantity'].'</td>';
+				$html .= '<td> $'.$row['other_unit_price'].'</td>';
+				$html .= '<td> $'.$row['other_ext_price'].'</td></tr>';
+			}
+			
+			$html .= "</table>";
+			//die($html);
 			$this->load->library('PDF');
 			$pdf = new PDF('P', 'mm', 'A4', true, 'UTF-8', false);
 			$pdf->SetHeaderMargin(30);
 			$pdf->SetTopMargin(20);
 			$pdf->setFooterMargin(20);
+			$pdf->SetAutoPageBreak(true, 20);
 			$pdf->AddPage();
+			//$pdf->writeHTMLCell(80, '', '', '', $html, 1, 1, 1, true, 'J', true);
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->Output('My-File-Name.pdf', 'I');
 		}
@@ -405,9 +515,9 @@
 		 * @param $id the work order id that will be used to generate a printable report.
 		 */
 		function printCustSummary($id) {
-			/*$this->load->helper('url'); 
+			$this->load->helper('url'); 
     		$home = base_url();
-	
+			/*
 			$html = "<html>
 						<head>
 							<link rel='stylesheet' type='text/css' href=".$home."css/printableWO.css>
@@ -478,10 +588,10 @@
 				$serviceTable .= "<td class='editable service serv_type ".$row['serv_id']." text'>".$row['serv_type']."</td>";
 				$serviceTable .= "<td class='editable service serv_length ".$row['serv_id']." num'>".$row['serv_length']."</td>";
 				$serviceTable .= "<td class='editable service serv_width ".$row['serv_id']." num'>".$row['serv_width']."</td>";
-				$serviceTable .= "<td>".$row['serv_sq_feet']."</td>";
+				$serviceTable .= "<td class='uneditable service serv_sq_feet ".$row['serv_id']." num'>".$row['serv_sq_feet']."</td>";
 				$serviceTable .= "<td class='editable service serv_quantity ".$row['serv_id']." num'>".$row['serv_quantity']."</td>";
 				$serviceTable .= "<td class='editable service serv_unit_price ".$row['serv_id']." num'>".$row['serv_unit_price']."</td>";
-				$serviceTable .= "<td class='service serv_ext_price ".$row['serv_id']."'></td>";
+				$serviceTable .= "<td class='uneditable service serv_ext_price ".$row['serv_id']." num'></td>";
 				$serviceTable .= "<td class='serv-delete-row'><button class='btn btn-danger btn-deleterow' onclick='deleteTableRow(".$row['serv_id'].", ".$row['wo_id'].", \"service\", \"serv_id\", \"#carpetTab\")'>Delete</button></td></tr>";
 			}
 			
@@ -537,7 +647,7 @@
 				$upholsteryTable .= "<td class='editable upholstery up_type ".$row['up_id']." text'>".$row['up_type']."</td>";
 				$upholsteryTable .= "<td class='editable upholstery up_quantity ".$row['up_id']." num'>".$row['up_quantity']."</td>";
 				$upholsteryTable .= "<td class='editable upholstery up_unit_price ".$row['up_id']." num'>".$row['up_unit_price']."</td>";
-				$upholsteryTable .= "<td class='upholstery up_ext_price ".$row['up_id']."'></td>";
+				$upholsteryTable .= "<td class='uneditable upholstery up_ext_price ".$row['up_id']."'></td>";
 				$upholsteryTable .= "<td class='up-delete-row'><button class='btn btn-danger btn-deleterow' onclick='deleteTableRow(".$row['up_id'].", ".$row['wo_id'].", \"upholstery\", \"up_id\", \"#upholsteryTab\")'>Delete</button></td></tr>";
 			}
 			
@@ -591,10 +701,10 @@
 				$stainguardTable .= "<tr><td class='editable stain_guard sg_description ".$row['sg_id']." text'>".$row['sg_description']."</td>";
 				$stainguardTable .= "<td class='editable stain_guard sg_length ".$row['sg_id']." num'>".$row['sg_length']."</td>";
 				$stainguardTable .= "<td class='editable stain_guard sg_width ".$row['sg_id']." num'>".$row['sg_width']."</td>";
-				$stainguardTable .= "<td>".$row['sg_sq_feet']."</td>";
+				$stainguardTable .= "<td class='uneditable stain_guard sg_sq_feet ".$row['sg_id']."'>".$row['sg_sq_feet']."</td>";
 				$stainguardTable .= "<td class='editable stain_guard sg_quantity ".$row['sg_id']." num'>".$row['sg_quantity']."</td>";
 				$stainguardTable .= "<td class='editable stain_guard sg_unit_price ".$row['sg_id']." num'>".$row['sg_unit_price']."</td>";
-				$stainguardTable .= "<td class='stain_guard sg_ext_price ".$row['sg_id']."'></td>";
+				$stainguardTable .= "<td class='uneditable stain_guard sg_ext_price ".$row['sg_id']."'></td>";
 				$stainguardTable .= "<td class='sg-delete-row'><button class='btn btn-danger btn-deleterow' onclick='deleteTableRow(".$row['sg_id'].", ".$row['wo_id'].", \"stain_guard\", \"sg_id\", \"#stainGuardTab\")'>Delete</button></td></tr>";
 			}
 			
@@ -651,10 +761,10 @@
 					$otherTable .= "<td class='editable other other_type ".$row['other_id']." text'>".$row['other_type']."</td>";
 					$otherTable .= "<td class='editable other other_length ".$row['other_id']." num'>".$row['other_length']."</td>";
 					$otherTable .= "<td class='editable other other_width ".$row['other_id']." num'>".$row['other_width']."</td>";
-					$otherTable .= "<td>".$row['other_sq_feet']."</td>";
+					$otherTable .= "<td class='uneditable other other_sq_feet ".$row['other_id']."'>".$row['other_sq_feet']."</td>";
 					$otherTable .= "<td class='editable other other_quantity ".$row['other_id']." num'>".$row['other_quantity']."</td>";
 					$otherTable .= "<td class='editable other other_unit_price ".$row['other_id']." num'>".$row['other_unit_price']."</td>";
-					$otherTable .= "<td class='other other_ext_price ".$row['other_id']."'></td>";
+					$otherTable .= "<td class='uneditable other other_ext_price ".$row['other_id']."'></td>";
 					$otherTable .= "<td class='other-delete-row'><button class='btn btn-danger btn-deleterow' onclick='deleteTableRow(".$row['other_id'].", ".$row['wo_id'].", \"other\", \"other_id\", \"#otherTab\")'>Delete</button></td></tr>";
 				}
 				

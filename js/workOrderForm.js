@@ -193,9 +193,7 @@
     
     /**
      * gets the value of the workorderID field, and passes it to the printWorkOrder function in the controller, to create a printable
-     * PDF, and then opens the returned pdf in a new window.
-     * 
-     * CURRENTLY NOT IN USE 
+     * PDF, and then opens the returned pdf in a new tab.
 	 */
     function printWorkOrder() {
     	var id = $("#workOrderID").val();
@@ -433,6 +431,7 @@
     		else {
     			$('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
     		}
+    		updateTabTable($('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)'), true);
     	});
     	
     	$("#stainguard-table tbody tr").each(function(i) {
@@ -447,6 +446,7 @@
     		else {
     			$('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(4)').text("0.00");
     		}
+    		updateTabTable($('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(4)'), true);
     	});
     	
     	$("#other-table tbody tr").each(function(i) {
@@ -461,6 +461,7 @@
     		else {
     			$('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
     		}
+    		updateTabTable($('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)'), true);
     	});
     }
     
@@ -483,6 +484,7 @@
     		else {
     			$('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
     		}
+    		updateTabTable($('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)'), true);
     	});
     	
     	$("#upholstery-table tbody tr").each(function(i) {
@@ -497,6 +499,7 @@
     		else {
     			$('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)').text("0.00");
     		}
+    		updateTabTable($('#upholstery-table tbody tr:nth-child('+(i+1)+')>td:nth-child(5)'), true);
     	});
     	
     	$("#stainguard-table tbody tr").each(function(i) {
@@ -512,6 +515,7 @@
     		else {
     			$('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(7)').text("0.00");
     		}
+    		updateTabTable($('#stainguard-table tbody tr:nth-child('+(i+1)+')>td:nth-child(7)'), true);
     	});
     	
     	$("#other-table tbody tr").each(function(i) {
@@ -527,6 +531,7 @@
     		else {
     			$('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text("0.00");
     		}
+    		updateTabTable($('#other-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)'), true);
     	});
     }
     
@@ -757,7 +762,7 @@
 	    	if(cellText == 0) {
 	    		cellText = $('#editbox').val();
 	    	}
-	    	
+	    	//$('#editbox').blur();
 	    	var htmlData = '<input id="editbox" type="text" value="' +  cellText + '">';
 	    	
 	 		$('.ajax').html($('.ajax input').val());  
@@ -807,12 +812,16 @@
 	});
 	
 	//Takes the classes of the submitted element, and uses them to save the updated value to the database.
-	function updateTabTable(selector) {
-		var value = $('.ajax input').val();
-	   
+	//Also is used to update the database when a calculated cell is updated, and is handled differently using
+	//the calcCell parameter.
+	function updateTabTable(selector, calcCell) {
+		calcCell = (typeof calcCell === "undefined") ? false : calcCell;
+		if(!calcCell) var value = $('.ajax input').val();
+	  	else var value = $(selector).text();
 	    //Puts all of the classes into an array, to be passed to the controller.
 	    var data = $(selector).attr('class').split( " " );
-	    //data[0] = editable
+	    //alert(data[0]);
+	    //data[0] = editable/uneditable
 	    //data[1] = table name
 	    //data[2] = table field
 	    //data[3] = primary key
@@ -833,7 +842,9 @@
 			success: function(data){
 				$('.ajax').html($('.ajax input').val());  
 				$('.ajax').removeClass('ajax');
-				runAllCalcs();  
+				if(!calcCell) {
+					runAllCalcs();
+				}  
 		  	}
     	});
 	}
