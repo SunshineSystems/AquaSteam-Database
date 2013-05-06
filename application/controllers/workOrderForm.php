@@ -358,10 +358,24 @@
 			$results = $this->dbm->getPaymentByWOID($id);
 			$payment = $results->row_array();
 		
+			$results = $this->dbm->getTravelByWOID($id);
+			$travel = $results->row_array();
+			if(count($travel) == 0 || $travel['travel_distance'] == 0.00 && $travel['travel_price'] == 0.00)
+				$travelEntered = false;
+			else 
+				$travelEntered = true;
+			
 			$carpet = $this->dbm->getServiceByWOID($id);
 			$upholstery = $this->dbm->getUpholsteryByWOID($id);
 			$stainguard = $this->dbm->getStainGuardByWOID($id);
 			$other = $this->dbm->getOtherByWOID($id);
+			
+			$subTotal = 0;
+			$travelTotal = 0;
+			$gst = 0;
+			$adjTotal = 0;
+			$finalTotal = 0;
+			
 			//die(var_dump($payment));
 			//Format the work order date properly
 			if($workOrder['wo_date'] == "0000-00-00" || $workOrder['wo_date'] == "1970-01-01" || $workOrder['wo_date'] == "1969-12-31") {
@@ -455,6 +469,7 @@
 				$html .= '<td>'.$row['serv_quantity'].'</td>';
 				$html .= '<td> $'.$row['serv_unit_price'].'</td>';
 				$html .= '<td> $'.$row['serv_ext_price'].'</td></tr>';
+				$subTotal += $row['serv_ext_price'];
 			}
 			
 			foreach($upholstery->result_array() as $row) {
@@ -467,6 +482,7 @@
 				$html .= '<td>'.$row['up_quantity'].'</td>';
 				$html .= '<td> $'.$row['up_unit_price'].'</td>';
 				$html .= '<td> $'.$row['up_ext_price'].'</td></tr>';
+				$subTotal += $row['up_ext_price'];
 			}
 			
 			foreach($stainguard->result_array() as $row) {
@@ -479,6 +495,7 @@
 				$html .= '<td>'.$row['sg_quantity'].'</td>';
 				$html .= '<td> $'.$row['sg_unit_price'].'</td>';
 				$html .= '<td> $'.$row['sg_ext_price'].'</td></tr>';
+				$subTotal += $row['sg_ext_price'];
 			}
 			
 			foreach($other->result_array() as $row) {
@@ -491,9 +508,91 @@
 				$html .= '<td>'.$row['other_quantity'].'</td>';
 				$html .= '<td> $'.$row['other_unit_price'].'</td>';
 				$html .= '<td> $'.$row['other_ext_price'].'</td></tr>';
+				$subTotal += $row['other_ext_price'];
 			}
-			
+			if($travelEntered) {
+				$travelTotal = $travel['travel_distance'] * $travel['travel_price'];
+				$subTotal += $travelTotal;
+				$travelTotalFormatted = number_format($travelTotal, 2, '.', '');	
+				$html .= '<tr><td>Travel<br></td>';
+				$html .= '<td colspan="6" align="left">Distance: '.$travel['travel_distance'].'km</td>';
+				$html .= '<td>$'.$travel['travel_price'].'</td>';
+				$html .= '<td>$'.$travelTotalFormatted.'</td></tr>';
+			}
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
 			$html .= "</table>";
+			
+			//Payment/other information to be displayed at the bottom.
+			$html .= '<table><tr><td></td>';
+			$html .= '<td border="1" colspan="3"><b> Payment Method: </b>';
+			//Checking payment methods to be checked or not.
+			if($workOrder['pay_cash'] == 1)
+				$html .= $checked.' Cash &nbsp;&nbsp;&nbsp;';
+			else 
+				$html .= $unchecked.' Cash &nbsp;&nbsp;&nbsp;';
+			if($workOrder['pay_cheque'] == 1)
+				$html .= $checked.' Cheque &nbsp;&nbsp;&nbsp;';
+			else 
+				$html .= $unchecked.' Cheque &nbsp;&nbsp;&nbsp;';
+			if($workOrder['pay_cc'] == 1)
+				$html .= $checked.' Credit Card &nbsp;&nbsp;&nbsp;';
+			else 
+				$html .= $unchecked.' Credit Card &nbsp;&nbsp;&nbsp;';
+			if($workOrder['pay_charge'] == 1)
+				$html .= $checked.' Charge <br>';
+			else 
+				$html .= $unchecked.' Charge <br>';
+			if($workOrder['pay_debit'] == 1)
+				$html .= '&nbsp;'.$checked.' Debit &nbsp;&nbsp;&nbsp;';
+			else 
+				$html .= '&nbsp;'.$unchecked.' Debit &nbsp;&nbsp;&nbsp;';
+			if($workOrder['pay_other'] != "")
+				$html .= $checked.' Other: '.$workOrder['pay_other'];
+			else 
+				$html .= $unchecked.' Other';		
+			$html .= '</td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			
+			$subTotalFormatted = number_format($subTotal, 2, '.', ',');
+			$html .= '<tr><td><b>Notes:</b></td><td></td><td width="30%"></td><td width="20%">Subtotal:';
+			$html .= '&nbsp;&nbsp;<u> &nbsp;$'.$subTotalFormatted.'</u></td></tr>';
+			
+			$html .= '<tr><td></td><td></td><td width="30%"></td><td width="20%">Discount:';
+			if($payment['pay_discount_type'] == "$") {
+				$discount = "$".$payment['pay_discount'];
+				$adjTotal = $subTotal - $payment['pay_discount'];
+			}
+			else {
+				$discount = $payment['pay_discount']."%";
+				$discountVal = $payment['pay_discount'] /100 * $subTotal;
+				$adjTotal = $subTotal - $discountVal;
+				//$discountVal = $subTotal * discountVal;
+			}
+			$html .= '&nbsp;&nbsp;<u> &nbsp;'.$discount.'</u></td></tr>';
+			
+			$adjTotalFormatted = number_format($adjTotal, 2, '.', ',');
+			$html .= '<tr><td></td><td></td><td></td><td width="30%">Adj. Total:';
+			$html .= '&nbsp;<u> $'.$adjTotalFormatted.'</u></td></tr>';
+			
+			$taxVal = $payment['pay_tax_rate'] /100 * $adjTotal;
+			$finalTotal = $adjTotal + $taxVal;
+			
+			$taxTotalFormatted = number_format($taxVal, 2, '.', ',');
+			$html .= '<tr><td></td><td></td><td></td><td width="30%">GST:';
+			$html .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>&nbsp; $'.$taxTotalFormatted.'</u></td></tr>';
+			$finalTotalFormatted = number_format($finalTotal, 2, '.', ',');
+			$html .= '<tr><td></td><td></td><td></td><td width="30%">Total:';
+			$html .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u> $'.$finalTotalFormatted.'</u></td></tr>';
+			
+			$html .= '</table>';
 			//die($html);
 			$this->load->library('PDF');
 			$pdf = new PDF('P', 'mm', 'A4', true, 'UTF-8', false);
@@ -502,51 +601,230 @@
 			$pdf->setFooterMargin(20);
 			$pdf->SetAutoPageBreak(true, 20);
 			$pdf->AddPage();
-			//$pdf->writeHTMLCell(80, '', '', '', $html, 1, 1, 1, true, 'J', true);
 			$pdf->writeHTML($html, true, false, true, false, '');
-			$pdf->Output('My-File-Name.pdf', 'I');
+			$filename = 'WorkOrder-'.$id;
+			$pdf->Output($filename, 'I');
 		}
 		
 		/**
-		 * Printable work orders aren't going to happen, because I don't have enough time to do it by the deadline.
-		 * It takes a huge amount of time to get it to format properly, and is a giant time sink.
-		 * When I work on implementing it for the final system/later it will be done here.
+		 * Same idea as the printWorkOrder() function, except it creates a pdf with a little less information displayed
+		 * so that it can be given/shown to customers.
 		 * 
 		 * @param $id the work order id that will be used to generate a printable report.
 		 */
 		function printCustSummary($id) {
 			$this->load->helper('url'); 
     		$home = base_url();
-			/*
-			$html = "<html>
-						<head>
-							<link rel='stylesheet' type='text/css' href=".$home."css/printableWO.css>
-						</head>
-						<body>
-							<div id='container'>
-								<img src='".$home."images/New Aqua Logo Web.png' alt='Aqua Steam Logo'>
-								<h1 id='workOrderHeader'>Work Order</h1>
-								<p id='date'>Date: 09/11/2013</p>
-								<hr>
-							</div>
-						</body>
-					</html>";
-					
-			$this->createPDF($html);
-			echo $html;*/
-			$this->load->library('PDF');
 			
+			//Gets the information that we will use
+			$results = $this->dbm->getWorkOrderById($id);
+			$workOrder = $results->row_array();
+			
+			$results = $this->dbm->getCustomerById($workOrder['cust_id']);
+			$customer = $results->row_array();
+			
+			$results = $this->dbm->getPaymentByWOID($id);
+			$payment = $results->row_array();
+		
+			$results = $this->dbm->getTravelByWOID($id);
+			$travel = $results->row_array();
+			if(count($travel) == 0 || $travel['travel_distance'] == 0.00 && $travel['travel_price'] == 0.00)
+				$travelEntered = false;
+			else 
+				$travelEntered = true;
+			
+			$carpet = $this->dbm->getServiceByWOID($id);
+			$upholstery = $this->dbm->getUpholsteryByWOID($id);
+			$stainguard = $this->dbm->getStainGuardByWOID($id);
+			$other = $this->dbm->getOtherByWOID($id);
+			
+			$subTotal = 0;
+			$travelTotal = 0;
+			$gst = 0;
+			$adjTotal = 0;
+			$finalTotal = 0;
+			$carpetTotal = 0;
+			$sgTotal = 0;
+			
+			//die(var_dump($payment));
+			//Format the work order date properly
+			if($workOrder['wo_date'] == "0000-00-00" || $workOrder['wo_date'] == "1970-01-01" || $workOrder['wo_date'] == "1969-12-31") {
+				$date = "";
+			}
+			else {
+				$unix = strtotime($workOrder["wo_date"]);
+				$formattedDate = date("m/d/Y", $unix);
+				$date = $formattedDate;
+			}
+			
+			//Image tags for checkboxes, to be used for equipment/payment options.
+			$checked='<img src="'.$home.'images/checked.png"  height="10"/>';
+			$unchecked='<img src="'.$home.'images/unchecked.png"  height="10"/>';
+			
+			$html ='<table style="width: 100%; "><tr><td style="border-bottom: 1px solid black;"></td><td colspan="2" style="text-align: center; border-bottom: 1px solid black;"><h1>Customer Summary</h1></td>
+						<td style="text-align:center; line-height: 3px; border-bottom: 1px solid black;"><b>Date: '.$date.'</b></td></tr>';
+			
+			$html .= '<tr><td><br></td></tr>'; //The only way TCPDF will seem to space out table cells, css doesn't work.
+			$html .= '<tr><td><u>Customer Information:</u></td>
+					 	 <td colspan="2" align="center"><u>Cleaning To Be Done At:</u></td><td align="center"><b>ID: </b>'.$id.'</td></tr>';
+			
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td width="200px"><b>Company:</b> '.$customer['cust_company'].'</td><td colspan="2"><b>Address:</b> '.$workOrder['wo_address'].'</td></tr>';
+			$html .= '<tr><td width="256px"><b>Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> '.$customer['cust_fname'].' '.$customer['cust_lname'].'
+						  </td><td colspan="2">'.$workOrder['wo_city'].', '.$workOrder['wo_prov'].'</td></tr>';
+			$html .= '<tr><td width="256px"><b>Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> '.$customer['cust_email'].'
+						  </td><td colspan="2">'.$workOrder['wo_pcode'].'</td></tr>';
+						  
+			$html .= '<tr><td width="200px"><b>Address:&nbsp;&nbsp;</b> '.$customer['cust_address'].'
+						  </td><td width="150"><b>Phone: &nbsp;&nbsp;&nbsp;</b>'.$workOrder['wo_phone'].'</td>
+						  <td width="188"><b>Gift: </b>'.$payment['pay_gift'].'</td></tr>';
+			$html .= '<tr><td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							'.$customer['cust_city'].', '.$customer['cust_prov'].'</td></tr>';
+			$html .= '<tr><td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							'.$customer['cust_pcode'].'</td></tr>';
+			$html .= '<tr><td><br></td></tr>';			  		
+			$html .= '<tr><td><b>Home Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> '.$customer['cust_hphone'].'</td>
+						  	  <td rowspan="4" width="320"><br></td></tr>';
+			
+			$html .= '<tr><td><b>Business Phone:</b> '.$customer['cust_bphone'].'</td></tr>';
+			$html .= '<tr><td><b>Cell Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> '.$customer['cust_cphone'].'</td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= "</table>";
+			
+			//Outputs the work order table data
+			$html .='<table style="width: 100%;" align="center"><tr>
+							<td style="border-bottom: 1px solid black;"><b>Category</b></td>
+							<td style="border-bottom: 1px solid black;"><b>Quantity</b></td>
+							<td style="border-bottom: 1px solid black;"><b>Price</b></td></tr>';
+			
+			foreach($carpet->result_array() as $row) {
+				$carpetTotal += $row['serv_ext_price'];	
+				$subTotal += $row['serv_ext_price'];
+			}
+
+			if($carpet->num_rows > 0) {
+				$carpetTotal = number_format($carpetTotal, 2, '.', '');
+				$html .= '<tr><td>Carpet</td>';
+				$html .= '<td>N/A</td>';
+				$html .= '<td>$'.$carpetTotal.'</td></tr>';
+			}
+
+			foreach($upholstery->result_array() as $row) {
+				$html .= '<tr><td>'.$row['up_description'].'</td>';
+				$html .= '<td>'.$row['up_quantity'].'</td>';
+				$html .= '<td> $'.$row['up_ext_price'].'</td></tr>';
+				$subTotal += $row['up_ext_price'];
+			}
+			
+			foreach($stainguard->result_array() as $row) {
+				$sgTotal += $row['sg_ext_price'];	
+				$subTotal += $row['sg_ext_price'];
+			}
+			if($stainguard->num_rows > 0) {
+				$sgTotal = number_format($sgTotal, 2, '.', '');
+				$html .= '<tr><td>Stain Guard</td>';
+				$html .= '<td>N/A</td>';
+				$html .= '<td>$'.$sgTotal.'</td></tr>';
+			}
+			foreach($other->result_array() as $row) {
+				$html .= '<tr><td>'.$row['other_description'].'</td>';
+				$html .= '<td>'.$row['other_quantity'].'</td>';
+				$html .= '<td> $'.$row['other_ext_price'].'</td></tr>';
+				$subTotal += $row['other_ext_price'];
+			}
+			if($travelEntered) {
+				$travelTotal = $travel['travel_distance'] * $travel['travel_price'];
+				$subTotal += $travelTotal;
+				$travelTotalFormatted = number_format($travelTotal, 2, '.', '');	
+				$html .= '<tr><td colspan="2">Travel<br></td>';
+				$html .= '<td>$'.$travelTotalFormatted.'</td></tr>';
+			}
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= "</table>";
+			
+			//Payment/other information to be displayed at the bottom.
+			$html .= '<table><tr><td></td>';
+			$html .= '<td border="1" colspan="3"><b> Payment Method: </b>';
+			//Checking payment methods to be checked or not.
+			if($workOrder['pay_cash'] == 1)
+				$html .= $checked.' Cash &nbsp;&nbsp;&nbsp;';
+			else 
+				$html .= $unchecked.' Cash &nbsp;&nbsp;&nbsp;';
+			if($workOrder['pay_cheque'] == 1)
+				$html .= $checked.' Cheque &nbsp;&nbsp;&nbsp;';
+			else 
+				$html .= $unchecked.' Cheque &nbsp;&nbsp;&nbsp;';
+			if($workOrder['pay_cc'] == 1)
+				$html .= $checked.' Credit Card &nbsp;&nbsp;&nbsp;';
+			else 
+				$html .= $unchecked.' Credit Card &nbsp;&nbsp;&nbsp;';
+			if($workOrder['pay_charge'] == 1)
+				$html .= $checked.' Charge <br>';
+			else 
+				$html .= $unchecked.' Charge <br>';
+			if($workOrder['pay_debit'] == 1)
+				$html .= '&nbsp;'.$checked.' Debit &nbsp;&nbsp;&nbsp;';
+			else 
+				$html .= '&nbsp;'.$unchecked.' Debit &nbsp;&nbsp;&nbsp;';
+			if($workOrder['pay_other'] != "")
+				$html .= $checked.' Other: '.$workOrder['pay_other'];
+			else 
+				$html .= $unchecked.' Other';		
+			$html .= '</td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			$html .= '<tr><td><br></td></tr>';
+			
+			$subTotalFormatted = number_format($subTotal, 2, '.', ',');
+			$html .= '<tr><td><b>Notes:</b></td><td></td><td width="30%"></td><td width="20%">Subtotal:';
+			$html .= '&nbsp;&nbsp;<u> &nbsp;$'.$subTotalFormatted.'</u></td></tr>';
+			
+			$html .= '<tr><td></td><td></td><td width="30%"></td><td width="20%">Discount:';
+			if($payment['pay_discount_type'] == "$") {
+				$discount = "$".$payment['pay_discount'];
+				$adjTotal = $subTotal - $payment['pay_discount'];
+			}
+			else {
+				$discount = $payment['pay_discount']."%";
+				$discountVal = $payment['pay_discount'] /100 * $subTotal;
+				$adjTotal = $subTotal - $discountVal;
+				//$discountVal = $subTotal * discountVal;
+			}
+			$html .= '&nbsp;&nbsp;<u> &nbsp;'.$discount.'</u></td></tr>';
+			
+			$adjTotalFormatted = number_format($adjTotal, 2, '.', ',');
+			$html .= '<tr><td></td><td></td><td></td><td width="30%">Adj. Total:';
+			$html .= '&nbsp;<u> $'.$adjTotalFormatted.'</u></td></tr>';
+			
+			$taxVal = $payment['pay_tax_rate'] /100 * $adjTotal;
+			$finalTotal = $adjTotal + $taxVal;
+			
+			$taxTotalFormatted = number_format($taxVal, 2, '.', ',');
+			$html .= '<tr><td></td><td></td><td></td><td width="30%">GST:';
+			$html .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>&nbsp; $'.$taxTotalFormatted.'</u></td></tr>';
+			$finalTotalFormatted = number_format($finalTotal, 2, '.', ',');
+			$html .= '<tr><td></td><td></td><td></td><td width="30%">Total:';
+			$html .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u> $'.$finalTotalFormatted.'</u></td></tr>';
+			
+			$html .= '</table>';
+			//die($html);
+			$this->load->library('PDF');
 			$pdf = new PDF('P', 'mm', 'A4', true, 'UTF-8', false);
-			$pdf->SetTitle('My Title');
 			$pdf->SetHeaderMargin(30);
 			$pdf->SetTopMargin(20);
 			$pdf->setFooterMargin(20);
-			$pdf->SetAutoPageBreak(true);
-			$pdf->SetAuthor('Author');
-			$pdf->SetDisplayMode('real', 'default');
-			
-			$pdf->Write(5, 'Some sample text');
-			$pdf->Output('My-File-Name.pdf', 'I');
+			$pdf->SetAutoPageBreak(true, 20);
+			$pdf->AddPage();
+			$pdf->writeHTML($html, true, false, true, false, '');
+			$filename = 'WorkOrder-'.$id;
+			$pdf->Output($filename, 'I');
 		}
 		
 		/**

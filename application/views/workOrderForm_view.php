@@ -263,7 +263,7 @@
 							<a href="javascript:void(0)" onclick="printWorkOrder()">Work Order</a>
 						</li>
 						<li>
-							<a href="javascript:void(0)" onclick="printCustSummary)">Customer Summary</a>
+							<a href="javascript:void(0)" onclick="printCustSummary()">Customer Summary</a>
 						</li>
 					</ul>
 				</div>

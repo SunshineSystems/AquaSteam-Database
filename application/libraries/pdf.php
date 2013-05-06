@@ -11,13 +11,17 @@
 	        parent::__construct();
 	    }
 		
-		//Page header
+		//Page header, only to be displayed on first page, if our html tables extend to the next page, tcpdf will throw errors
+		//if the header is trying to be displayed on the next page.
 	    public function Header() {
-	        // Logo
-	        $image_file = K_PATH_IMAGES.'logo.png';
-	        $this->Image($image_file, 10, 10, 60, '', 'PNG', '', 'M', false, 300, '', false, false, 0, false, false, false);
-	        // Set font
-
+			if($this->page == 1){
+				// Logo
+	        	$image_file = K_PATH_IMAGES.'logo.png';
+	        	$this->Image($image_file, 10, 10, 60, '', 'PNG', '', 'M', false, 300, '', false, false, 0, false, false, false);
+			}
+			else {
+				return;
+			}
 	    }
 	
 	    // Page footer
@@ -26,8 +30,9 @@
 	        $this->SetY(-15);
 	        // Set font
 	        $this->SetFont('helvetica', 'I', 8);
-	        // Page number
-	        $this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+	        // footer content... sorry for the mess
+	        $date = date("m/d/Y");
+	        $this->Cell(0, 10, 'Printed On: '.$date.'                                                                      AquaPro 2.0                                                                                Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
 	    }
 	}
 
