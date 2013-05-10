@@ -144,7 +144,7 @@
 						url: home + "index.php/workOrderForm/copyDataTables",
 						data: { "oldID" : oldID, "newID" : newID},
 						complete: function(data) {
-							var url = home + "index.php/workorderform/openWorkOrder/" + newID;
+							var url = home + "index.php/workOrderForm/openWorkOrder/" + newID;
 							$("#alert-data").val(alertdata);
 							$("#alert-form").attr({'action': url}); //Sets the action of the form, to the new work order's url.
 							document.getElementById("alert-form").submit();
@@ -197,13 +197,13 @@
 	 */
     function printWorkOrder() {
     	var id = $("#workOrderID").val();
-    	var url = home + "index.php/workorderform/printWorkOrder/" + id;
+    	var url = home + "index.php/workOrderForm/printWorkOrder/" + id;
 		var page = window.open(url, '_blank');
     }
     
     function printCustSummary() {
     	var id = $("#workOrderID").val();
-    	var url = home + "index.php/workorderform/printCustSummary/" + id;
+    	var url = home + "index.php/workOrderForm/printCustSummary/" + id;
 		var page = window.open(url, '_blank');
     }
    
@@ -754,20 +754,17 @@
     /************************************************************************************************/
 	
 	//When an editable table cell is clicked, an input box with the value of that td will show up inside of the cell.
-	$(function() {
+
 	    $(document).on("click", 'td.editable', function(){
-	    	
 	    	//Prevents input from clearing if clicked twice
 	    	var cellText = $(this).text();
 	    	if(cellText == 0) {
 	    		cellText = $('#editbox').val();
 	    	}
-	    	//$('#editbox').blur();
 	    	var htmlData = '<input id="editbox" type="text" value="' +  cellText + '">';
-	    	
 	 		$('.ajax').html($('.ajax input').val());  
-	 		$('.ajax').removeClass('ajax');  
-	  
+	 		$('.ajax').removeClass('ajax');
+	 		
 	 		$(this).addClass('ajax');  
 	 		$(this).html(htmlData);
 	 		if($('#editbox').val() == "undefined") {
@@ -781,7 +778,7 @@
 			*/
 			$('#editbox').focus();
 		});
-	});
+
 	
 	//When enter is hit while editing a cell, the value of that cell is updated in the database.
 	$(function() {
@@ -793,12 +790,19 @@
 		    
 		    // To be used to open next cell when tab is hit, isn't working because it blurs the input box as soon as
 		    // it opens.
-		   /* else if(event.keyCode == 9) {
+		    else if(event.keyCode == 9 && event.shiftKey == true) {
 		    	//event.preventDefault();
 		    	$('#editbox').blur();
-		    	$(this).next("td.editable").click();
+		    	$(this).prevAll("td.editable").first().click();
 		    	return false;
-		    } */
+		    }
+		    
+		    else if(event.keyCode == 9) {
+		    	//event.preventDefault();
+		    	$('#editbox').blur();
+		    	$(this).nextAll("td.editable").first().click();
+		    	return false;
+		    } 
 		});
 	}); 
 	
@@ -808,6 +812,7 @@
 			updateTabTable($(this).parent()); //Calls the updateTabTable function when the input box is blurred.
 			$('.ajax').html($('.ajax input').val());
 			$('.ajax').removeClass('ajax');
+			runAllCalcs();
 		});
 	});
 	
@@ -840,11 +845,9 @@
 				'id' : data[3], 'field' : data[2], 'table' : data[1], 'value' : value
 			},
 			success: function(data){
-				$('.ajax').html($('.ajax input').val());  
-				$('.ajax').removeClass('ajax');
-				if(!calcCell) {
+				/*if(!calcCell) {
 					runAllCalcs();
-				}  
+				}  */
 		  	}
     	});
 	}
