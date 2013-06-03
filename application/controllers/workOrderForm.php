@@ -571,8 +571,10 @@
 				$adjTotal = $subTotal - $payment['pay_discount'];
 			}
 			else {
-				$discount = $payment['pay_discount']."%";
+				//$discount = $payment['pay_discount']."%";
 				$discountVal = $payment['pay_discount'] /100 * $subTotal;
+				//$discount = "$".$discountVal;
+				$discount = "$".number_format($discountVal, 2, '.', ',');
 				$adjTotal = $subTotal - $discountVal;
 				//$discountVal = $subTotal * discountVal;
 			}
@@ -792,8 +794,10 @@
 				$adjTotal = $subTotal - $payment['pay_discount'];
 			}
 			else {
-				$discount = $payment['pay_discount']."%";
+				//$discount = $payment['pay_discount']."%";
 				$discountVal = $payment['pay_discount'] /100 * $subTotal;
+				//$discount = "$".$discountVal;
+				$discount = "$".number_format($discountVal, 2, '.', ',');
 				$adjTotal = $subTotal - $discountVal;
 				//$discountVal = $subTotal * discountVal;
 			}

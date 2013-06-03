@@ -668,9 +668,9 @@
 		diget = diget.join("");
 		
 		var totalTax = subTotal * diget/100;
-		
-		$("#total-wo-tax").val(totalTax.toFixed(2));
-		return totalTax.toFixed(2);
+		totalTax = (Math.round(totalTax*100)/100).toFixed(2); //Rounding solution for chrome, toFixed itself doesn't round as expected.
+		$("#total-wo-tax").val(totalTax);
+		return totalTax;
 	}
 	
     /**
