@@ -547,10 +547,24 @@
 		
 		$("#service-table tbody tr").each(function(i) {
 			var rowPrice = $('#service-table tbody tr:nth-child('+(i+1)+')>td:nth-child(8)').text();
+			var discount = $("#workOrderDiscount").val();
+			var discountType = $("#workOrderDiscountType").val();
 			if(isValidNum(rowPrice)) {
 				serviceTotal += parseFloat(rowPrice);
 				var roundedTotal = serviceTotal.toFixed(2);
-				$("#total-service-price").val(roundedTotal);
+				
+				if(discountType == "$") { //If the discount is in dollars, just subtract the dollars.
+					roundedTotal -= parseFloat(discount);
+				}
+				else { // Else if the discount is in %, calculate the percentage of the total, and subtract it from the total's price.
+					discount = parseFloat(discount);
+					discount = discount.toFixed(2) / 100;
+					var percentOff = roundedTotal * discount;
+					percentOff = (Math.round(percentOff*100)/100).toFixed(2);
+					roundedTotal -= percentOff;
+				}
+				
+				$("#total-service-price").val((Math.round(roundedTotal*100)/100).toFixed(2));
 			}
 		});
 		
@@ -638,7 +652,7 @@
 						   + parseFloat(stainGuardTotal) 
 						   + parseFloat(otherTotal) 
 						   + parseFloat(travelTotal);
-		
+		/*
 		if(discountType == "$") { //If the discount is in dollars, just subtract the dollars.
 			totalPrice -= parseFloat(discount);
 		}
@@ -648,7 +662,7 @@
 			var percentOff = totalPrice * discount;
 			totalPrice -= percentOff;
 		}
-		
+		*/
 		//Passes the current total price to the CalcTotalTax function, to get the value of the tax.
 		//The value of the tax is then added on to the total price.
 		var taxTotal = calcTotalTax(totalPrice.toFixed(2));

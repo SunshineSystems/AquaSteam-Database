@@ -371,6 +371,7 @@
 			$other = $this->dbm->getOtherByWOID($id);
 			
 			$subTotal = 0;
+			$carpetTotal = 0;
 			$travelTotal = 0;
 			$gst = 0;
 			$adjTotal = 0;
@@ -469,6 +470,7 @@
 				$html .= '<td>'.$row['serv_quantity'].'</td>';
 				$html .= '<td> $'.$row['serv_unit_price'].'</td>';
 				$html .= '<td> $'.$row['serv_ext_price'].'</td></tr>';
+				$carpetTotal += $row['serv_ext_price'];
 				$subTotal += $row['serv_ext_price'];
 			}
 			
@@ -572,7 +574,7 @@
 			}
 			else {
 				//$discount = $payment['pay_discount']."%";
-				$discountVal = $payment['pay_discount'] /100 * $subTotal;
+				$discountVal = $payment['pay_discount'] /100 * $carpetTotal;
 				//$discount = "$".$discountVal;
 				$discount = "$".number_format($discountVal, 2, '.', ',');
 				$adjTotal = $subTotal - $discountVal;
@@ -795,7 +797,7 @@
 			}
 			else {
 				//$discount = $payment['pay_discount']."%";
-				$discountVal = $payment['pay_discount'] /100 * $subTotal;
+				$discountVal = $payment['pay_discount'] /100 * $carpetTotal;
 				//$discount = "$".$discountVal;
 				$discount = "$".number_format($discountVal, 2, '.', ',');
 				$adjTotal = $subTotal - $discountVal;
